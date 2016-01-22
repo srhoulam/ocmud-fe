@@ -1,6 +1,6 @@
 'use strict';
 
-var sendCommand = (function() {
+var socket = (function() {
     // UI
     // spin this off into its own module soon
     var ui = {
@@ -13,10 +13,12 @@ var sendCommand = (function() {
     function addToLog(info) {
         ui.log.textContent += info + '\n';
     }
-    function displaySight(view) {
-        ui.raw.textContent = JSON.stringify(view);
-        ui.desc.textContent = view.desc;
-        ui.exits.textContent = view.exits;
+    function displaySight(sight) {
+        console.log(sight);
+
+        ui.raw.textContent = JSON.stringify(sight);
+        ui.desc.textContent = sight.desc;
+        ui.exits.textContent = sight.exits;
     }
 
     // end UI
@@ -27,9 +29,7 @@ var sendCommand = (function() {
 
     socket.on("info", addToLog);
     socket.on("numClients", num => console.log("numClients:", num.clients));
-    socket.on("look", displaySight);
+    socket.on("sight", displaySight);
 
-    return function sendCommand(command) {
-        socket.emit(command);
-    };
+    return socket;
 })();
