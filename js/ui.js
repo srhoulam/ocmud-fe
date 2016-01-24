@@ -3,6 +3,7 @@
 var ui = {
     elements : {
         raw : document.getElementById('raw'),
+        name : document.getElementById('name'),
         desc : document.getElementById('desc'),
         exits : document.getElementById('exits'),
         log : document.getElementById('log')
@@ -12,9 +13,8 @@ var ui = {
             ui.elements.log.textContent += info + '\n';
         },
         displaySight : function displaySight(sight) {
-            console.log(sight);
-
             ui.elements.raw.textContent = JSON.stringify(sight);
+            ui.elements.name.textContent = sight.name;
             ui.elements.desc.textContent = sight.desc;
             ui.elements.exits.textContent = sight.exits;
         }
