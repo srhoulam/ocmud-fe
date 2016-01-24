@@ -6,4 +6,6 @@ function init() {
     return socket.init(backendURL);
 }
 
-ui.methods.applyHandlers();
+$(document).ready(function() {
+    ui.methods.applyHandlers();
+});
