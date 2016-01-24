@@ -11,8 +11,8 @@
 
   <h2>Auth</h2>
   <form id="auth">
-    <label><input type="email" placeholder="your@e.mail" /></label>
-    <label><input type="password" placeholder="Password123!" /></label>
+    <label><input type="email" name="email" placeholder="your@e.mail" /></label>
+    <label><input type="password" name="password" placeholder="Password123!" /></label>
     <button type="submit">Log in</button>
   </form>
 
@@ -29,7 +29,9 @@
   <h2>Info Log</h2>
   <textarea rows="10" cols="50" id="log"></textarea>
 
+  <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
   <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+  <script src="js/auth.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/socket.js"></script>
   <script src="js/index.js"></script>

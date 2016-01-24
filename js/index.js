@@ -1,7 +1,9 @@
 'use strict';
 
-function init() {
-    var backendURL = "http://localhost:3000";
+var backendURL = "http://localhost:3000";
 
+function init() {
     return socket.init(backendURL);
 }
+
+ui.methods.applyHandlers();
