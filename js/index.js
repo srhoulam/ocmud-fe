@@ -6,6 +6,6 @@ function init() {
     return socket.init(backendURL);
 }
 
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
     ui.methods.applyHandlers();
 });
