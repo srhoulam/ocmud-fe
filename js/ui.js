@@ -27,12 +27,12 @@ var ui = {
         auth : function authHandler(event) {
             event.preventDefault();
 
-            event.target.email.disabled =
+            event.target.username.disabled =
             event.target.password.disabled =
             event.target.children[2].disabled = true;
 
             auth.enticate({
-                username : event.target.email.value,
+                username : event.target.username.value,
                 password : event.target.password.value,
                 success : ui.handlers.authSuccess,
                 fail : function() {
@@ -48,7 +48,7 @@ var ui = {
             window.socket = init();
         },
         authFail : function(form) {
-            form.email.disabled =
+            form.username.disabled =
             form.password.disabled =
             form.children[2].disabled = false;
 
