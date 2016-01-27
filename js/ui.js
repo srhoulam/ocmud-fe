@@ -6,18 +6,29 @@ var ui = {
         name : document.getElementById('name'),
         desc : document.getElementById('desc'),
         exits : document.getElementById('exits'),
-        log : document.getElementById('log'),
-        auth : document.getElementById('auth')
+        auth : document.getElementById('auth'),
+        wall : document.getElementById('writings')
     },
     methods : {
         addToLog : function addToLog(info) {
-            ui.elements.log.textContent += info + '\n';
+            console.log(info);
+        },
+        addToWall : function addToWall(writing) {
+            var li = document.createElement('li');
+            li.textContent = JSON.stringify(writing);
+            ui.elements.wall.appendChild(li);
         },
         displaySight : function displaySight(sight) {
             ui.elements.raw.textContent = JSON.stringify(sight);
             ui.elements.name.textContent = sight.name;
             ui.elements.desc.textContent = sight.desc;
             ui.elements.exits.textContent = sight.exits;
+
+            Array.prototype.forEach.
+                call(ui.elements.wall.children, c => c.remove());
+            sight.writings && sight.writings.forEach(function(w) {
+                ui.methods.addToWall(JSON.stringify(w));
+            });
         },
         applyHandlers : function applyHandlers() {
             ui.elements.auth.addEventListener('submit', ui.handlers.auth);
