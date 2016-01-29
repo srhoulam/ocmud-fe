@@ -27,7 +27,7 @@ var ui = {
             Array.prototype.forEach.
                 call(ui.elements.wall.children, c => c.remove());
             sight.writings && sight.writings.forEach(function(w) {
-                ui.methods.addToWall(JSON.stringify(w));
+                ui.methods.addToWall(w);
             });
         },
         applyHandlers : function applyHandlers() {
@@ -40,11 +40,13 @@ var ui = {
 
             event.target.username.disabled =
             event.target.password.disabled =
+            event.target.email.disabled =
             event.target.children[2].disabled = true;
 
             auth.enticate({
                 username : event.target.username.value,
                 password : event.target.password.value,
+                email : event.target.email.value,
                 success : ui.handlers.authSuccess,
                 fail : function() {
                     ui.handlers.authFail(event.target);
@@ -61,6 +63,7 @@ var ui = {
         authFail : function(form) {
             form.username.disabled =
             form.password.disabled =
+            form.email.disabled =
             form.children[2].disabled = false;
 
             console.log("Auth failed. Try again.");

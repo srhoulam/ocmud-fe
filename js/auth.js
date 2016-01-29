@@ -10,7 +10,8 @@ var auth = {
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify({
                 username : options.username,
-                password : options.password
+                password : options.password,
+                email : options.email
             }));
         }).then(function(event) {
             if(event.target.status === 200) {
