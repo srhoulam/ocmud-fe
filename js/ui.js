@@ -58,7 +58,7 @@ var ui = {
         authSuccess : function() {
             console.log("Auth successful. Launching socket.");
 
-            window.socket = init();
+            return initApi();
         },
         authFail : function(form) {
             form.username.disabled =
