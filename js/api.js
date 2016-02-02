@@ -55,6 +55,12 @@ function initApi() {
                 command : 'quit'
             });
         },
+        say : function say(message) {
+            return io.emit('command', {
+                command : 'say',
+                'message' : message
+            });
+        },
         write : function write(text) {
             return io.emit('command', {
                 command : 'write',

@@ -7,6 +7,7 @@ var socket = {
         socket.on("info", ui.methods.addToLog);
         socket.on("numClients", num => console.log("numClients:", num.clients));
         socket.on("sight", ui.methods.displaySight);
+        socket.on("speech", obj => console.log("Speech:", `<${obj.from}> ${obj.message}`));
 
         return socket;
     }
