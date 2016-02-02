@@ -21,7 +21,7 @@ var ui = {
         displaySight : function displaySight(sight) {
             ui.elements.raw.textContent = JSON.stringify(sight);
             ui.elements.name.textContent = sight.name;
-            ui.elements.desc.textContent = sight.desc;
+            ui.elements.desc.textContent = sight.description;
             ui.elements.exits.textContent = sight.exits;
 
             Array.prototype.forEach.
