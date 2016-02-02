@@ -5,7 +5,7 @@ var socket = {
         var socket = io(url);
 
         socket.on("info", ui.methods.addToLog);
-        socket.on("error", ui.methods.addToLog);
+        socket.on("error", console.warn);
 
         socket.on("numClients", num => console.log("numClients:", num.clients));
 
