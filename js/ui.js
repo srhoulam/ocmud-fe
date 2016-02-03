@@ -7,7 +7,8 @@ var ui = {
         desc : document.getElementById('desc'),
         exits : document.getElementById('exits'),
         auth : document.getElementById('auth'),
-        wall : document.getElementById('writings')
+        wall : document.getElementById('writings'),
+        explore : document.querySelector("button[type=button]")
     },
     methods : {
         addToLog : function addToLog(info) {
@@ -32,6 +33,7 @@ var ui = {
         },
         applyHandlers : function applyHandlers() {
             ui.elements.auth.addEventListener('submit', ui.handlers.auth);
+            ui.elements.explore.addEventListener('click', ui.handlers.explore);
         }
     },
     handlers : {
@@ -41,7 +43,8 @@ var ui = {
             event.target.username.disabled =
             event.target.password.disabled =
             event.target.email.disabled =
-            event.target.children[2].disabled = true;
+            event.target.children[3].disabled =
+            event.target.children[4].disabled = true;
 
             auth.enticate({
                 username : event.target.username.value,
@@ -64,9 +67,15 @@ var ui = {
             form.username.disabled =
             form.password.disabled =
             form.email.disabled =
-            form.children[2].disabled = false;
+            form.children[3].disabled =
+            form.children[4].disabled = false;
 
             console.log("Auth failed. Try again.");
+        },
+        explore : function exploreHandler() {
+            console.log("Explore mode. Launching socket.");
+
+            return initApi();
         }
     }
 };

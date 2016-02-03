@@ -61,6 +61,11 @@ function initApi() {
                 'message' : message
             });
         },
+        whoami : function whoami() {
+            return io.emit('command', {
+                command : 'whoami'
+            });
+        },
         write : function write(text) {
             return io.emit('command', {
                 command : 'write',
