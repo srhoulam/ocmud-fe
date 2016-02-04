@@ -2,7 +2,9 @@
 
 var socket = {
     init : function initSocket(url) {
-        var socket = io(url);
+        var socket = io(url, {
+            forceNew : true
+        });
 
         socket.on("info", ui.methods.addToLog);
         socket.on("error", console.warn);
