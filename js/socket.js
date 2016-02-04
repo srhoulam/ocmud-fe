@@ -2,12 +2,13 @@
 
 var socket = {
     init : function initSocket(url) {
+        api && api.quit && api.quit();
+
         var socket = io(url, {
             forceNew : true
         });
 
         socket.on("info", ui.methods.addToLog);
-        socket.on("error", console.warn);
 
         socket.on("numClients", num => console.log("numClients:", num.clients));
 

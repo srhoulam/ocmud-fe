@@ -51,9 +51,13 @@ function initApi() {
             });
         },
         quit : function quit() {
-            return io.emit('command', {
+            let result = io.emit('command', {
                 command : 'quit'
             });
+
+            io = null;
+
+            return result;
         },
         say : function say(message) {
             return io.emit('command', {
