@@ -59,6 +59,11 @@ function initApi() {
 
             return result;
         },
+        resend : function resend() {
+            return io.emit('command', {
+                command : 'resendEmail'
+            });
+        },
         say : function say(message) {
             return io.emit('command', {
                 command : 'say',
