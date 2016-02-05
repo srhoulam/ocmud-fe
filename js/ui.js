@@ -46,11 +46,13 @@ var ui = {
             event.target.children[3].disabled =
             event.target.children[4].disabled = true;
 
+            let username = event.target.username.value;
+
             auth.enticate({
-                username : event.target.username.value,
+                'username' : username,
                 password : event.target.password.value,
                 email : event.target.email.value,
-                success : ui.handlers.authSuccess,
+                success : ui.handlers.authSuccess(username),
                 fail : function() {
                     ui.handlers.authFail(event.target);
                 }
@@ -58,10 +60,12 @@ var ui = {
 
             return false;
         },
-        authSuccess : function() {
-            console.log("Auth successful. Launching socket.");
-
-            return initApi();
+        authSuccess : function(username) {
+            return function() {
+                console.log("Auth successful. Launching socket.");
+                app.loggedInAs = username;
+                return initApi();
+            };
         },
         authFail : function(form) {
             form.username.disabled =
