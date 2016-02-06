@@ -1,10 +1,21 @@
 //  Location view
+let directionNames = {
+    'n' : 'north',
+    'e' : 'east',
+    'w' : 'west',
+    's' : 'south'
+};
+
 let Location = React.createClass({
+    classes : {
+        main : "location col-xs-10 col-xs-push-1 col-sm-10 col-sm-push-1 col-md-10 col-md-push-1",
+        surface : "col-xs-6 col-xs-push-3 col-sm-6 col-sm-push-3 col-md-6 col-md-push-3"
+    },
     getInitialState : function() {
         return {
             name : "Limbo",
             description : "Almost there, but not quite.",
-            exits : [],
+            exits : ['n', 'e', 'w', 's'],
             surface : null,
             writings : null
         };
@@ -17,19 +28,35 @@ let Location = React.createClass({
         return this.state.exits.indexOf(direction) >= 0;
     },
     render : function() {
-        let exits = this.state.exits.map(function(d, i) {
-            return <span key={i} className={`direction${d.toUpperCase()}`}></span>;
+        let exits = this.state.exits.map(function(d) {
+            return directionNames[d];
         });
+
+        if(exits.length === 1) {
+            exits = exits[0];
+        } else if(exits.length === 2) {
+            exits = exits.join(' and ')
+        } else {
+            exits = `${exits.slice(0, exits.length - 1).join(', ')}, and ${exits[exits.length - 1]}`;
+        }
+
         return (
             <div>
-                <center className="location">
-                    <h2>{this.state.name}</h2>
-                    <p>{this.state.description}</p>
-                    {this.state.surface && <p>There is a {this.state.surface} here.</p>}
-                    {exits}
-                </center>
+                <div className="row">
+                    <center className={this.classes.main}>
+                        <h1>{this.state.name}</h1>
+                        <h3>{this.state.description}</h3>
+                        <h3>There are exits to the <strong>{exits}</strong> here.</h3>
+                        {this.state.surface && <h4>There is a {this.state.surface} here.</h4>}
+                    </center>
+                </div>
                 {this.state.writings && this.state.writings.length > 0 &&
-                    <Surface name={this.state.surface} writings={this.state.writings} />}
+                <div className="row">
+                    <Surface
+                        name={this.state.surface}
+                        writings={this.state.writings}
+                        className={this.classes.surface} />
+                </div>}
             </div>
         );
     }
@@ -39,10 +66,10 @@ let Location = React.createClass({
 let Surface = React.createClass({
     render : function() {
         return (
-            <div className="surface" id="surfaceView">
-                <h3>{this.props.name ? `A ${this.props.name}` : 'Nothing'}</h3>
+            <center className={`surface ${this.props.className}`} id="surfaceView">
+                <h2>{this.props.name ? `A ${this.props.name}` : 'Nothing'}</h2>
                 <WritingList writings={this.props.writings} />
-            </div>
+            </center>
         );
     }
 });
@@ -54,9 +81,9 @@ let WritingList = React.createClass({
             );
         });
         return (
-            <dl className="writingList">
+            <ul className="writingList">
                 {writings}
-            </dl>
+            </ul>
         );
     }
 });
@@ -77,14 +104,9 @@ let WriteForm = React.createClass({
 let Writing = React.createClass({
     render : function() {
         return (
-            <span>
-                <dt className="writing">
-                    {this.props.author} wrote
-                </dt>
-                <dd>
-                    <em>"{this.props.text}"</em>
-                </dd>
-            </span>
+            <li className="writing">
+                "<em>{this.props.text}</em>", written by {this.props.author}.
+            </li>
         );
     }
 });
@@ -101,11 +123,11 @@ let Log = React.createClass({
         });
 
         return (
-            <div className={this.props.type.toLowerCase() + 'Box'}>
+            <center className={this.props.type.toLowerCase() + 'Box'}>
                 <h3>{this.props.type}</h3>
                 <div className="staleMessages">{staleMessages}</div>
                 <div className="freshMessages">{freshMessages}</div>
-            </div>
+            </center>
         );
     }
 });

@@ -2,17 +2,11 @@
 
 var ui = {
     elements : {
-        raw : document.getElementById('raw'),
-        name : document.getElementById('name'),
-        desc : document.getElementById('desc'),
-        exits : document.getElementById('exits'),
         auth : document.getElementById('auth'),
-        wall : document.getElementById('writings'),
         explore : document.querySelector("button[type=button]")
     },
     methods : {
         addToChatLog : function addToChat(message) {
-            console.log(message);
             reactViews.chatLog.add(message);
         },
         addToInfoLog : function addToLog(type, info) {
@@ -20,11 +14,6 @@ var ui = {
                 'type' : type,
                 message : info
             });
-        },
-        addToWall : function addToWall(writing) {
-            var li = document.createElement('li');
-            li.textContent = JSON.stringify(writing);
-            ui.elements.wall.appendChild(li);
         },
         ageMessages : function ageMessages() {
             reactViews.infoLog.tick();
@@ -35,21 +24,6 @@ var ui = {
         },
         displaySight : function displaySight(sight) {
             reactViews.location.setState(sight);
-            // reactViews.surface.setState({
-            //     name : sight.surface,
-            //     writings : sight.writings
-            // });
-
-            ui.elements.raw.textContent = JSON.stringify(sight);
-            ui.elements.name.textContent = sight.name;
-            ui.elements.desc.textContent = sight.description;
-            ui.elements.exits.textContent = sight.exits;
-
-            Array.prototype.forEach.
-                call(ui.elements.wall.children, c => c.remove());
-            sight.writings && sight.writings.forEach(function(w) {
-                ui.methods.addToWall(w);
-            });
         },
         handleTravel : function handleTravel(info) {
             if(info === true) {

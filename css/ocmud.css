@@ -1,0 +1,19 @@
+/*  direction arrows  */
+.location {
+    position: relative;
+    padding: 3%;
+}
+.location h2, .location h3, .location h4 {
+    font-weight: normal;
+}
+.writingList {
+    list-style-type: none;
+}
+.infoBox, .chatBox {
+    max-height: 20%;
+}
+.infoBox > div, .chatBox > div {
+    text-align: left;
+    overflow: scroll;
+    max-height: 50%;
+}
