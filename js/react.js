@@ -1,4 +1,65 @@
 //  Location view
+let Location;
+
+//  Surface view
+let Surface = React.createClass({
+    getInitialState : function() {
+        return {
+            name : 'surface',
+            writings : []
+        };
+    },
+    render : function() {
+        return (
+            <div className="surface" id="surfaceView">
+                <h3>{this.state.name ? `A ${this.state.name}` : 'Nothing'}</h3>
+                <WritingList writings={this.state.writings} />
+            </div>
+        );
+    }
+});
+let WritingList = React.createClass({
+    render : function() {
+        let writings = this.props.writings.map(function(writing, index) {
+            return (
+                <Writing key={index} author={writing.author} text={writing.message} />
+            );
+        });
+        return (
+            <dl className="writingList">
+                {writings}
+            </dl>
+        );
+    }
+});
+
+//  convert this into a generic form that is customizable by setting its state
+let WriteForm = React.createClass({
+    render : function() {
+        return (
+            <form className="writeForm" onSubmit={this.props.onSubmit}>
+                <label>
+                    Message: <input name="message" placeholder="A message for passerby." />
+                </label>
+                <input type="submit" value="Write" />
+            </form>
+        );
+    }
+});
+let Writing = React.createClass({
+    render : function() {
+        return (
+            <span>
+                <dt className="writing">
+                    {this.props.author} wrote
+                </dt>
+                <dd>
+                    <em>"{this.props.text}"</em>
+                </dd>
+            </span>
+        );
+    }
+});
 
 //  Info & chat view
 let Log = React.createClass({
@@ -107,66 +168,6 @@ let ChatLog = React.createClass({
     render : function() {
         return (
             <Log type="Chat" messages={this.state.messages} formatMessage={ChatLog.formatMessage} />
-        );
-    }
-});
-
-//  Surface view
-let Surface = React.createClass({
-    getInitialState : function() {
-        return {
-            name : 'surface',
-            writings : []
-        };
-    },
-    render : function() {
-        return (
-            <div className="surface" id="surfaceView">
-                <h3>{this.state.name ? `A ${this.state.name}` : 'Nothing'}</h3>
-                <WritingList writings={this.state.writings} />
-            </div>
-        );
-    }
-});
-let WritingList = React.createClass({
-    render : function() {
-        let writings = this.props.writings.map(function(writing, index) {
-            return (
-                <Writing key={index} author={writing.author} text={writing.message} />
-            );
-        });
-        return (
-            <dl className="writingList">
-                {writings}
-            </dl>
-        );
-    }
-});
-
-//  convert this into a generic form that is customizable by setting its state
-let WriteForm = React.createClass({
-    render : function() {
-        return (
-            <form className="writeForm" onSubmit={this.props.onSubmit}>
-                <label>
-                    Message: <input name="message" placeholder="A message for passerby." />
-                </label>
-                <input type="submit" value="Write" />
-            </form>
-        );
-    }
-});
-let Writing = React.createClass({
-    render : function() {
-        return (
-            <span>
-                <dt className="writing">
-                    {this.props.author} wrote
-                </dt>
-                <dd>
-                    <em>"{this.props.text}"</em>
-                </dd>
-            </span>
         );
     }
 });
