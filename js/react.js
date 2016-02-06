@@ -105,7 +105,7 @@ let Writing = React.createClass({
     render : function() {
         return (
             <li className="writing">
-                "<em>{this.props.text}</em>", written by {this.props.author}.
+                "<em>{this.props.text}</em>", written by <strong>{this.props.author}</strong>.
             </li>
         );
     }
