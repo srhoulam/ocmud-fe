@@ -1,19 +1,47 @@
 //  Location view
-let Location;
+let Location = React.createClass({
+    getInitialState : function() {
+        return {
+            name : "Limbo",
+            description : "Almost there, but not quite.",
+            exits : [],
+            surface : null,
+            writings : null
+        };
+    },
+    reset : function() {
+        this.state = this.getInitialState();
+        this.forceUpdate();
+    },
+    hasExit : function(direction) {
+        return this.state.exits.indexOf(direction) >= 0;
+    },
+    render : function() {
+        let exits = this.state.exits.map(function(d, i) {
+            return <span key={i} className={`direction${d.toUpperCase()}`}></span>;
+        });
+        return (
+            <div>
+                <center className="location">
+                    <h2>{this.state.name}</h2>
+                    <p>{this.state.description}</p>
+                    {this.state.surface && <p>There is a {this.state.surface} here.</p>}
+                    {exits}
+                </center>
+                {this.state.writings && this.state.writings.length > 0 &&
+                    <Surface name={this.state.surface} writings={this.state.writings} />}
+            </div>
+        );
+    }
+});
 
 //  Surface view
 let Surface = React.createClass({
-    getInitialState : function() {
-        return {
-            name : 'surface',
-            writings : []
-        };
-    },
     render : function() {
         return (
             <div className="surface" id="surfaceView">
-                <h3>{this.state.name ? `A ${this.state.name}` : 'Nothing'}</h3>
-                <WritingList writings={this.state.writings} />
+                <h3>{this.props.name ? `A ${this.props.name}` : 'Nothing'}</h3>
+                <WritingList writings={this.props.writings} />
             </div>
         );
     }
@@ -173,10 +201,14 @@ let ChatLog = React.createClass({
 });
 
 window.reactViews = {
-    surface : ReactDOM.render(
-        <Surface />,
-        document.getElementById('surface')
+    location : ReactDOM.render(
+        <Location />,
+        document.getElementById('location')
     ),
+    // surface : ReactDOM.render(
+    //     <Surface />,
+    //     document.getElementById('surface')
+    // ),
     infoLog : ReactDOM.render(
         <InfoLog />,
         document.getElementById('infoLog')

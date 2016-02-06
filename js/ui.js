@@ -34,10 +34,11 @@ var ui = {
             ui.elements.explore.addEventListener('click', ui.handlers.explore);
         },
         displaySight : function displaySight(sight) {
-            reactViews.surface.setState({
-                name : sight.surface,
-                writings : sight.writings
-            });
+            reactViews.location.setState(sight);
+            // reactViews.surface.setState({
+            //     name : sight.surface,
+            //     writings : sight.writings
+            // });
 
             ui.elements.raw.textContent = JSON.stringify(sight);
             ui.elements.name.textContent = sight.name;

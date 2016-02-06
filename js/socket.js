@@ -36,6 +36,7 @@ var socket = {
 
         socket.on("connect", function() {
             console.log("Connected.");
+            api.look();
         });
         socket.on("disconnect", function() {
             console.log("Disconnected.");
