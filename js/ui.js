@@ -12,7 +12,6 @@ var ui = {
     },
     methods : {
         addToLog : function addToLog(type, info) {
-            console.log(info);
             reactViews.infoLog.add({
                 'type' : type,
                 message : info
@@ -31,6 +30,11 @@ var ui = {
             ui.elements.explore.addEventListener('click', ui.handlers.explore);
         },
         displaySight : function displaySight(sight) {
+            reactViews.surface.setState({
+                name : sight.surface,
+                writings : sight.writings
+            });
+
             ui.elements.raw.textContent = JSON.stringify(sight);
             ui.elements.name.textContent = sight.name;
             ui.elements.desc.textContent = sight.description;
@@ -41,6 +45,14 @@ var ui = {
             sight.writings && sight.writings.forEach(function(w) {
                 ui.methods.addToWall(w);
             });
+        },
+        handleTravel : function handleTravel(info) {
+            if(info === true) {
+                ui.methods.ageMessages();
+            } else if(info !== false) {
+                //  not a boolean
+                ui.methods.addToLog('travel', info);
+            }
         }
     },
     handlers : {

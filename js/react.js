@@ -68,14 +68,14 @@ let InfoLog = React.createClass({
 let Surface = React.createClass({
     getInitialState : function() {
         return {
-            name : 'Surface',
+            name : 'surface',
             writings : []
         };
     },
     render : function() {
         return (
             <div className="surface" id="surfaceView">
-                <h3>{this.state.name}</h3>
+                <h3>{this.state.name ? `A ${this.state.name}` : 'Nothing'}</h3>
                 <WritingList writings={this.state.writings} />
             </div>
         );

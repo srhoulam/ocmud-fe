@@ -52,14 +52,7 @@ var socket = {
 
         socket.on("numClients", num => console.log("numClients:", num.clients));
 
-        socket.on("travel", function(info) {
-            if(info === true) {
-                ui.methods.ageMessages();
-            } else if(info !== false) {
-                //  not a boolean
-                ui.methods.addToLog('travel', info);
-            }
-        });
+        socket.on("travel", ui.methods.handleTravel);
         socket.on("action", function(info) {
             ui.methods.addToLog('action', info);
         });
