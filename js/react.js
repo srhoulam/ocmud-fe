@@ -95,6 +95,8 @@ let WritingList = React.createClass({
         );
     }
 });
+
+//  convert this into a generic form that is customizable by setting its state
 let WriteForm = React.createClass({
     render : function() {
         return (

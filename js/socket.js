@@ -56,6 +56,7 @@ var socket = {
             if(info === true) {
                 ui.methods.ageMessages();
             } else if(info !== false) {
+                //  not a boolean
                 ui.methods.addToLog('travel', info);
             }
         });
