@@ -5,7 +5,7 @@ var socket = {
         try {
             api.quit();
         } catch(error) {
-            // no existing connection to terminate
+            //  no existing connection to terminate
         }
 
         var socket = io(url, {
