@@ -11,13 +11,24 @@ var ui = {
         explore : document.querySelector("button[type=button]")
     },
     methods : {
-        addToLog : function addToLog(info) {
+        addToLog : function addToLog(type, info) {
             console.log(info);
+            reactViews.infoLog.add({
+                'type' : type,
+                message : info
+            });
         },
         addToWall : function addToWall(writing) {
             var li = document.createElement('li');
             li.textContent = JSON.stringify(writing);
             ui.elements.wall.appendChild(li);
+        },
+        ageMessages : function ageMessages() {
+            reactViews.infoLog.tick();
+        },
+        applyHandlers : function applyHandlers() {
+            ui.elements.auth.addEventListener('submit', ui.handlers.auth);
+            ui.elements.explore.addEventListener('click', ui.handlers.explore);
         },
         displaySight : function displaySight(sight) {
             ui.elements.raw.textContent = JSON.stringify(sight);
@@ -30,10 +41,6 @@ var ui = {
             sight.writings && sight.writings.forEach(function(w) {
                 ui.methods.addToWall(w);
             });
-        },
-        applyHandlers : function applyHandlers() {
-            ui.elements.auth.addEventListener('submit', ui.handlers.auth);
-            ui.elements.explore.addEventListener('click', ui.handlers.explore);
         }
     },
     handlers : {

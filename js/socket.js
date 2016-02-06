@@ -46,13 +46,25 @@ var socket = {
             }
         });
 
-        socket.on("info", ui.methods.addToLog);
+        socket.on("info", function(info) {
+            ui.methods.addToLog('info', info);
+        });
 
         socket.on("numClients", num => console.log("numClients:", num.clients));
 
-        socket.on("travel", ui.methods.addToLog);
-        socket.on("action", ui.methods.addToLog);
-        socket.on("locations", ui.methods.addToLog);
+        socket.on("travel", function(info) {
+            if(info === true) {
+                ui.methods.ageMessages();
+            } else if(info !== false) {
+                ui.methods.addToLog('travel', info);
+            }
+        });
+        socket.on("action", function(info) {
+            ui.methods.addToLog('action', info);
+        });
+        socket.on("locations", function(locs) {
+            ui.methods.addToLog('locations', locs);
+        });
 
         socket.on("sight", ui.methods.displaySight);
         socket.on("speech", obj => console.log("Speech:", `<${obj.from}> ${obj.message}`));
