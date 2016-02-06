@@ -12,11 +12,40 @@ var socket = {
             forceNew : true
         });
 
+        //  yes, this is actually necessary
+        function detectDowngrade() {
+            console.log("detectDowngrade");
+            socket.removeListener('connect', detectDowngrade);
+            socket.on('ident', (function(intervalId) {
+                return function onIdent(id) {
+                    console.log("onIdent");
+
+                    if(id !== app.loggedInAs) {
+                        app.loggedInAs = id;
+
+                        if(id === false) {
+                            console.log("Reconnected and downgraded to explore mode.");
+                        }
+                    }
+
+                    socket.removeListener('ident', onIdent);
+                    clearInterval(intervalId);
+                };
+            })(setInterval(api.whoami, 500)));
+        }
+        function onIdent(id) {
+        }
+
         socket.on("connect", function() {
             console.log("Connected.");
         });
         socket.on("disconnect", function() {
             console.log("Disconnected.");
+
+            if(app.loggedInAs !== false) {
+                socket.on('ident', onIdent);
+                socket.on('connect', detectDowngrade);
+            }
         });
 
         socket.on("info", ui.methods.addToLog);
