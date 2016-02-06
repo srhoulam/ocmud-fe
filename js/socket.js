@@ -33,8 +33,6 @@ var socket = {
                 };
             })(setInterval(api.whoami, 500)));
         }
-        function onIdent(id) {
-        }
 
         socket.on("connect", function() {
             console.log("Connected.");
