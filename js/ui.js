@@ -11,7 +11,11 @@ var ui = {
         explore : document.querySelector("button[type=button]")
     },
     methods : {
-        addToLog : function addToLog(type, info) {
+        addToChatLog : function addToChat(message) {
+            console.log(message);
+            reactViews.chatLog.add(message);
+        },
+        addToInfoLog : function addToLog(type, info) {
             reactViews.infoLog.add({
                 'type' : type,
                 message : info
@@ -51,7 +55,7 @@ var ui = {
                 ui.methods.ageMessages();
             } else if(info !== false) {
                 //  not a boolean
-                ui.methods.addToLog('travel', info);
+                ui.methods.addToInfoLog('travel', info);
             }
         }
     },

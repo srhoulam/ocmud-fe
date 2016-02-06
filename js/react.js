@@ -1,4 +1,6 @@
-// Info & chat view
+//  Location view
+
+//  Info & chat view
 let Log = React.createClass({
     render : function() {
         let self = this;
@@ -63,8 +65,53 @@ let InfoLog = React.createClass({
         );
     }
 });
+let ChatLog = React.createClass({
+    statics : {
+        formatMessage : function(type, msg, index) {
+            return (
+                <div key={index} className={type + 'Message'}>
+                    {`<${msg.from}> ${msg.message}`}
+                </div>
+            );
+        }
+    },
+    getInitialState : function() {
+        return {
+            messages : {
+                stale : [],
+                fresh : [
+                    {
+                        from : 'ocmud',
+                        message : "Speak freely and don't complain if others do the same."
+                    }
+                ]
+            }
+        };
+    },
+    tick : function() {
+        let length = this.state.messages.fresh.length;
 
-// Surface view
+        if(length > 0) {
+            for(var count = 0; count < length; count++) {
+                let currMsg = this.state.messages.fresh.shift();
+                this.state.messages.stale.push(currMsg);
+            }
+        }
+
+        this.forceUpdate();
+    },
+    add : function(msg) {
+        this.state.messages.fresh.push(msg);
+        this.forceUpdate();
+    },
+    render : function() {
+        return (
+            <Log type="Chat" messages={this.state.messages} formatMessage={ChatLog.formatMessage} />
+        );
+    }
+});
+
+//  Surface view
 let Surface = React.createClass({
     getInitialState : function() {
         return {
@@ -124,11 +171,6 @@ let Writing = React.createClass({
     }
 });
 
-// window.surfaceView = ReactDOM.render(
-//     <Surface submitHandler={function(e) { e.preventDefault(); }}/>,
-//     document.getElementById('content')
-// );
-
 window.reactViews = {
     surface : ReactDOM.render(
         <Surface />,
@@ -136,6 +178,10 @@ window.reactViews = {
     ),
     infoLog : ReactDOM.render(
         <InfoLog />,
-        document.getElementById('infolog')
+        document.getElementById('infoLog')
+    ),
+    chatLog : ReactDOM.render(
+        <ChatLog />,
+        document.getElementById('chatLog')
     )
 };

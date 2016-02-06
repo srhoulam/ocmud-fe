@@ -47,21 +47,21 @@ var socket = {
         });
 
         socket.on("info", function(info) {
-            ui.methods.addToLog('info', info);
+            ui.methods.addToInfoLog('info', info);
         });
 
         socket.on("numClients", num => console.log("numClients:", num.clients));
 
         socket.on("travel", ui.methods.handleTravel);
         socket.on("action", function(info) {
-            ui.methods.addToLog('action', info);
+            ui.methods.addToInfoLog('action', info);
         });
         socket.on("locations", function(locs) {
-            ui.methods.addToLog('locations', locs);
+            ui.methods.addToInfoLog('locations', locs);
         });
 
         socket.on("sight", ui.methods.displaySight);
-        socket.on("speech", obj => console.log("Speech:", `<${obj.from}> ${obj.message}`));
+        socket.on("speech", ui.methods.addToChatLog);
 
         return socket;
     }
