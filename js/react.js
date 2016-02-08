@@ -4,17 +4,44 @@
 
 let OneLineForm = React.createClass({
     statics : {
-        containingElement : document.getElementById('form')
+        containingElement : document.getElementById('form'),
+        classes : {
+            entireRow : "col-xs-12 col-sm-12 col-md-12",
+            inputBox : "col-xs-8 col-sm-8 col-md-8 col-xs-push-1 col-sm-push-1 col-md-push-1",
+            button : "col-xs-2 col-sm-2 col-md-2 col-xs-push-1 col-sm-push-1 col-md-push-1"
+        }
     },
     getInitialState : function() {
         return {
             title : "Untitled",
             description : "This form has not been properly prepared.",
             placeholder : "What you write here will be completely ignored",
-            buttonTitle : "Close"
+            buttonTitle : "Close",
+            submitHandler : function(e) {
+                e.preventDefault();
+                OneLineForm.containingElement.classList.add('hidden');
+            }
         };
     },
-    render : function() {}
+    render : function() {
+        return (
+            <form onSubmit={this.state.submitHandler}>
+                <center className="row">
+                    <h1 className={OneLineForm.classes.entireRow}>{this.state.title}</h1>
+                </center>
+                <center className="row">
+                    <h3 className={OneLineForm.classes.entireRow}>{this.state.description}</h3>
+                </center>
+                <div className="row">
+                    <input className={OneLineForm.classes.inputBox}
+                        type="text"
+                        placeholder={this.state.placeholder} />
+                    <button className={OneLineForm.classes.button}
+                        type="submit">{this.state.buttonTitle}</button>
+                </div>
+            </form>
+        );
+    }
 });
 
 //  Location view
@@ -25,9 +52,11 @@ const directionNames = {
     's' : 'south'
 };
 let Location = React.createClass({
-    classes : {
-        main : "location col-xs-10 col-xs-push-1 col-sm-10 col-sm-push-1 col-md-10 col-md-push-1",
-        surface : "col-xs-6 col-xs-push-3 col-sm-6 col-sm-push-3 col-md-6 col-md-push-3"
+    statics : {
+        classes : {
+            main : "location col-xs-10 col-xs-push-1 col-sm-10 col-sm-push-1 col-md-10 col-md-push-1",
+            surface : "col-xs-6 col-xs-push-3 col-sm-6 col-sm-push-3 col-md-6 col-md-push-3"
+        }
     },
     getInitialState : function() {
         return {
@@ -64,7 +93,7 @@ let Location = React.createClass({
         return (
             <div>
                 <div className="row">
-                    <center className={this.classes.main}>
+                    <center className={Location.classes.main}>
                         <h1>{this.state.name}</h1>
                         <h3>{this.state.description}</h3>
                         <h3>There are exits to the <strong>{exits}</strong> here.</h3>
@@ -76,7 +105,7 @@ let Location = React.createClass({
                     <Surface
                         name={this.state.surface}
                         writings={this.state.writings}
-                        className={this.classes.surface} />
+                        className={Location.classes.surface} />
                 </div>}
             </div>
         );
@@ -250,6 +279,10 @@ let ChatLog = React.createClass({
 });
 
 window.reactViews = {
+    form : ReactDOM.render(
+        <OneLineForm />,
+        OneLineForm.containingElement
+    ),
     location : ReactDOM.render(
         <Location />,
         document.getElementById('location')
