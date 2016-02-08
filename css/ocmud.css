@@ -1,4 +1,6 @@
-/*  direction arrows  */
+.hidden {
+    display: none;
+}
 .location h2, .location h3, .location h4 {
     font-weight: normal;
 }

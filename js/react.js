@@ -1,11 +1,29 @@
+'use strict';
+
+//  Generic form with one text box input
+
+let OneLineForm = React.createClass({
+    statics : {
+        containingElement : document.getElementById('form')
+    },
+    getInitialState : function() {
+        return {
+            title : "Untitled",
+            description : "This form has not been properly prepared.",
+            placeholder : "What you write here will be completely ignored",
+            buttonTitle : "Close"
+        };
+    },
+    render : function() {}
+});
+
 //  Location view
-let directionNames = {
+const directionNames = {
     'n' : 'north',
     'e' : 'east',
     'w' : 'west',
     's' : 'south'
 };
-
 let Location = React.createClass({
     classes : {
         main : "location col-xs-10 col-xs-push-1 col-sm-10 col-sm-push-1 col-md-10 col-md-push-1",
@@ -24,21 +42,24 @@ let Location = React.createClass({
         this.state = this.getInitialState();
         this.forceUpdate();
     },
-    hasExit : function(direction) {
-        return this.state.exits.indexOf(direction) >= 0;
-    },
-    render : function() {
+    renderExits : function() {
         let exits = this.state.exits.map(function(d) {
             return directionNames[d];
         });
+        let result;
 
         if(exits.length === 1) {
-            exits = exits[0];
+            result = exits[0];
         } else if(exits.length === 2) {
-            exits = exits.join(' and ')
+            result = exits.join(' and ');
         } else {
-            exits = `${exits.slice(0, exits.length - 1).join(', ')}, and ${exits[exits.length - 1]}`;
+            result = `${exits.slice(0, exits.length - 1).join(', ')}, and ${exits[exits.length - 1]}`;
         }
+
+        return result;
+    },
+    render : function() {
+        let exits = this.renderExits();
 
         return (
             <div>
@@ -125,8 +146,14 @@ let Log = React.createClass({
         return (
             <center className={this.props.type.toLowerCase() + 'Box'}>
                 <h3>{this.props.type}</h3>
-                <div className="staleMessages">{staleMessages}</div>
-                <div className="freshMessages">{freshMessages}</div>
+                <div className="staleMessages">
+                    <h4>Older messages</h4>
+                    {staleMessages}
+                </div>
+                <div className="freshMessages">
+                    <h4>New messages</h4>
+                    {freshMessages}
+                </div>
             </center>
         );
     }
