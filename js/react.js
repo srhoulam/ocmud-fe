@@ -190,7 +190,7 @@ let OneLineForm = React.createClass({
         );
     }
 });
-
+//'
 //  Location view
 const directionNames = {
     'n' : 'north',

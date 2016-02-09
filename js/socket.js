@@ -42,7 +42,6 @@ var socket = {
             console.log("Disconnected.");
 
             if(app.loggedInAs !== false) {
-                socket.on('ident', onIdent);
                 socket.on('connect', detectDowngrade);
             }
         });

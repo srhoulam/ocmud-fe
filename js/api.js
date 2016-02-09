@@ -57,6 +57,8 @@ function initApi() {
 
             io = null;
 
+            reactViews.location.reset();
+
             return result;
         },
         resend : function resend() {
