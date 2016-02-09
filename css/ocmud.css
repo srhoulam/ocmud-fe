@@ -31,12 +31,15 @@ button {
 .location h2, .location h3, .location h4 {
     font-weight: normal;
 }
+.location {
+    min-height: 10em;
+}
 .writingList {
     list-style-type: none;
     overflow-y: scroll;
     overflow-x: break-word;
-    min-height: 15em;
-    max-height: 15em;
+    min-height: 10em;
+    max-height: 12em;
 }
 .writing {
     display: inline;
@@ -48,6 +51,6 @@ button {
     text-align: left;
     overflow-y: scroll;
     overflow-x: hidden;
-    min-height: 12em;
-    max-height: 12em;
+    min-height: 10em;
+    max-height: 10em;
 }

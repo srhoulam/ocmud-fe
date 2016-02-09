@@ -9,8 +9,9 @@ let classes = {
     authBtn2 : "col-xs-3 col-sm-3 col-md-3 col-xs-push-3 col-sm-push-3 col-md-push-3",
     olfInputBox : "col-xs-8 col-sm-8 col-md-8 col-xs-push-1 col-sm-push-1 col-md-push-1",
     olfButton : "col-xs-2 col-sm-2 col-md-2 col-xs-push-1 col-sm-push-1 col-md-push-1",
-    location : "location col-xs-10 col-xs-push-1 col-sm-10 col-sm-push-1 col-md-10 col-md-push-1",
-    surface : "col-xs-6 col-xs-push-3 col-sm-6 col-sm-push-3 col-md-6 col-md-push-3"
+    location : "location col-xs-6 col-sm-6 col-md-6",
+    locOnly : "location col-xs-10 col-xs-push-1 col-sm-10 col-sm-push-1 col-md-10 col-md-push-1",
+    surface : "col-xs-6 col-sm-6 col-md-6"
 };
 
 //  Authentication form
@@ -64,9 +65,12 @@ let AuthForm = React.createClass({
     },
     authFailure : function() {
         this.setDisabled(false);
-        console.log("Auth failed. Try again.");
+        console.log("Incorrect credentials or occupied username and/or email.");
     },
-    authError : function() {},
+    authError : function() {
+        this.setDisabled(false);
+        console.log("Server error. Please try again after a few minutes.");
+    },
     render : function() {
         return (
             <form onSubmit={this.submit}>
@@ -129,6 +133,7 @@ let AuthForm = React.createClass({
         );
     }
 });
+//'
 let FormElement = React.createClass({
     render : function() {
         return (
@@ -190,7 +195,7 @@ let OneLineForm = React.createClass({
         );
     }
 });
-//'
+
 //  Location view
 const directionNames = {
     'n' : 'north',
@@ -230,24 +235,23 @@ let Location = React.createClass({
     },
     render : function() {
         let exits = this.renderExits();
+        let surfaceExists = this.state.writings && this.state.writings.length > 0;
 
         return (
             <div>
                 <div className="row">
-                    <center className={classes.location}>
+                    <center className={classes[surfaceExists ? 'location' : 'locOnly']}>
                         <h1>{this.state.name}</h1>
                         <h3>{this.state.description}</h3>
                         <h3>There are exits to the <strong>{exits}</strong> here.</h3>
                         {this.state.surface && <h4>There is a {this.state.surface} here.</h4>}
                     </center>
-                </div>
-                {this.state.writings && this.state.writings.length > 0 &&
-                <div className="row">
+                {surfaceExists &&
                     <Surface
                         name={this.state.surface}
                         writings={this.state.writings}
-                        className={classes.surface} />
-                </div>}
+                        className={classes.surface} />}
+                </div>
             </div>
         );
     }
@@ -304,6 +308,21 @@ let Writing = React.createClass({
 
 //  Info & chat view
 let Log = React.createClass({
+    componentWillUpdate : function() {
+        let domNode = ReactDOM.findDOMNode(this);
+        this.shouldScroll = Array.prototype.map.call(domNode.children, function(n, i) {
+            return n.scrollTop + n.offsetHeight === n.scrollHeight;
+        });
+    },
+    componentDidUpdate : function() {
+        let domNode = ReactDOM.findDOMNode(this);
+        this.shouldScroll.forEach(function(shouldUpdate, index) {
+            if(shouldUpdate) {
+                let currNode = domNode.children[index];
+                currNode.scrollTop = currNode.scrollHeight;
+            }
+        });
+    },
     render : function() {
         let self = this;
         let staleMessages = this.props.messages.stale.map(function(m, i) {
