@@ -7,6 +7,7 @@ var auth = {
             xhr.responseType = 'text';
             xhr.open('POST', backendURL + '/auth', true);
             xhr.addEventListener('load', resolve);
+            xhr.addEventListener('error', reject);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify({
                 username : options.username,
@@ -16,8 +17,10 @@ var auth = {
         }).then(function(event) {
             if(event.target.status === 200) {
                 return options.success();
-            } else {
+            } else if(event.target.status === 400) {
                 return options.fail();
+            } else {
+                return options.error();
             }
         }).catch(options.fail);
     }

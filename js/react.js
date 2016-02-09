@@ -1,15 +1,156 @@
 'use strict';
 
-//  Generic form with one text box input
+//  all class attributes to reduce duplication
+let classes = {
+    entireRow : "col-xs-12 col-sm-12 col-md-12",
+    authLabel : "col-xs-2 col-sm-2 col-md-2 col-xs-push-1 col-sm-push-1 col-md-push-1",
+    authInput : "col-xs-6 col-sm-6 col-md-6 col-xs-push-1 col-sm-push-1 col-md-push-1",
+    authBtn1 : "col-xs-3 col-sm-3 col-md-3 col-xs-push-3 col-sm-push-3 col-md-push-3",
+    authBtn2 : "col-xs-3 col-sm-3 col-md-3 col-xs-push-3 col-sm-push-3 col-md-push-3",
+    olfInputBox : "col-xs-8 col-sm-8 col-md-8 col-xs-push-1 col-sm-push-1 col-md-push-1",
+    olfButton : "col-xs-2 col-sm-2 col-md-2 col-xs-push-1 col-sm-push-1 col-md-push-1",
+    location : "location col-xs-10 col-xs-push-1 col-sm-10 col-sm-push-1 col-md-10 col-md-push-1",
+    surface : "col-xs-6 col-xs-push-3 col-sm-6 col-sm-push-3 col-md-6 col-md-push-3"
+};
 
+//  Authentication form
+let AuthForm = React.createClass({
+    statics : {
+        containingElement : document.getElementById('auth')
+    },
+    getInitialState : function() {
+        return {
+            disabled : false
+        };
+    },
+    setDisabled : function(bool) {
+        this.state.disabled = bool;
+    },
+    show : function() {
+        AuthForm.containingElement.classList.remove('hidden');
+    },
+    hide : function() {
+        AuthForm.containingElement.classList.add('hidden');
+    },
+    explore : function exploreHandler() {
+        console.log("Explore mode. Launching socket.");
+
+        return initApi();
+    },
+    submit : function authHandler(e) {
+        e.preventDefault();
+
+        this.setDisabled(true);
+
+        let username = e.target.username.value;
+
+        auth.enticate({
+            'username' : username,
+            password : e.target.password.value,
+            email : e.target.email.value,
+            success : this.authSuccess(username),
+            fail : this.authFailure,
+            error : this.authError
+        });
+    },
+    authSuccess : function(username) {
+        let self = this;
+        return function() {
+            console.log("Auth successful. Launching socket.");
+            self.hide();
+            app.loggedInAs = username;
+            return initApi();
+        };
+    },
+    authFailure : function() {
+        this.setDisabled(false);
+        console.log("Auth failed. Try again.");
+    },
+    authError : function() {},
+    render : function() {
+        return (
+            <form onSubmit={this.submit}>
+                <center className="row">
+                    <h1 className={classes.entireRow}>Register or Log In</h1>
+                </center>
+                <div className="row directions">
+                    <div className={classes.entireRow}>
+                        <h3>
+                            To <strong>log in</strong>, supply your username and password and
+                            click the "log in" button.
+                        </h3>
+                        <h3>
+                            To <strong>register an account</strong>, simply provide an email
+                            with your desired username and password.
+                        </h3>
+                        <h3>
+                            If the username does not exist, and account by that name will be
+                            created for you. If the username is already claimed, you will be
+                            asked to choose another one.
+                        </h3>
+                        <h3>
+                            You also have the option to <strong>explore ocmud</strong>. Explorers
+                            aren't allowed to do all the things that creators (registered users)
+                            are, but are able to travel and see the world others have made.
+                        </h3>
+                    </div>
+                </div>
+                <FormElement labelClass={classes.authLabel}
+                    labelText="Username"
+                    inputClass={classes.authInput}
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    disabled={this.state.disabled} />
+                <FormElement labelClass={classes.authLabel}
+                    labelText="Password"
+                    inputClass={classes.authInput}
+                    type="password"
+                    name="password"
+                    placeholder="Password123!"
+                    disabled={this.state.disabled} />
+                <FormElement labelClass={classes.authLabel}
+                    labelText="Email"
+                    inputClass={classes.authInput}
+                    type="email"
+                    name="email"
+                    placeholder="your@email.address"
+                    disabled={this.state.disabled} />
+                <center className="row">
+                    <button className={classes.authBtn1}
+                        disabled={this.state.disabled}
+                        type="submit">Log in</button>
+                    <button className={classes.authBtn2}
+                        disabled={this.state.disabled}
+                        type="button"
+                        onClick={this.explore}>Explore</button>
+                </center>
+            </form>
+        );
+    }
+});
+let FormElement = React.createClass({
+    render : function() {
+        return (
+            <center className="row">
+                <label>
+                    <span className={this.props.labelClass}>
+                        {this.props.labelText}
+                    </span>
+                    <input className={this.props.inputClass}
+                        disabled={this.props.disabled}
+                        type={this.props.type} name={this.props.name}
+                        placeholder={this.props.placeholder} />
+                </label>
+            </center>
+        );
+    }
+});
+
+//  Generic form with one text box input
 let OneLineForm = React.createClass({
     statics : {
-        containingElement : document.getElementById('form'),
-        classes : {
-            entireRow : "col-xs-12 col-sm-12 col-md-12",
-            inputBox : "col-xs-8 col-sm-8 col-md-8 col-xs-push-1 col-sm-push-1 col-md-push-1",
-            button : "col-xs-2 col-sm-2 col-md-2 col-xs-push-1 col-sm-push-1 col-md-push-1"
-        }
+        containingElement : document.getElementById('form')
     },
     getInitialState : function() {
         return {
@@ -23,20 +164,26 @@ let OneLineForm = React.createClass({
             }
         };
     },
+    show : function() {
+        OneLineForm.containingElement.classList.remove('hidden');
+    },
+    hide : function() {
+        OneLineForm.containingElement.classList.add('hidden');
+    },
     render : function() {
         return (
             <form onSubmit={this.state.submitHandler}>
                 <center className="row">
-                    <h1 className={OneLineForm.classes.entireRow}>{this.state.title}</h1>
+                    <h1 className={classes.entireRow}>{this.state.title}</h1>
                 </center>
                 <center className="row">
-                    <h3 className={OneLineForm.classes.entireRow}>{this.state.description}</h3>
+                    <h3 className={classes.entireRow}>{this.state.description}</h3>
                 </center>
                 <div className="row">
-                    <input className={OneLineForm.classes.inputBox}
+                    <input className={classes.olfInputBox}
                         type="text"
                         placeholder={this.state.placeholder} />
-                    <button className={OneLineForm.classes.button}
+                    <button className={classes.olfButton}
                         type="submit">{this.state.buttonTitle}</button>
                 </div>
             </form>
@@ -52,12 +199,6 @@ const directionNames = {
     's' : 'south'
 };
 let Location = React.createClass({
-    statics : {
-        classes : {
-            main : "location col-xs-10 col-xs-push-1 col-sm-10 col-sm-push-1 col-md-10 col-md-push-1",
-            surface : "col-xs-6 col-xs-push-3 col-sm-6 col-sm-push-3 col-md-6 col-md-push-3"
-        }
-    },
     getInitialState : function() {
         return {
             name : "Limbo",
@@ -93,7 +234,7 @@ let Location = React.createClass({
         return (
             <div>
                 <div className="row">
-                    <center className={Location.classes.main}>
+                    <center className={classes.location}>
                         <h1>{this.state.name}</h1>
                         <h3>{this.state.description}</h3>
                         <h3>There are exits to the <strong>{exits}</strong> here.</h3>
@@ -105,7 +246,7 @@ let Location = React.createClass({
                     <Surface
                         name={this.state.surface}
                         writings={this.state.writings}
-                        className={Location.classes.surface} />
+                        className={classes.surface} />
                 </div>}
             </div>
         );
@@ -283,14 +424,14 @@ window.reactViews = {
         <OneLineForm />,
         OneLineForm.containingElement
     ),
+    authForm : ReactDOM.render(
+        <AuthForm />,
+        AuthForm.containingElement
+    ),
     location : ReactDOM.render(
         <Location />,
         document.getElementById('location')
     ),
-    // surface : ReactDOM.render(
-    //     <Surface />,
-    //     document.getElementById('surface')
-    // ),
     infoLog : ReactDOM.render(
         <InfoLog />,
         document.getElementById('infoLog')

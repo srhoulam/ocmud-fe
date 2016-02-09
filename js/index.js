@@ -5,5 +5,5 @@ var app = {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-    ui.methods.applyHandlers();
+    console.log("DOMContentLoaded");
 });

@@ -1,6 +1,33 @@
 .hidden {
     display: none;
 }
+.modal {
+    display: block;
+    padding: 5% 3%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(255, 255, 255, .80);
+    z-index: 99999;
+    -webkit-transition: opacity 250ms ease-in;
+    -moz-transition: opacity 250ms ease-in;
+    -o-transition: opacity 250ms ease-in;
+    transition: opacity 250ms ease-in;
+}
+.directions {
+    padding-bottom: 4%;
+}
+.row > label {
+    width: 100%;
+}
+label > span {
+    text-align: right;
+}
+button {
+    font-size: 1.5em;
+}
 .location h2, .location h3, .location h4 {
     font-weight: normal;
 }
@@ -8,6 +35,7 @@
     list-style-type: none;
     overflow-y: scroll;
     overflow-x: break-word;
+    min-height: 15em;
     max-height: 15em;
 }
 .writing {
@@ -20,5 +48,6 @@
     text-align: left;
     overflow-y: scroll;
     overflow-x: hidden;
+    min-height: 12em;
     max-height: 12em;
 }
