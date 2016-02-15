@@ -28,6 +28,9 @@ var ui = {
                 //  not a boolean
                 ui.methods.addToInfoLog('travel', info);
             }
+        },
+        init : function uiInit() {
+            reactViews.authForm.show();
         }
     }
 };
