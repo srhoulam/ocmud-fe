@@ -139,16 +139,18 @@ var AuthForm = React.createClass({
                 type: "text",
                 name: "username",
                 placeholder: "Username",
-                disabled: this.state.disabled }),
+                disabled: this.state.disabled,
+                required: "true" }),
             React.createElement(FormElement, { labelClass: classes.authLabel,
                 labelText: "Password",
                 inputClass: classes.authInput,
                 type: "password",
                 name: "password",
                 placeholder: "Password123!",
-                disabled: this.state.disabled }),
+                disabled: this.state.disabled,
+                required: "true" }),
             React.createElement(FormElement, { labelClass: classes.authLabel,
-                labelText: "Email",
+                labelText: "Email*",
                 inputClass: classes.authInput,
                 type: "email",
                 name: "email",
@@ -162,7 +164,7 @@ var AuthForm = React.createClass({
                     { className: classes.authBtn1,
                         disabled: this.state.disabled,
                         type: "submit" },
-                    "Log in"
+                    "Log in / Register"
                 ),
                 React.createElement(
                     "button",
@@ -170,7 +172,16 @@ var AuthForm = React.createClass({
                         disabled: this.state.disabled,
                         type: "button",
                         onClick: this.explore },
-                    "Explore"
+                    "Explore as a guest"
+                )
+            ),
+            React.createElement(
+                "center",
+                { className: "row" },
+                React.createElement(
+                    "span",
+                    { className: classes.entireRow },
+                    "* Required for registration, not required when logging in."
                 )
             )
         );
@@ -195,7 +206,8 @@ var FormElement = React.createClass({
                 React.createElement("input", { className: this.props.inputClass,
                     disabled: this.props.disabled,
                     type: this.props.type, name: this.props.name,
-                    placeholder: this.props.placeholder })
+                    placeholder: this.props.placeholder,
+                    required: this.props.required })
             )
         );
     }

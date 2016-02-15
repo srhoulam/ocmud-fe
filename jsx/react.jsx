@@ -105,16 +105,18 @@ let AuthForm = React.createClass({
                     type="text"
                     name="username"
                     placeholder="Username"
-                    disabled={this.state.disabled} />
+                    disabled={this.state.disabled}
+                    required='true' />
                 <FormElement labelClass={classes.authLabel}
                     labelText="Password"
                     inputClass={classes.authInput}
                     type="password"
                     name="password"
                     placeholder="Password123!"
-                    disabled={this.state.disabled} />
+                    disabled={this.state.disabled}
+                    required='true' />
                 <FormElement labelClass={classes.authLabel}
-                    labelText="Email"
+                    labelText="Email*"
                     inputClass={classes.authInput}
                     type="email"
                     name="email"
@@ -123,11 +125,16 @@ let AuthForm = React.createClass({
                 <center className="row">
                     <button className={classes.authBtn1}
                         disabled={this.state.disabled}
-                        type="submit">Log in</button>
+                        type="submit">Log in / Register</button>
                     <button className={classes.authBtn2}
                         disabled={this.state.disabled}
                         type="button"
-                        onClick={this.explore}>Explore</button>
+                        onClick={this.explore}>Explore as a guest</button>
+                </center>
+                <center className="row">
+                    <span className={classes.entireRow}>
+                        * Required for registration, not required when logging in.
+                    </span>
                 </center>
             </form>
         );
@@ -145,7 +152,8 @@ let FormElement = React.createClass({
                     <input className={this.props.inputClass}
                         disabled={this.props.disabled}
                         type={this.props.type} name={this.props.name}
-                        placeholder={this.props.placeholder} />
+                        placeholder={this.props.placeholder}
+                        required={this.props.required || 'false'} />
                 </label>
             </center>
         );
