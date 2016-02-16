@@ -18,6 +18,9 @@ var ui = {
         ageMessages : function ageMessages() {
             reactViews.infoLog.tick();
         },
+        beginListening : function() {
+            document.addEventListener('keypress', ui.handlers.keyPress);
+        },
         displaySight : function displaySight(sight) {
             reactViews.location.setState(sight);
         },
@@ -31,6 +34,14 @@ var ui = {
         },
         init : function uiInit() {
             reactViews.authForm.show();
+        },
+        stopListening : function() {
+            document.removeEventListener('keypress', ui.handlers.keyPress);
+        }
+    },
+    handlers : {
+        keyPress : function keyCommand(event) {
+            console.log("key pressed");
         }
     }
 };

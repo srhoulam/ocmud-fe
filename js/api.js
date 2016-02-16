@@ -84,4 +84,6 @@ function initApi() {
             });
         }
     };
+
+    ui.methods.beginListening();
 }
