@@ -3,6 +3,7 @@
 //  all class attributes to reduce duplication
 let classes = {
     entireRow : "col-xs-12 col-sm-12 col-md-12",
+    quarterRow : "col-xs-3 col-sm-3 col-md-3",
     authLabel : "col-xs-2 col-sm-2 col-md-2 col-xs-push-1 col-sm-push-1 col-md-push-1",
     authInput : "col-xs-6 col-sm-6 col-md-6 col-xs-push-1 col-sm-push-1 col-md-push-1",
     authBtn1 : "col-xs-3 col-sm-3 col-md-3 col-xs-push-3 col-sm-push-3 col-md-push-3",
@@ -13,6 +14,36 @@ let classes = {
     locOnly : "location col-xs-10 col-xs-push-1 col-sm-10 col-sm-push-1 col-md-10 col-md-push-1",
     surface : "col-xs-6 col-sm-6 col-md-6"
 };
+
+//  Command display
+let CommandDisplay = React.createClass({
+    render : function() {
+        return (
+            <center>
+                <h3>Command Reference</h3>
+                <dl className="row">
+                    <span className={classes.quarterRow}>
+                        <dt>←</dt>
+                        <dd>Travel west</dd>
+                    </span>
+                    <span className={classes.quarterRow}>
+                        <dt>↑</dt>
+                        <dd>Travel north</dd>
+                    </span>
+                    <span className={classes.quarterRow}>
+                        <dt>→</dt>
+                        <dd>Travel east</dd>
+                    </span>
+                    <span className={classes.quarterRow}>
+                        <dt>↓</dt>
+                        <dd>Travel south</dd>
+                    </span>
+                </dl>
+                <div className="row"></div>
+            </center>
+        );
+    }
+});
 
 //  Authentication form
 let AuthForm = React.createClass({
@@ -35,7 +66,8 @@ let AuthForm = React.createClass({
     },
     explore : function exploreHandler() {
         console.log("Explore mode. Launching socket.");
-
+        this.setDisabled(true);
+        this.hide();
         return initApi();
     },
     submit : function authHandler(e) {
@@ -466,5 +498,9 @@ window.reactViews = {
     chatLog : ReactDOM.render(
         <ChatLog />,
         document.getElementById('chatLog')
+    ),
+    commandDisplay : ReactDOM.render(
+        <CommandDisplay />,
+        document.getElementById('commands')
     )
 };

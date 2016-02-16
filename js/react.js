@@ -4,6 +4,7 @@
 
 var classes = {
     entireRow: "col-xs-12 col-sm-12 col-md-12",
+    quarterRow: "col-xs-3 col-sm-3 col-md-3",
     authLabel: "col-xs-2 col-sm-2 col-md-2 col-xs-push-1 col-sm-push-1 col-md-push-1",
     authInput: "col-xs-6 col-sm-6 col-md-6 col-xs-push-1 col-sm-push-1 col-md-push-1",
     authBtn1: "col-xs-3 col-sm-3 col-md-3 col-xs-push-3 col-sm-push-3 col-md-push-3",
@@ -14,6 +15,84 @@ var classes = {
     locOnly: "location col-xs-10 col-xs-push-1 col-sm-10 col-sm-push-1 col-md-10 col-md-push-1",
     surface: "col-xs-6 col-sm-6 col-md-6"
 };
+
+//  Command display
+var CommandDisplay = React.createClass({
+    displayName: "CommandDisplay",
+
+    render: function render() {
+        return React.createElement(
+            "center",
+            null,
+            React.createElement(
+                "h3",
+                null,
+                "Command Reference"
+            ),
+            React.createElement(
+                "dl",
+                { className: "row" },
+                React.createElement(
+                    "span",
+                    { className: classes.quarterRow },
+                    React.createElement(
+                        "dt",
+                        null,
+                        "←"
+                    ),
+                    React.createElement(
+                        "dd",
+                        null,
+                        "Travel west"
+                    )
+                ),
+                React.createElement(
+                    "span",
+                    { className: classes.quarterRow },
+                    React.createElement(
+                        "dt",
+                        null,
+                        "↑"
+                    ),
+                    React.createElement(
+                        "dd",
+                        null,
+                        "Travel north"
+                    )
+                ),
+                React.createElement(
+                    "span",
+                    { className: classes.quarterRow },
+                    React.createElement(
+                        "dt",
+                        null,
+                        "→"
+                    ),
+                    React.createElement(
+                        "dd",
+                        null,
+                        "Travel east"
+                    )
+                ),
+                React.createElement(
+                    "span",
+                    { className: classes.quarterRow },
+                    React.createElement(
+                        "dt",
+                        null,
+                        "↓"
+                    ),
+                    React.createElement(
+                        "dd",
+                        null,
+                        "Travel south"
+                    )
+                )
+            ),
+            React.createElement("div", { className: "row" })
+        );
+    }
+});
 
 //  Authentication form
 var AuthForm = React.createClass({
@@ -38,7 +117,8 @@ var AuthForm = React.createClass({
     },
     explore: function exploreHandler() {
         console.log("Explore mode. Launching socket.");
-
+        this.setDisabled(true);
+        this.hide();
         return initApi();
     },
     submit: function authHandler(e) {
@@ -207,7 +287,7 @@ var FormElement = React.createClass({
                     disabled: this.props.disabled,
                     type: this.props.type, name: this.props.name,
                     placeholder: this.props.placeholder,
-                    required: this.props.required })
+                    required: this.props.required || 'false' })
             )
         );
     }
@@ -592,6 +672,7 @@ window.reactViews = {
     authForm: ReactDOM.render(React.createElement(AuthForm, null), AuthForm.containingElement),
     location: ReactDOM.render(React.createElement(Location, null), document.getElementById('location')),
     infoLog: ReactDOM.render(React.createElement(InfoLog, null), document.getElementById('infoLog')),
-    chatLog: ReactDOM.render(React.createElement(ChatLog, null), document.getElementById('chatLog'))
+    chatLog: ReactDOM.render(React.createElement(ChatLog, null), document.getElementById('chatLog')),
+    commandDisplay: ReactDOM.render(React.createElement(CommandDisplay, null), document.getElementById('commands'))
 };
 //# sourceMappingURL=react.js.map
