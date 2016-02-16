@@ -31,65 +31,188 @@ var CommandDisplay = React.createClass({
             ),
             React.createElement(
                 "dl",
-                { className: "row" },
+                null,
                 React.createElement(
-                    "span",
-                    { className: classes.quarterRow },
+                    "div",
+                    { className: "row" },
                     React.createElement(
-                        "dt",
-                        null,
-                        "←"
+                        "span",
+                        { className: classes.quarterRow },
+                        React.createElement(
+                            "dt",
+                            null,
+                            "←"
+                        ),
+                        React.createElement(
+                            "dd",
+                            null,
+                            "Travel west"
+                        )
                     ),
                     React.createElement(
-                        "dd",
-                        null,
-                        "Travel west"
+                        "span",
+                        { className: classes.quarterRow },
+                        React.createElement(
+                            "dt",
+                            null,
+                            "↑"
+                        ),
+                        React.createElement(
+                            "dd",
+                            null,
+                            "Travel north"
+                        )
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: classes.quarterRow },
+                        React.createElement(
+                            "dt",
+                            null,
+                            "→"
+                        ),
+                        React.createElement(
+                            "dd",
+                            null,
+                            "Travel east"
+                        )
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: classes.quarterRow },
+                        React.createElement(
+                            "dt",
+                            null,
+                            "↓"
+                        ),
+                        React.createElement(
+                            "dd",
+                            null,
+                            "Travel south"
+                        )
                     )
                 ),
                 React.createElement(
-                    "span",
-                    { className: classes.quarterRow },
+                    "div",
+                    { className: "row" },
                     React.createElement(
-                        "dt",
-                        null,
-                        "↑"
+                        "span",
+                        { className: classes.quarterRow },
+                        React.createElement(
+                            "dt",
+                            null,
+                            "W"
+                        ),
+                        React.createElement(
+                            "dd",
+                            null,
+                            "Write"
+                        )
                     ),
                     React.createElement(
-                        "dd",
-                        null,
-                        "Travel north"
+                        "span",
+                        { className: classes.quarterRow },
+                        React.createElement(
+                            "dt",
+                            null,
+                            "S"
+                        ),
+                        React.createElement(
+                            "dd",
+                            null,
+                            "Speak"
+                        )
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: classes.quarterRow },
+                        React.createElement(
+                            "dt",
+                            null,
+                            "J"
+                        ),
+                        React.createElement(
+                            "dd",
+                            null,
+                            "Jump"
+                        )
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: classes.quarterRow },
+                        React.createElement(
+                            "dt",
+                            null,
+                            "L"
+                        ),
+                        React.createElement(
+                            "dd",
+                            null,
+                            "List your locations"
+                        )
                     )
                 ),
                 React.createElement(
-                    "span",
-                    { className: classes.quarterRow },
+                    "div",
+                    { className: "row" },
                     React.createElement(
-                        "dt",
-                        null,
-                        "→"
+                        "span",
+                        { className: classes.quarterRow },
+                        React.createElement(
+                            "dt",
+                            null,
+                            "M"
+                        ),
+                        React.createElement(
+                            "dd",
+                            null,
+                            "Create new location"
+                        )
                     ),
                     React.createElement(
-                        "dd",
-                        null,
-                        "Travel east"
-                    )
-                ),
-                React.createElement(
-                    "span",
-                    { className: classes.quarterRow },
-                    React.createElement(
-                        "dt",
-                        null,
-                        "↓"
+                        "span",
+                        { className: classes.quarterRow },
+                        React.createElement(
+                            "dt",
+                            null,
+                            "C"
+                        ),
+                        React.createElement(
+                            "dd",
+                            null,
+                            "Connect location"
+                        )
                     ),
                     React.createElement(
-                        "dd",
-                        null,
-                        "Travel south"
+                        "span",
+                        { className: classes.quarterRow },
+                        React.createElement(
+                            "dt",
+                            null,
+                            "V"
+                        ),
+                        React.createElement(
+                            "dd",
+                            null,
+                            "Look around (refresh)"
+                        )
+                    ),
+                    React.createElement(
+                        "span",
+                        { className: classes.quarterRow },
+                        React.createElement(
+                            "dt",
+                            null,
+                            "Q"
+                        ),
+                        React.createElement(
+                            "dd",
+                            null,
+                            "Quit"
+                        )
                     )
                 )
-            ),
-            React.createElement("div", { className: "row" })
+            )
         );
     }
 });

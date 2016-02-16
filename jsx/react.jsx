@@ -21,25 +21,62 @@ let CommandDisplay = React.createClass({
         return (
             <center>
                 <h3>Command Reference</h3>
-                <dl className="row">
-                    <span className={classes.quarterRow}>
-                        <dt>←</dt>
-                        <dd>Travel west</dd>
-                    </span>
-                    <span className={classes.quarterRow}>
-                        <dt>↑</dt>
-                        <dd>Travel north</dd>
-                    </span>
-                    <span className={classes.quarterRow}>
-                        <dt>→</dt>
-                        <dd>Travel east</dd>
-                    </span>
-                    <span className={classes.quarterRow}>
-                        <dt>↓</dt>
-                        <dd>Travel south</dd>
-                    </span>
+                <dl>
+                    <div className="row">
+                        <span className={classes.quarterRow}>
+                            <dt>←</dt>
+                            <dd>Travel west</dd>
+                        </span>
+                        <span className={classes.quarterRow}>
+                            <dt>↑</dt>
+                            <dd>Travel north</dd>
+                        </span>
+                        <span className={classes.quarterRow}>
+                            <dt>→</dt>
+                            <dd>Travel east</dd>
+                        </span>
+                        <span className={classes.quarterRow}>
+                            <dt>↓</dt>
+                            <dd>Travel south</dd>
+                        </span>
+                    </div>
+                    <div className="row">
+                        <span className={classes.quarterRow}>
+                            <dt>W</dt>
+                            <dd>Write</dd>
+                        </span>
+                        <span className={classes.quarterRow}>
+                            <dt>S</dt>
+                            <dd>Speak</dd>
+                        </span>
+                        <span className={classes.quarterRow}>
+                            <dt>J</dt>
+                            <dd>Jump</dd>
+                        </span>
+                        <span className={classes.quarterRow}>
+                            <dt>L</dt>
+                            <dd>List your locations</dd>
+                        </span>
+                    </div>
+                    <div className="row">
+                        <span className={classes.quarterRow}>
+                            <dt>M</dt>
+                            <dd>Create new location</dd>
+                        </span>
+                        <span className={classes.quarterRow}>
+                            <dt>C</dt>
+                            <dd>Connect location</dd>
+                        </span>
+                        <span className={classes.quarterRow}>
+                            <dt>V</dt>
+                            <dd>Look around (refresh)</dd>
+                        </span>
+                        <span className={classes.quarterRow}>
+                            <dt>Q</dt>
+                            <dd>Quit</dd>
+                        </span>
+                    </div>
                 </dl>
-                <div className="row"></div>
             </center>
         );
     }
