@@ -16,9 +16,6 @@
     -o-transition: opacity 250ms ease-in;
     transition: opacity 250ms ease-in;
 }
-.directions {
-    padding-bottom: 4%;
-}
 .row > label {
     width: 100%;
 }
@@ -33,6 +30,9 @@ button {
 }
 .location {
     min-height: 10em;
+}
+#commands dt {
+    font-size: 1.5em;
 }
 .writingList {
     list-style-type: none;
