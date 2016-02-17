@@ -10,6 +10,7 @@ var ui = (function() {
             submitHandler : function submitSay(e) {
                 e.preventDefault();
                 reactViews.form.hide();
+                reactViews.form.setState(reactViews.form.getInitialState());
                 ui.methods.beginListening();
             }
         },
@@ -21,6 +22,7 @@ var ui = (function() {
             submitHandler : function submitWrite(e) {
                 e.preventDefault();
                 reactViews.form.hide();
+                reactViews.form.setState(reactViews.form.getInitialState());
                 ui.methods.beginListening();
             }
         }
