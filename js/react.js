@@ -424,6 +424,8 @@ var OneLineForm = React.createClass({
         containingElement: document.getElementById('form')
     },
     getInitialState: function getInitialState() {
+        var self = this;
+
         return {
             title: "Untitled",
             description: "This form has not been properly prepared.",
@@ -431,7 +433,7 @@ var OneLineForm = React.createClass({
             buttonTitle: "Close",
             submitHandler: function submitHandler(e) {
                 e.preventDefault();
-                OneLineForm.containingElement.classList.add('hidden');
+                self.hide();
             }
         };
     },
