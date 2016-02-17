@@ -229,10 +229,18 @@ let FormElement = React.createClass({
     }
 });
 
+//  Option form
+let OptionForm = React.createClass({
+    statics : {
+        containingElement : document.getElementById('option-form')
+    },
+    render : function() {}
+});
+
 //  Generic form with one text box input
 let OneLineForm = React.createClass({
     statics : {
-        containingElement : document.getElementById('form')
+        containingElement : document.getElementById('line-form')
     },
     getInitialState : function() {
         let self = this;
