@@ -235,7 +235,37 @@ let OptionForm = React.createClass({
     statics : {
         containingElement : document.getElementById('option-form')
     },
-    render : function() {}
+    render : function() {
+        return;
+    }
+});
+let OptionElement = React.createClass({
+    statics : {
+        changeHandler : function(e) {
+            Array.prototype.forEach.call(
+                e.target.parentNode.parentNode.children,
+                function(sibling) {
+                    sibling.classList.remove('chosen');
+                }
+            );
+            e.target.parentNode.classList.add('chosen');
+        }
+    },
+    render : function() {
+        return (
+            <label>
+                <span className={this.props.labelClass}>
+                    {this.props.labelText}
+                </span>
+                <input className='hidden'
+                    disabled={this.props.disabled}
+                    type='radio' name={this.props.name}
+                    required='true'
+                    onChange={OptionElement.changeHandler}
+                    value={this.props.value} />
+            </label>
+        );
+    }
 });
 
 //  Generic form with one text box input

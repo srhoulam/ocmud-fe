@@ -16,6 +16,10 @@
     -o-transition: opacity 250ms ease-in;
     transition: opacity 250ms ease-in;
 }
+.chosen {
+    background-color: orange;
+    border: thin solid black;
+}
 .row > label {
     width: 100%;
 }

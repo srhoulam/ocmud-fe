@@ -424,7 +424,29 @@ var OptionForm = React.createClass({
     statics: {
         containingElement: document.getElementById('option-form')
     },
-    render: function render() {}
+    render: function render() {
+        return;
+    }
+});
+var OptionElement = React.createClass({
+    displayName: "OptionElement",
+
+    render: function render() {
+        return React.createElement(
+            "label",
+            null,
+            React.createElement(
+                "span",
+                { className: this.props.labelClass },
+                this.props.labelText
+            ),
+            React.createElement("input", { className: this.props.inputClass,
+                disabled: this.props.disabled,
+                type: this.props.type, name: this.props.name,
+                placeholder: this.props.placeholder,
+                required: this.props.required || 'false' })
+        );
+    }
 });
 
 //  Generic form with one text box input
