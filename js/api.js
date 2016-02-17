@@ -58,6 +58,8 @@ function initApi() {
             io = null;
 
             reactViews.location.reset();
+            reactViews.authForm.setDisabled(false);
+            reactViews.authForm.show();
 
             return result;
         },
