@@ -50,6 +50,9 @@ var ui = {
                 case 'arrowdown':
                     console.log('travel');
                     break;
+                case 'escape':
+                    console.log('escape');
+                    break;
                 case 'c':
                     break;
                 case 'j':
@@ -59,7 +62,7 @@ var ui = {
                 case 'm':
                     break;
                 case 'q':
-                    api.quit();
+                    ui.commands.quit();
                     break;
                 case 's':
                     break;
@@ -80,6 +83,14 @@ var ui = {
         jump : function jumo() {},
         list : function list() {},
         look : function look() {},
+        quit : function quit() {
+            reactViews.location.reset();
+            reactViews.authForm.setDisabled(false);
+            reactViews.authForm.show();
+            ui.methods.stopListening();
+
+            return api.quit();
+        },
         say : function say() {},
         write : function write() {}
     }
