@@ -235,8 +235,78 @@ let OptionForm = React.createClass({
     statics : {
         containingElement : document.getElementById('option-form')
     },
+    getInitialState : function() {
+        let self = this;
+
+        return {
+            title : "Election",
+            description : "Vote for your next president.",
+            name : 'president',
+            buttonTitle : "Vote",
+            options : [{
+                name : "Josef Stalin",
+                value : "stalin"
+            }],
+            submitHandler : function(e) {
+                e.preventDefault();
+                self.hide();
+            }
+        };
+    },
+    show : function() {
+        OptionForm.containingElement.classList.remove('hidden');
+    },
+    hide : function() {
+        OptionForm.containingElement.classList.add('hidden');
+    },
     render : function() {
-        return;
+        let total = this.state.options.length;
+        let perRow = 4;
+        let numRows = 1;
+        let rows = [];
+
+        if(total > 4) {
+            perRow = 6;
+            numRows = Math.ceil(total / perRow);
+        }
+
+        for(let row = 0; row < numRows; row++) {
+            let currRow = [];
+            for(let option = 0; option < perRow && row*perRow + option < total; option++) {
+                let index = row*perRow + option;
+                let currOption = this.state.options[index];
+
+                currRow.push(
+                    <OptionElement key={index}
+                        labelText={currOption.name}
+                        labelClass={perRow === 6 ? classes.sixthRow : classes.quarterRow}
+                        name={this.state.name}
+                        value={currOption.value} />
+                );
+            }
+
+            rows.push(
+                <center key={row} className="row">
+                    {currRow}
+                </center>
+            );
+        }
+
+        return (
+            <form onSubmit={this.state.submitHandler}>
+                <center className="row">
+                    <h1 className={classes.entireRow}>{this.state.title}</h1>
+                </center>
+                <center className="row">
+                    <h3 className={classes.entireRow}>{this.state.description}</h3>
+                </center>
+                {rows}
+                <center className="row">
+                    <button className={classes.optButton}
+                        type="submit">{this.state.buttonTitle}</button>
+                </center>
+            </form>
+        );
     }
 });
 let OptionElement = React.createClass({
@@ -253,12 +323,11 @@ let OptionElement = React.createClass({
     },
     render : function() {
         return (
-            <label>
-                <span className={this.props.labelClass}>
+            <label className={`${this.props.labelClass} option`}>
+                <span>
                     {this.props.labelText}
                 </span>
                 <input className='hidden'
-                    disabled={this.props.disabled}
                     type='radio' name={this.props.name}
                     required='true'
                     onChange={OptionElement.changeHandler}
@@ -492,7 +561,7 @@ let InfoLog = React.createClass({
         let length = this.state.messages.fresh.length;
 
         if(length > 0) {
-            for(var count = 0; count < length; count++) {
+            for(let count = 0; count < length; count++) {
                 let currMsg = this.state.messages.fresh.shift();
                 this.state.messages.stale.push(currMsg);
             }
@@ -537,7 +606,7 @@ let ChatLog = React.createClass({
         let length = this.state.messages.fresh.length;
 
         if(length > 0) {
-            for(var count = 0; count < length; count++) {
+            for(let count = 0; count < length; count++) {
                 let currMsg = this.state.messages.fresh.shift();
                 this.state.messages.stale.push(currMsg);
             }
@@ -564,6 +633,10 @@ window.reactViews = {
     authForm : ReactDOM.render(
         <AuthForm />,
         AuthForm.containingElement
+    ),
+    optionForm : ReactDOM.render(
+        <OptionForm />,
+        OptionForm.containingElement
     ),
     location : ReactDOM.render(
         <Location />,
