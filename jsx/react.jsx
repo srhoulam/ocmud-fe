@@ -2,17 +2,18 @@
 
 //  all class attributes to reduce duplication
 let classes = {
-    entireRow : "col-xs-12 col-sm-12 col-md-12",
-    quarterRow : "col-xs-3 col-sm-3 col-md-3",
-    authLabel : "col-xs-2 col-sm-2 col-md-2 col-xs-push-1 col-sm-push-1 col-md-push-1",
-    authInput : "col-xs-6 col-sm-6 col-md-6 col-xs-push-1 col-sm-push-1 col-md-push-1",
-    authBtn1 : "col-xs-3 col-sm-3 col-md-3 col-xs-push-3 col-sm-push-3 col-md-push-3",
-    authBtn2 : "col-xs-3 col-sm-3 col-md-3 col-xs-push-3 col-sm-push-3 col-md-push-3",
-    olfInputBox : "col-xs-8 col-sm-8 col-md-8 col-xs-push-1 col-sm-push-1 col-md-push-1",
-    olfButton : "col-xs-2 col-sm-2 col-md-2 col-xs-push-1 col-sm-push-1 col-md-push-1",
-    location : "location col-xs-6 col-sm-6 col-md-6",
-    locOnly : "location col-xs-10 col-xs-push-1 col-sm-10 col-sm-push-1 col-md-10 col-md-push-1",
-    surface : "col-xs-6 col-sm-6 col-md-6"
+    entireRow : "col-xs-12 col-sm-12 col-md-12 col-lg-12",
+    quarterRow : "col-xs-3 col-sm-3 col-md-3 col-lg-3",
+    sixthRow : "col-xs-2 col-sm-2 col-md-2 col-lg-2",
+    authLabel : "col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xs-push-1 col-sm-push-1 col-md-push-1 col-lg-push-1",
+    authInput : "col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-push-1 col-sm-push-1 col-md-push-1 col-lg-push-1",
+    authBtn1 : "col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-push-3 col-sm-push-3 col-md-push-3 col-lg-push-3",
+    authBtn2 : "col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-push-3 col-sm-push-3 col-md-push-3 col-lg-push-3",
+    olfInputBox : "col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-push-1 col-sm-push-1 col-md-push-1 col-lg-push-1",
+    olfButton : "col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xs-push-1 col-sm-push-1 col-md-push-1 col-lg-push-1",
+    location : "location col-xs-6 col-sm-6 col-md-6 col-lg-6",
+    locOnly : "location col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xs-push-1 col-sm-push-1 col-md-push-1 col-lg-push-1",
+    surface : "col-xs-6 col-sm-6 col-md-6 col-lg-6"
 };
 
 //  Command display
