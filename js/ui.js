@@ -41,7 +41,46 @@ var ui = {
     },
     handlers : {
         keyPress : function keyCommand(event) {
-            console.log("key pressed");
+            var keyPressed = event.key || event.keyCode;
+
+            switch(keyPressed.toLowerCase()) {
+                case 'arrowleft':
+                case 'arrowright':
+                case 'arrowup':
+                case 'arrowdown':
+                    console.log('travel');
+                    break;
+                case 'c':
+                    break;
+                case 'j':
+                    break;
+                case 'l':
+                    break;
+                case 'm':
+                    break;
+                case 'q':
+                    api.quit();
+                    break;
+                case 's':
+                    break;
+                case 'v':
+                    break;
+                case 'w':
+                    console.log('write');
+                    break;
+                default:
+                    console.log("something else");
+                    break;
+            }
         }
+    },
+    commands : {
+        connect : function connect() {},
+        create : function create() {},
+        jump : function jumo() {},
+        list : function list() {},
+        look : function look() {},
+        say : function say() {},
+        write : function write() {}
     }
 };
