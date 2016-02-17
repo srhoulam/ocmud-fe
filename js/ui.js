@@ -84,6 +84,7 @@ var ui = (function() {
                     case 'j':
                         break;
                     case 'l':
+                        api.look();
                         break;
                     case 'm':
                         break;
@@ -92,8 +93,6 @@ var ui = (function() {
                         break;
                     case 's':
                         ui.commands.say();
-                        break;
-                    case 'v':
                         break;
                     case 'w':
                         ui.commands.write();
@@ -108,8 +107,6 @@ var ui = (function() {
             connect : function connect() {},
             create : function create() {},
             jump : function jumo() {},
-            list : function list() {},
-            look : function look() {},
             quit : function quit() {
                 ui.methods.stopListening();
                 reactViews.location.reset();
