@@ -17,9 +17,9 @@ var classes = {
     surface: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
 };
 
-//  Command display
-var CommandDisplay = React.createClass({
-    displayName: "CommandDisplay",
+//  Command legend
+var CommandLegend = React.createClass({
+    displayName: "CommandLegend",
 
     render: function render() {
         return React.createElement(
@@ -926,6 +926,6 @@ window.reactViews = {
     location: ReactDOM.render(React.createElement(Location, null), document.getElementById('location')),
     infoLog: ReactDOM.render(React.createElement(InfoLog, null), document.getElementById('infoLog')),
     chatLog: ReactDOM.render(React.createElement(ChatLog, null), document.getElementById('chatLog')),
-    commandDisplay: ReactDOM.render(React.createElement(CommandDisplay, null), document.getElementById('commands'))
+    commandLegend: ReactDOM.render(React.createElement(CommandLegend, null), document.getElementById('commands'))
 };
 //# sourceMappingURL=react.js.map

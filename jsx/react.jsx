@@ -16,8 +16,8 @@ let classes = {
     surface : "col-xs-6 col-sm-6 col-md-6 col-lg-6"
 };
 
-//  Command display
-let CommandDisplay = React.createClass({
+//  Command legend
+let CommandLegend = React.createClass({
     render : function() {
         return (
             <center>
@@ -650,8 +650,8 @@ window.reactViews = {
         <ChatLog />,
         document.getElementById('chatLog')
     ),
-    commandDisplay : ReactDOM.render(
-        <CommandDisplay />,
+    commandLegend : ReactDOM.render(
+        <CommandLegend />,
         document.getElementById('commands')
     )
 };
