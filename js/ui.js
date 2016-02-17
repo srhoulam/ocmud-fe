@@ -2,6 +2,17 @@
 
 var ui = (function() {
     var formStates = {
+        say : {
+            title : "Say what?",
+            description : "Enter what you want to say below.",
+            placeholder : "I couldn't think of anything to say.",
+            buttonTitle : "Say",
+            submitHandler : function submitSay(e) {
+                e.preventDefault();
+                reactViews.form.hide();
+                ui.methods.beginListening();
+            }
+        },
         write : {
             title : "Write what?",
             description : "Enter what you want to write below.",
@@ -10,6 +21,7 @@ var ui = (function() {
             submitHandler : function submitWrite(e) {
                 e.preventDefault();
                 reactViews.form.hide();
+                ui.methods.beginListening();
             }
         }
     };
@@ -79,6 +91,7 @@ var ui = (function() {
                         ui.commands.quit();
                         break;
                     case 's':
+                        ui.commands.say();
                         break;
                     case 'v':
                         break;
@@ -98,15 +111,20 @@ var ui = (function() {
             list : function list() {},
             look : function look() {},
             quit : function quit() {
+                ui.methods.stopListening();
                 reactViews.location.reset();
                 reactViews.authForm.setDisabled(false);
                 reactViews.authForm.show();
-                ui.methods.stopListening();
 
                 return api.quit();
             },
-            say : function say() {},
+            say : function say() {
+                ui.methods.stopListening();
+                reactViews.form.setState(formStates.say);
+                reactViews.form.show();
+            },
             write : function write() {
+                ui.methods.stopListening();
                 reactViews.form.setState(formStates.write);
                 reactViews.form.show();
             }
