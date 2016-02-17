@@ -33,22 +33,22 @@ var ui = (function() {
         },
         methods : {
             addToChatLog : function addToChat(message) {
-                reactViews.chatLog.add(message);
+                return reactViews.chatLog.add(message);
             },
             addToInfoLog : function addToLog(type, info) {
-                reactViews.infoLog.add({
+                return reactViews.infoLog.add({
                     'type' : type,
                     message : info
                 });
             },
             ageMessages : function ageMessages() {
-                reactViews.infoLog.tick();
+                return reactViews.infoLog.tick();
             },
             beginListening : function() {
-                document.addEventListener('keypress', ui.handlers.keyPress);
+                return document.addEventListener('keypress', ui.handlers.keyPress);
             },
             displaySight : function displaySight(sight) {
-                reactViews.location.setState(sight);
+                return reactViews.location.setState(sight);
             },
             handleTravel : function handleTravel(info) {
                 if(info === true) {
@@ -59,10 +59,10 @@ var ui = (function() {
                 }
             },
             init : function uiInit() {
-                reactViews.authForm.show();
+                return reactViews.authForm.show();
             },
             stopListening : function() {
-                document.removeEventListener('keypress', ui.handlers.keyPress);
+                return document.removeEventListener('keypress', ui.handlers.keyPress);
             }
         },
         handlers : {
@@ -121,12 +121,12 @@ var ui = (function() {
             say : function say() {
                 ui.methods.stopListening();
                 reactViews.form.setState(formStates.say);
-                reactViews.form.show();
+                return reactViews.form.show();
             },
             write : function write() {
                 ui.methods.stopListening();
                 reactViews.form.setState(formStates.write);
-                reactViews.form.show();
+                return reactViews.form.show();
             }
         }
     };
