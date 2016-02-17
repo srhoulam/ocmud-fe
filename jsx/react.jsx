@@ -56,10 +56,14 @@ let CommandDisplay = React.createClass({
                         </span>
                         <span className={classes.quarterRow}>
                             <dt>L</dt>
-                            <dd>List your locations</dd>
+                            <dd>Look around (refresh)</dd>
                         </span>
                     </div>
                     <div className="row">
+                        <span className={classes.quarterRow}>
+                            <dt>Esc</dt>
+                            <dd>Special command menu</dd>
+                        </span>
                         <span className={classes.quarterRow}>
                             <dt>M</dt>
                             <dd>Create new location</dd>
@@ -67,10 +71,6 @@ let CommandDisplay = React.createClass({
                         <span className={classes.quarterRow}>
                             <dt>C</dt>
                             <dd>Connect location</dd>
-                        </span>
-                        <span className={classes.quarterRow}>
-                            <dt>V</dt>
-                            <dd>Look around (refresh)</dd>
                         </span>
                         <span className={classes.quarterRow}>
                             <dt>Q</dt>

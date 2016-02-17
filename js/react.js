@@ -149,13 +149,27 @@ var CommandDisplay = React.createClass({
                         React.createElement(
                             "dd",
                             null,
-                            "List your locations"
+                            "Look around (refresh)"
                         )
                     )
                 ),
                 React.createElement(
                     "div",
                     { className: "row" },
+                    React.createElement(
+                        "span",
+                        { className: classes.quarterRow },
+                        React.createElement(
+                            "dt",
+                            null,
+                            "Esc"
+                        ),
+                        React.createElement(
+                            "dd",
+                            null,
+                            "Special command menu"
+                        )
+                    ),
                     React.createElement(
                         "span",
                         { className: classes.quarterRow },
@@ -182,20 +196,6 @@ var CommandDisplay = React.createClass({
                             "dd",
                             null,
                             "Connect location"
-                        )
-                    ),
-                    React.createElement(
-                        "span",
-                        { className: classes.quarterRow },
-                        React.createElement(
-                            "dt",
-                            null,
-                            "V"
-                        ),
-                        React.createElement(
-                            "dd",
-                            null,
-                            "Look around (refresh)"
                         )
                     ),
                     React.createElement(
