@@ -424,27 +424,121 @@ var OptionForm = React.createClass({
     statics: {
         containingElement: document.getElementById('option-form')
     },
+    getInitialState: function getInitialState() {
+        var self = this;
+
+        return {
+            title: "Election",
+            description: "Vote for your next president.",
+            name: 'president',
+            buttonTitle: "Vote",
+            options: [{
+                name: "Josef Stalin",
+                value: "stalin"
+            }],
+            submitHandler: function submitHandler(e) {
+                e.preventDefault();
+                self.hide();
+            }
+        };
+    },
+    show: function show() {
+        OptionForm.containingElement.classList.remove('hidden');
+    },
+    hide: function hide() {
+        OptionForm.containingElement.classList.add('hidden');
+    },
     render: function render() {
-        return;
+        var total = this.state.options.length;
+        var perRow = 4;
+        var numRows = 1;
+        var rows = [];
+
+        if (total > 4) {
+            perRow = 6;
+            numRows = Math.ceil(total / perRow);
+        }
+
+        for (var row = 0; row < numRows; row++) {
+            var currRow = [];
+            for (var option = 0; option < perRow && row * perRow + option < total; option++) {
+                var index = row * perRow + option;
+                var currOption = this.state.options[index];
+
+                currRow.push(React.createElement(OptionElement, { key: index,
+                    labelText: currOption.name,
+                    labelClass: perRow === 6 ? classes.sixthRow : classes.quarterRow,
+                    name: this.state.name,
+                    value: currOption.value }));
+            }
+
+            rows.push(React.createElement(
+                "center",
+                { key: row, className: "row" },
+                currRow
+            ));
+        }
+
+        return React.createElement(
+            "form",
+            { onSubmit: this.state.submitHandler },
+            React.createElement(
+                "center",
+                { className: "row" },
+                React.createElement(
+                    "h1",
+                    { className: classes.entireRow },
+                    this.state.title
+                )
+            ),
+            React.createElement(
+                "center",
+                { className: "row" },
+                React.createElement(
+                    "h3",
+                    { className: classes.entireRow },
+                    this.state.description
+                )
+            ),
+            rows,
+            React.createElement(
+                "center",
+                { className: "row" },
+                React.createElement(
+                    "button",
+                    { className: classes.optButton,
+                        type: "submit" },
+                    this.state.buttonTitle
+                )
+            )
+        );
     }
 });
 var OptionElement = React.createClass({
     displayName: "OptionElement",
 
+    statics: {
+        changeHandler: function changeHandler(e) {
+            Array.prototype.forEach.call(e.target.parentNode.parentNode.children, function (sibling) {
+                sibling.classList.remove('chosen');
+            });
+            e.target.parentNode.classList.add('chosen');
+        }
+    },
     render: function render() {
         return React.createElement(
             "label",
-            null,
+            { className: this.props.labelClass + " option" },
             React.createElement(
                 "span",
-                { className: this.props.labelClass },
+                null,
                 this.props.labelText
             ),
-            React.createElement("input", { className: this.props.inputClass,
-                disabled: this.props.disabled,
-                type: this.props.type, name: this.props.name,
-                placeholder: this.props.placeholder,
-                required: this.props.required || 'false' })
+            React.createElement("input", { className: "hidden",
+                type: "radio", name: this.props.name,
+                required: "true",
+                onChange: OptionElement.changeHandler,
+                value: this.props.value })
         );
     }
 });
@@ -828,6 +922,7 @@ var ChatLog = React.createClass({
 window.reactViews = {
     form: ReactDOM.render(React.createElement(OneLineForm, null), OneLineForm.containingElement),
     authForm: ReactDOM.render(React.createElement(AuthForm, null), AuthForm.containingElement),
+    optionForm: ReactDOM.render(React.createElement(OptionForm, null), OptionForm.containingElement),
     location: ReactDOM.render(React.createElement(Location, null), document.getElementById('location')),
     infoLog: ReactDOM.render(React.createElement(InfoLog, null), document.getElementById('infoLog')),
     chatLog: ReactDOM.render(React.createElement(ChatLog, null), document.getElementById('chatLog')),
