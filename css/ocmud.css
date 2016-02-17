@@ -16,11 +16,14 @@
     -o-transition: opacity 250ms ease-in;
     transition: opacity 250ms ease-in;
 }
+.option {
+    font-size: 2em;
+}
 .chosen {
     background-color: orange;
     border: thin solid black;
 }
-.row > label {
+#auth .row > label {
     width: 100%;
 }
 label > span {
