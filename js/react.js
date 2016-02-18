@@ -227,11 +227,19 @@ var AuthForm = React.createClass({
     },
     getInitialState: function getInitialState() {
         return {
-            disabled: false
+            disabled: false,
+            error: null
         };
     },
     setDisabled: function setDisabled(bool) {
-        this.state.disabled = bool;
+        var state = this.state;
+        state.disabled = bool;
+        this.setState(state);
+    },
+    setError: function setError(err) {
+        var state = this.state;
+        state.error = err;
+        this.setState(state);
     },
     show: function show() {
         AuthForm.containingElement.classList.remove('hidden');
@@ -272,11 +280,19 @@ var AuthForm = React.createClass({
     },
     authFailure: function authFailure() {
         this.setDisabled(false);
-        console.log("Incorrect credentials or occupied username and/or email.");
+        this.setError({
+            type: "auth-fail",
+            title: "Authentication Failure",
+            message: "Your account credentials are incorrect or there is already an account with that username or email."
+        });
     },
     authError: function authError() {
         this.setDisabled(false);
-        console.log("Server error. Please try again after a few minutes.");
+        this.setError({
+            type: "auth-error",
+            title: "Server Error",
+            message: "We're sorry. Please check your account credentials and try again after a few minutes."
+        });
     },
     render: function render() {
         return React.createElement(
@@ -335,6 +351,20 @@ var AuthForm = React.createClass({
                         ),
                         ". Explorers aren't allowed to do all the things that creators (registered users) are, but are able to travel and see the world others have made."
                     )
+                )
+            ),
+            this.state.error && React.createElement(
+                "center",
+                { className: this.state.error.type },
+                React.createElement(
+                    "h2",
+                    null,
+                    this.state.error.title
+                ),
+                React.createElement(
+                    "p",
+                    null,
+                    this.state.error.message
                 )
             ),
             React.createElement(FormElement, { labelClass: classes.authLabel,

@@ -90,11 +90,19 @@ let AuthForm = React.createClass({
     },
     getInitialState : function() {
         return {
-            disabled : false
+            disabled : false,
+            error : null
         };
     },
     setDisabled : function(bool) {
-        this.state.disabled = bool;
+        let state = this.state;
+        state.disabled = bool;
+        this.setState(state);
+    },
+    setError : function(err) {
+        let state = this.state;
+        state.error = err;
+        this.setState(state);
     },
     show : function() {
         AuthForm.containingElement.classList.remove('hidden');
@@ -135,11 +143,19 @@ let AuthForm = React.createClass({
     },
     authFailure : function() {
         this.setDisabled(false);
-        console.log("Incorrect credentials or occupied username and/or email.");
+        this.setError({
+            type : "auth-fail",
+            title : "Authentication Failure",
+            message : "Your account credentials are incorrect or there is already an account with that username or email."
+        });
     },
     authError : function() {
         this.setDisabled(false);
-        console.log("Server error. Please try again after a few minutes.");
+        this.setError({
+            type : "auth-error",
+            title : "Server Error",
+            message : "We're sorry. Please check your account credentials and try again after a few minutes."
+        });
     },
     render : function() {
         return (
@@ -169,6 +185,11 @@ let AuthForm = React.createClass({
                         </h3>
                     </div>
                 </div>
+                {this.state.error &&
+                    <center className={this.state.error.type}>
+                        <h2>{this.state.error.title}</h2>
+                        <p>{this.state.error.message}</p>
+                    </center>}
                 <FormElement labelClass={classes.authLabel}
                     labelText="Username"
                     inputClass={classes.authInput}
