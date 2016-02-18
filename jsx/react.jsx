@@ -176,7 +176,7 @@ let AuthForm = React.createClass({
                     name="username"
                     placeholder="Username"
                     disabled={this.state.disabled}
-                    required='true' />
+                    required={true} />
                 <FormElement labelClass={classes.authLabel}
                     labelText="Password"
                     inputClass={classes.authInput}
@@ -184,7 +184,7 @@ let AuthForm = React.createClass({
                     name="password"
                     placeholder="Password123!"
                     disabled={this.state.disabled}
-                    required='true' />
+                    required={true} />
                 <FormElement labelClass={classes.authLabel}
                     labelText="Email*"
                     inputClass={classes.authInput}
@@ -223,7 +223,7 @@ let FormElement = React.createClass({
                         disabled={this.props.disabled}
                         type={this.props.type} name={this.props.name}
                         placeholder={this.props.placeholder}
-                        required={this.props.required || 'false'} />
+                        required={this.props.required || false} />
                 </label>
             </center>
         );
