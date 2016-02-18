@@ -18,8 +18,6 @@ var socket = {
             socket.removeListener('connect', detectDowngrade);
             socket.on('ident', (function(intervalId) {
                 return function onIdent(id) {
-                    console.log("onIdent");
-
                     if(id !== app.loggedInAs) {
                         app.loggedInAs = id;
 
@@ -54,7 +52,11 @@ var socket = {
 
         socket.on("travel", ui.methods.handleTravel);
         socket.on("action", function(info) {
-            ui.methods.addToInfoLog('action', info);
+            if(info === true) {
+                api.look();
+            } else {
+                ui.methods.addToInfoLog('action', info);
+            }
         });
         socket.on("locations", function(locs) {
             ui.methods.addToInfoLog('locations', locs);

@@ -44,6 +44,7 @@ var ui = (function() {
                 });
             },
             ageMessages : function ageMessages() {
+                reactViews.chatLog.tick();
                 return reactViews.infoLog.tick();
             },
             beginListening : function() {

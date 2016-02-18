@@ -638,7 +638,9 @@ var Location = React.createClass({
         });
         var result = undefined;
 
-        if (exits.length === 1) {
+        if (exits.length === 0) {
+            result = '';
+        } else if (exits.length === 1) {
             result = exits[0];
         } else if (exits.length === 2) {
             result = exits.join(' and ');
@@ -646,7 +648,10 @@ var Location = React.createClass({
             result = exits.slice(0, exits.length - 1).join(', ') + ", and " + exits[exits.length - 1];
         }
 
-        return result;
+        return {
+            num: exits.length,
+            directions: result
+        };
     },
     render: function render() {
         var exits = this.renderExits();
@@ -674,11 +679,14 @@ var Location = React.createClass({
                     React.createElement(
                         "h3",
                         null,
-                        "There are exits to the ",
+                        "There are ",
+                        exits.num > 0 ? '' : 'no ',
+                        "exits",
+                        exits.num > 0 ? ' to the ' : '',
                         React.createElement(
                             "strong",
                             null,
-                            exits
+                            exits.directions
                         ),
                         " here."
                     ),
@@ -780,7 +788,7 @@ var Log = React.createClass({
     componentWillUpdate: function componentWillUpdate() {
         var domNode = ReactDOM.findDOMNode(this);
         this.shouldScroll = Array.prototype.map.call(domNode.children, function (n, i) {
-            return n.scrollTop + n.offsetHeight === n.scrollHeight;
+            return Math.abs(n.scrollTop + n.offsetHeight - n.scrollHeight) <= 1;
         });
     },
     componentDidUpdate: function componentDidUpdate() {

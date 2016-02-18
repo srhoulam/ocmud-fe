@@ -410,7 +410,9 @@ let Location = React.createClass({
         });
         let result;
 
-        if(exits.length === 1) {
+        if(exits.length === 0) {
+            result = '';
+        } else if(exits.length === 1) {
             result = exits[0];
         } else if(exits.length === 2) {
             result = exits.join(' and ');
@@ -418,7 +420,10 @@ let Location = React.createClass({
             result = `${exits.slice(0, exits.length - 1).join(', ')}, and ${exits[exits.length - 1]}`;
         }
 
-        return result;
+        return {
+            num : exits.length,
+            directions : result
+        };
     },
     render : function() {
         let exits = this.renderExits();
@@ -430,7 +435,7 @@ let Location = React.createClass({
                     <center className={classes[surfaceExists ? 'location' : 'locOnly']}>
                         <h1>{this.state.name}</h1>
                         <h3>{this.state.description}</h3>
-                        <h3>There are exits to the <strong>{exits}</strong> here.</h3>
+                        <h3>There are {exits.num  > 0 ? '' : 'no '}exits{exits.num > 0 ? ' to the ' : ''}<strong>{exits.directions}</strong> here.</h3>
                         {this.state.surface && <h4>There is a {this.state.surface} here.</h4>}
                     </center>
                 {surfaceExists &&
@@ -498,7 +503,7 @@ let Log = React.createClass({
     componentWillUpdate : function() {
         let domNode = ReactDOM.findDOMNode(this);
         this.shouldScroll = Array.prototype.map.call(domNode.children, function(n, i) {
-            return n.scrollTop + n.offsetHeight === n.scrollHeight;
+            return Math.abs(n.scrollTop + n.offsetHeight - n.scrollHeight) <= 1;
         });
     },
     componentDidUpdate : function() {
