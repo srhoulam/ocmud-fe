@@ -28,6 +28,39 @@ var ui = (function() {
         }
     };
 
+    function processKey(code) {
+        var result;
+
+        if(Number.isFinite(code)) {
+            // Chrome
+            switch(code) {
+                case 27:
+                    result = "escape";
+                    break;
+                case 37:
+                    result = "arrowleft";
+                    break;
+                case 38:
+                    result = "arrowup";
+                    break;
+                case 39:
+                    result = "arrowright";
+                    break;
+                case 40:
+                    result = "arrowdown";
+                    break;
+                default:
+                    result = String.fromCharCode(code);
+                    break;
+            }
+        } else {
+            // Firefox
+            result = code;
+        }
+
+        return result.toLowerCase();
+    }
+
     return {
         elements : {
             auth : document.getElementById('auth'),
@@ -48,7 +81,7 @@ var ui = (function() {
                 return reactViews.infoLog.tick();
             },
             beginListening : function() {
-                return document.addEventListener('keypress', ui.handlers.keyPress);
+                return document.addEventListener('keyup', ui.handlers.keyPress);
             },
             displaySight : function displaySight(sight) {
                 return reactViews.location.setState(sight);
@@ -65,12 +98,12 @@ var ui = (function() {
                 return reactViews.authForm.show();
             },
             stopListening : function() {
-                return document.removeEventListener('keypress', ui.handlers.keyPress);
+                return document.removeEventListener('keyup', ui.handlers.keyPress);
             }
         },
         handlers : {
             keyPress : function keyCommand(event) {
-                var keyPressed = event.key || event.keyCode;
+                var keyPressed = processKey(event.key || event.keyCode);
 
                 switch(keyPressed.toLowerCase()) {
                     case 'arrowleft':
