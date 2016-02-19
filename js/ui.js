@@ -110,7 +110,7 @@ var ui = (function() {
                     case 'arrowright':
                     case 'arrowup':
                     case 'arrowdown':
-                        console.log('travel');
+                        ui.commands.travel(keyPressed);
                         break;
                     case 'escape':
                         console.log('escape');
@@ -155,6 +155,30 @@ var ui = (function() {
                 ui.methods.stopListening();
                 reactViews.form.setState(formStates.say);
                 return reactViews.form.show();
+            },
+            travel : function travel(key) {
+                var direction;
+
+                switch(key) {
+                    case 'arrowleft':
+                        direction = 'w';
+                        break;
+                    case 'arrowright':
+                        direction = 'e';
+                        break;
+                    case 'arrowup':
+                        direction = 'n';
+                        break;
+                    case 'arrowdown':
+                        direction = 's';
+                        break;
+                }
+
+                if(!direction) {
+                    return;
+                }
+
+                api.go(direction);
             },
             write : function write() {
                 ui.methods.stopListening();
