@@ -181,7 +181,7 @@ var CommandLegend = React.createClass({
                         React.createElement(
                             "dd",
                             null,
-                            "Create new location"
+                            "Make new location"
                         )
                     ),
                     React.createElement(
@@ -584,11 +584,11 @@ var OneLineForm = React.createClass({
         var self = this;
 
         return {
-            title: "Untitled",
-            name: "null",
-            description: "This form has not been properly prepared.",
-            placeholder: "What you write here will be completely ignored",
-            buttonTitle: "Close",
+            title: "Confession",
+            name: "confession",
+            description: "What crimes have you committed, comrade?",
+            placeholder: "Espionage, grand capitalism, smoking in a non-smoking area.",
+            buttonTitle: "Confess",
             submitHandler: function submitHandler(e) {
                 e.preventDefault();
                 self.hide();

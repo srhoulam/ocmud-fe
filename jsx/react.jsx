@@ -66,7 +66,7 @@ let CommandLegend = React.createClass({
                         </span>
                         <span className={classes.quarterRow}>
                             <dt>M</dt>
-                            <dd>Create new location</dd>
+                            <dd>Make new location</dd>
                         </span>
                         <span className={classes.quarterRow}>
                             <dt>C</dt>
@@ -367,11 +367,11 @@ let OneLineForm = React.createClass({
         let self = this;
 
         return {
-            title : "Untitled",
-            name : "null",
-            description : "This form has not been properly prepared.",
-            placeholder : "What you write here will be completely ignored",
-            buttonTitle : "Close",
+            title : "Confession",
+            name : "confession",
+            description : "What crimes have you committed, comrade?",
+            placeholder : "Espionage, grand capitalism, smoking in a non-smoking area.",
+            buttonTitle : "Confess",
             submitHandler : function(e) {
                 e.preventDefault();
                 self.hide();
