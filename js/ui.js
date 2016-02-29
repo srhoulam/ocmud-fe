@@ -1,6 +1,11 @@
 'use strict';
 
 var ui = (function() {
+    var elements = {
+        olf : document.getElementById("line-form"),
+        optionForm : document.getElementById("option-form")
+    };
+
     function genericSubmitterFactory(helper) {
         return function(e) {
             e.preventDefault();
@@ -105,13 +110,13 @@ var ui = (function() {
                 return document.addEventListener('keyup', ui.handlers.keyPressMain);
             },
             listenOLF : function() {
-                return document.addEventListener('keyup', ui.handlers.keyPressOLF);
+                return elements.olf.addEventListener('keyup', ui.handlers.keyPressOLF);
             },
             ignoreMain : function() {
                 return document.removeEventListener('keyup', ui.handlers.keyPressMain);
             },
             ignoreOLF : function() {
-                return document.removeEventListener('keyup', ui.handlers.keyPressOLF);
+                return elements.olf.removeEventListener('keyup', ui.handlers.keyPressOLF);
             }
         },
         handlers : {
@@ -126,7 +131,7 @@ var ui = (function() {
                         ui.commands.travel(keyPressed);
                         break;
                     case 'escape':
-                        console.log('escape');
+                        console.log("escape");
                         break;
                     case 'c':
                         break;
@@ -149,6 +154,8 @@ var ui = (function() {
                 }
             },
             keyPressOLF : function olfKeyCommand(event) {
+                event.stopPropagation();
+
                 var keyPressed = processKey(event.key || event.keyCode);
 
                 switch(keyPressed.toLowerCase()) {
