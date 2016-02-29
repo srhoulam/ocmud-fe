@@ -83,5 +83,5 @@ function initApi() {
         }
     };
 
-    ui.methods.beginListening();
+    ui.methods.listenMain();
 }

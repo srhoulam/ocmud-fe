@@ -1,30 +1,41 @@
 'use strict';
 
 var ui = (function() {
+    function genericSubmitterFactory(helper) {
+        return function(e) {
+            e.preventDefault();
+            helper(e);
+            return e.target.reset();
+        };
+    }
+    function olfHelperFactory(executor) {
+        return function(e) {
+            reactViews.form.hide();
+            executor(e);
+            reactViews.form.setState(reactViews.form.getInitialState());
+            return ui.methods.listenMain();
+        };
+    }
     var formStates = {
         say : {
             title : "Say what?",
+            name : "message",
             description : "Enter what you want to say below.",
             placeholder : "I couldn't think of anything to say.",
             buttonTitle : "Say",
-            submitHandler : function submitSay(e) {
-                e.preventDefault();
-                reactViews.form.hide();
-                reactViews.form.setState(reactViews.form.getInitialState());
-                ui.methods.beginListening();
-            }
+            submitHandler : genericSubmitterFactory(olfHelperFactory(function(e) {
+                api.say(e.target.message.value);
+            }))
         },
         write : {
             title : "Write what?",
+            name : "text",
             description : "Enter what you want to write below.",
             placeholder : `Somebody was here.`,
             buttonTitle : "Write",
-            submitHandler : function submitWrite(e) {
-                e.preventDefault();
-                reactViews.form.hide();
-                reactViews.form.setState(reactViews.form.getInitialState());
-                ui.methods.beginListening();
-            }
+            submitHandler : genericSubmitterFactory(olfHelperFactory(function(e) {
+                api.write(e.target.text.value);
+            }))
         }
     };
 
@@ -80,9 +91,6 @@ var ui = (function() {
                 reactViews.chatLog.tick();
                 return reactViews.infoLog.tick();
             },
-            beginListening : function() {
-                return document.addEventListener('keyup', ui.handlers.keyPress);
-            },
             displaySight : function displaySight(sight) {
                 return reactViews.location.setState(sight);
             },
@@ -97,12 +105,21 @@ var ui = (function() {
             init : function uiInit() {
                 return reactViews.authForm.show();
             },
-            stopListening : function() {
-                return document.removeEventListener('keyup', ui.handlers.keyPress);
+            listenMain : function() {
+                return document.addEventListener('keyup', ui.handlers.keyPressMain);
+            },
+            listenOLF : function() {
+                return document.addEventListener('keyup', ui.handlers.keyPressOLF);
+            },
+            ignoreMain : function() {
+                return document.removeEventListener('keyup', ui.handlers.keyPressMain);
+            },
+            ignoreOLF : function() {
+                return document.removeEventListener('keyup', ui.handlers.keyPressOLF);
             }
         },
         handlers : {
-            keyPress : function keyCommand(event) {
+            keyPressMain : function mainKeyCommand(event) {
                 var keyPressed = processKey(event.key || event.keyCode);
 
                 switch(keyPressed.toLowerCase()) {
@@ -133,8 +150,17 @@ var ui = (function() {
                     case 'w':
                         ui.commands.write();
                         break;
-                    default:
-                        console.log("something else");
+                }
+            },
+            keyPressOLF : function olfKeyCommand(event) {
+                var keyPressed = processKey(event.key || event.keyCode);
+
+                switch(keyPressed.toLowerCase()) {
+                    case 'escape':
+                        ui.methods.ignoreOLF();
+                        reactViews.form.hide();
+                        reactViews.form.setState(reactViews.form.getInitialState());
+                        ui.methods.listenMain();
                         break;
                 }
             }
@@ -144,7 +170,7 @@ var ui = (function() {
             create : function create() {},
             jump : function jumo() {},
             quit : function quit() {
-                ui.methods.stopListening();
+                ui.methods.ignoreMain();
                 reactViews.location.reset();
                 reactViews.authForm.setDisabled(false);
                 reactViews.authForm.show();
@@ -152,9 +178,10 @@ var ui = (function() {
                 return api.quit();
             },
             say : function say() {
-                ui.methods.stopListening();
+                ui.methods.ignoreMain();
                 reactViews.form.setState(formStates.say);
-                return reactViews.form.show();
+                reactViews.form.show();
+                return ui.methods.listenOLF();
             },
             travel : function travel(key) {
                 var direction;
@@ -181,9 +208,10 @@ var ui = (function() {
                 api.go(direction);
             },
             write : function write() {
-                ui.methods.stopListening();
+                ui.methods.ignoreMain();
                 reactViews.form.setState(formStates.write);
-                return reactViews.form.show();
+                reactViews.form.show();
+                return ui.methods.listenOLF();
             }
         }
     };

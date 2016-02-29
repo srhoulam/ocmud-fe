@@ -585,6 +585,7 @@ var OneLineForm = React.createClass({
 
         return {
             title: "Untitled",
+            name: "null",
             description: "This form has not been properly prepared.",
             placeholder: "What you write here will be completely ignored",
             buttonTitle: "Close",
@@ -596,9 +597,13 @@ var OneLineForm = React.createClass({
     },
     show: function show() {
         OneLineForm.containingElement.classList.remove('hidden');
+        return document.querySelector('#line-form input').focus();
     },
     hide: function hide() {
-        OneLineForm.containingElement.classList.add('hidden');
+        return OneLineForm.containingElement.classList.add('hidden');
+    },
+    componentDidUpdate: function componentDidUpdate() {
+        return OneLineForm.containingElement.querySelector('form').reset();
     },
     render: function render() {
         return React.createElement(
@@ -627,6 +632,7 @@ var OneLineForm = React.createClass({
                 { className: "row" },
                 React.createElement("input", { className: classes.olfInputBox,
                     type: "text",
+                    name: this.state.name,
                     placeholder: this.state.placeholder }),
                 React.createElement(
                     "button",
