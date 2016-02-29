@@ -456,16 +456,17 @@ var OptionForm = React.createClass({
     },
     getInitialState: function getInitialState() {
         var self = this;
+        var stalin = {
+            name: "Josef Stalin",
+            value: "stalin"
+        };
 
         return {
             title: "Election",
             description: "Vote for your next president.",
-            name: 'president',
+            name: "president",
             buttonTitle: "Vote",
-            options: [{
-                name: "Josef Stalin",
-                value: "stalin"
-            }],
+            options: [stalin, stalin, stalin, stalin],
             submitHandler: function submitHandler(e) {
                 e.preventDefault();
                 self.hide();

@@ -73,10 +73,6 @@ var ui = (function() {
     }
 
     return {
-        elements : {
-            auth : document.getElementById('auth'),
-            explore : document.querySelector("button[type=button]")
-        },
         methods : {
             addToChatLog : function addToChat(message) {
                 return reactViews.chatLog.add(message);
