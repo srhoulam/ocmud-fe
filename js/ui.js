@@ -41,6 +41,9 @@ var ui = (function() {
             submitHandler : genericSubmitterFactory(olfHelperFactory(function(e) {
                 api.write(e.target.text.value);
             }))
+        },
+        jump : {
+            /* TODO */
         }
     };
 
@@ -112,11 +115,17 @@ var ui = (function() {
             listenOLF : function() {
                 return elements.olf.addEventListener('keyup', ui.handlers.keyPressOLF);
             },
+            listenOption : function() {
+                return elements.optionForm.addEventListener('keyup', ui.handlers.keyPressOption);
+            },
             ignoreMain : function() {
                 return document.removeEventListener('keyup', ui.handlers.keyPressMain);
             },
             ignoreOLF : function() {
                 return elements.olf.removeEventListener('keyup', ui.handlers.keyPressOLF);
+            },
+            ignoreOption : function() {
+                return elements.optionForm.removeEventListener('keyup', ui.handlers.keyPressOption);
             }
         },
         handlers : {
@@ -166,12 +175,31 @@ var ui = (function() {
                         ui.methods.listenMain();
                         break;
                 }
+            },
+            keyPressOption : function optionKeyCommand(event) {
+                event.stopPropagation();
+
+                var keyPressed = processKey(event.key || event.keyCode);
+
+                switch(keyPressed.toLowerCase()) {
+                    case 'escape':
+                        ui.methods.ignoreOption();
+                        reactViews.optionForm.hide();
+                        reactViews.optionForm.setState(reactViews.optionForm.getInitialState());
+                        ui.methods.listenMain();
+                        break;
+                }
             }
         },
         commands : {
             connect : function connect() {},
             create : function create() {},
-            jump : function jumo() {},
+            jump : function jumo() {
+                ui.methods.ignoreMain();
+                reactViews.optionForm.setState(formStates.jump);
+                reactViews.optionForm.show();
+                return ui.methods.listenOption();
+            },
             quit : function quit() {
                 ui.methods.ignoreMain();
                 reactViews.location.reset();
