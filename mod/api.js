@@ -60,12 +60,19 @@ function initApi(methods) {
             var p = new Promise(function listExec(res, rej) {
                 var resolved = false;
 
-                io.on('locations', function (locs) {
+                function onLoc(locs) {
                     resolved = true;
+                    rmOnLoc();
                     return res(locs);
-                });
+                }
+                function rmOnLoc() {
+                    io.removeListener('locations', onLoc);
+                }
+
+                io.on('locations', onLoc);
                 setTimeout(function () {
                     if (!resolved) {
+                        rmOnLoc();
                         return rej();
                     }
                 }, 2500);
