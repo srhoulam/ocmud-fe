@@ -44,7 +44,7 @@ var ui = (function() {
             title : "Write what?",
             name : "text",
             description : "Enter what you want to write below.",
-            placeholder : `Somebody was here.`,
+            placeholder : "Somebody was here.",
             buttonTitle : "Write",
             submitHandler : genericSubmitterFactory(olfHelperFactory(function(e) {
                 Api.write(e.target.text.value);
@@ -53,7 +53,7 @@ var ui = (function() {
     };
     let optionFormSubmitters = {
         jump : genericSubmitterFactory(optionHelperFactory(function(e) {
-            Api.jump(e.target.choice.value);
+            Api.jump(parseInt(e.target.location.value, 10));
         }))
     };
     let formStateFactories = {
@@ -62,6 +62,7 @@ var ui = (function() {
                 title : "Jump",
                 description : "Instantly travel to one of your locations.",
                 buttonTitle : "Jump",
+                name : "location",
                 options : choiceArray,
                 submitHandler : optionFormSubmitters.jump
             };

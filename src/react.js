@@ -296,10 +296,11 @@ let OptionForm = React.createClass({
             numRows = Math.ceil(total / perRow);
         }
 
+        let index = 0;
         for(let row = 0; row < numRows; row++) {
             let currRow = [];
-            for(let option = 0; option < perRow && row*perRow + option < total; option++) {
-                let index = row*perRow + option;
+
+            for(let option = 0; option < perRow && index < total; option++, index++) {
                 let currOption = this.state.options[index];
 
                 currRow.push(
@@ -307,7 +308,7 @@ let OptionForm = React.createClass({
                         labelText={currOption.name}
                         labelClass={perRow === 6 ? classes.sixthRow : classes.quarterRow}
                         name={this.state.name || "choice"}
-                        value={currOption.value} />
+                        value={index} />
                 );
             }
 

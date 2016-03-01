@@ -515,17 +515,18 @@ var OptionForm = _react2.default.createClass({
             numRows = Math.ceil(total / perRow);
         }
 
+        var index = 0;
         for (var row = 0; row < numRows; row++) {
             var currRow = [];
-            for (var option = 0; option < perRow && row * perRow + option < total; option++) {
-                var index = row * perRow + option;
+
+            for (var option = 0; option < perRow && index < total; option++, index++) {
                 var currOption = this.state.options[index];
 
                 currRow.push(_react2.default.createElement(OptionElement, { key: index,
                     labelText: currOption.name,
                     labelClass: perRow === 6 ? classes.sixthRow : classes.quarterRow,
                     name: this.state.name || "choice",
-                    value: currOption.value }));
+                    value: index }));
             }
 
             rows.push(_react2.default.createElement(

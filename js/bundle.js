@@ -126,7 +126,7 @@
 	            title: "Write what?",
 	            name: "text",
 	            description: "Enter what you want to write below.",
-	            placeholder: 'Somebody was here.',
+	            placeholder: "Somebody was here.",
 	            buttonTitle: "Write",
 	            submitHandler: genericSubmitterFactory(olfHelperFactory(function (e) {
 	                Api.write(e.target.text.value);
@@ -135,7 +135,7 @@
 	    };
 	    var optionFormSubmitters = {
 	        jump: genericSubmitterFactory(optionHelperFactory(function (e) {
-	            Api.jump(e.target.choice.value);
+	            Api.jump(parseInt(e.target.location.value, 10));
 	        }))
 	    };
 	    var formStateFactories = {
@@ -144,6 +144,7 @@
 	                title: "Jump",
 	                description: "Instantly travel to one of your locations.",
 	                buttonTitle: "Jump",
+	                name: "location",
 	                options: choiceArray,
 	                submitHandler: optionFormSubmitters.jump
 	            };
@@ -890,17 +891,18 @@
 	            numRows = Math.ceil(total / perRow);
 	        }
 	
+	        var index = 0;
 	        for (var row = 0; row < numRows; row++) {
 	            var currRow = [];
-	            for (var option = 0; option < perRow && row * perRow + option < total; option++) {
-	                var index = row * perRow + option;
+	
+	            for (var option = 0; option < perRow && index < total; option++, index++) {
 	                var currOption = this.state.options[index];
 	
 	                currRow.push(_react2.default.createElement(OptionElement, { key: index,
 	                    labelText: currOption.name,
 	                    labelClass: perRow === 6 ? classes.sixthRow : classes.quarterRow,
 	                    name: this.state.name || "choice",
-	                    value: currOption.value }));
+	                    value: index }));
 	            }
 	
 	            rows.push(_react2.default.createElement(
