@@ -306,7 +306,7 @@ let OptionForm = React.createClass({
                     <OptionElement key={index}
                         labelText={currOption.name}
                         labelClass={perRow === 6 ? classes.sixthRow : classes.quarterRow}
-                        name={this.state.name}
+                        name={this.state.name || "choice"}
                         value={currOption.value} />
                 );
             }
@@ -405,7 +405,7 @@ let OneLineForm = React.createClass({
                 <div className="row">
                     <input className={classes.olfInputBox}
                         type="text"
-                        name={this.state.name}
+                        name={this.state.name || "line"}
                         placeholder={this.state.placeholder} />
                     <button className={classes.olfButton}
                         type="submit">{this.state.buttonTitle}</button>
@@ -459,7 +459,7 @@ let Location = React.createClass({
     },
     render : function() {
         let exits = this.renderExits();
-        let surfaceExists = this.state.writings && this.state.writings.length > 0;
+        let surfaceExists = this.state.surface !== null;
 
         return (
             <div>
@@ -473,7 +473,7 @@ let Location = React.createClass({
                 {surfaceExists &&
                     <Surface
                         name={this.state.surface}
-                        writings={this.state.writings}
+                        writings={this.state.writings || []}
                         className={classes.surface} />}
                 </div>
             </div>

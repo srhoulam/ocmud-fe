@@ -12,16 +12,15 @@ var _api = require('./api');
 
 var _api2 = _interopRequireDefault(_api);
 
+var _app = require('./app');
+
+var _app2 = _interopRequireDefault(_app);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Api = undefined;
 
 var ui = function () {
-    var elements = {
-        olf: document.getElementById("line-form"),
-        optionForm: document.getElementById("option-form")
-    };
-
     function genericSubmitterFactory(helper) {
         return function (e) {
             e.preventDefault();
@@ -31,9 +30,19 @@ var ui = function () {
     }
     function olfHelperFactory(executor) {
         return function (e) {
+            ui.methods.ignoreOLF();
             _react2.default.form.hide();
             executor(e);
             _react2.default.form.setState(_react2.default.form.getInitialState());
+            return ui.methods.listenMain();
+        };
+    }
+    function optionHelperFactory(executor) {
+        return function (e) {
+            ui.methods.ignoreOption();
+            _react2.default.optionForm.hide();
+            executor(e);
+            _react2.default.optionForm.setState(_react2.default.optionForm.getInitialState());
             return ui.methods.listenMain();
         };
     }
@@ -57,12 +66,30 @@ var ui = function () {
             submitHandler: genericSubmitterFactory(olfHelperFactory(function (e) {
                 Api.write(e.target.text.value);
             }))
-        },
-        jump: {
-            /* TODO */
+        }
+    };
+    var optionFormSubmitters = {
+        jump: genericSubmitterFactory(optionHelperFactory(function (e) {
+            Api.jump(e.target.choice.value);
+        }))
+    };
+    var formStateFactories = {
+        jump: function jump(choiceArray) {
+            return {
+                title: "Jump",
+                description: "Instantly travel to one of your locations.",
+                buttonTitle: "Jump",
+                options: choiceArray,
+                submitHandler: optionFormSubmitters.jump
+            };
         }
     };
 
+    function ifLoggedIn(f) {
+        if (_app2.default.loggedInAs !== false) {
+            f();
+        }
+    }
     function processKey(code) {
         var result = undefined;
 
@@ -129,19 +156,19 @@ var ui = function () {
                 return document.addEventListener('keyup', ui.handlers.keyPressMain);
             },
             listenOLF: function listenOLF() {
-                return elements.olf.addEventListener('keyup', ui.handlers.keyPressOLF);
+                return document.addEventListener('keyup', ui.handlers.keyPressOLF);
             },
             listenOption: function listenOption() {
-                return elements.optionForm.addEventListener('keyup', ui.handlers.keyPressOption);
+                return document.addEventListener('keyup', ui.handlers.keyPressOption);
             },
             ignoreMain: function ignoreMain() {
                 return document.removeEventListener('keyup', ui.handlers.keyPressMain);
             },
             ignoreOLF: function ignoreOLF() {
-                return elements.olf.removeEventListener('keyup', ui.handlers.keyPressOLF);
+                return document.removeEventListener('keyup', ui.handlers.keyPressOLF);
             },
             ignoreOption: function ignoreOption() {
-                return elements.optionForm.removeEventListener('keyup', ui.handlers.keyPressOption);
+                return document.removeEventListener('keyup', ui.handlers.keyPressOption);
             }
         },
         handlers: {
@@ -161,6 +188,7 @@ var ui = function () {
                     case 'c':
                         break;
                     case 'j':
+                        ifLoggedIn(ui.commands.jump);
                         break;
                     case 'l':
                         Api.look();
@@ -179,8 +207,6 @@ var ui = function () {
                 }
             },
             keyPressOLF: function olfKeyCommand(event) {
-                event.stopPropagation();
-
                 var keyPressed = processKey(event.key || event.keyCode);
 
                 switch (keyPressed.toLowerCase()) {
@@ -193,8 +219,6 @@ var ui = function () {
                 }
             },
             keyPressOption: function optionKeyCommand(event) {
-                event.stopPropagation();
-
                 var keyPressed = processKey(event.key || event.keyCode);
 
                 switch (keyPressed.toLowerCase()) {
@@ -210,11 +234,13 @@ var ui = function () {
         commands: {
             connect: function connect() {},
             create: function create() {},
-            jump: function jumo() {
-                ui.methods.ignoreMain();
-                _react2.default.optionForm.setState(formStates.jump);
-                _react2.default.optionForm.show();
-                return ui.methods.listenOption();
+            jump: function jump() {
+                Api.list().then(function (locs) {
+                    ui.methods.ignoreMain();
+                    _react2.default.optionForm.setState(formStateFactories.jump(locs));
+                    _react2.default.optionForm.show();
+                    return ui.methods.listenOption();
+                });
             },
             quit: function quit() {
                 ui.methods.ignoreMain();

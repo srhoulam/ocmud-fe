@@ -65,9 +65,9 @@ exports.default = {
                 methods.addToInfoLog('action', info);
             }
         });
-        socket.on("locations", function (locs) {
-            methods.addToInfoLog('locations', locs);
-        });
+        // socket.on("locations", function(locs) {
+        //     methods.addToInfoLog('locations', locs);
+        // });
 
         socket.on("sight", methods.displaySight);
         socket.on("speech", methods.addToChatLog);

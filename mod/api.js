@@ -57,9 +57,24 @@ function initApi(methods) {
             });
         },
         list: function list() {
-            return io.emit('command', {
+            var p = new Promise(function listExec(res, rej) {
+                var resolved = false;
+
+                io.on('locations', function (locs) {
+                    resolved = true;
+                    return res(locs);
+                });
+                setTimeout(function () {
+                    if (!resolved) {
+                        return rej();
+                    }
+                }, 2500);
+            });
+            io.emit('command', {
                 command: 'list'
             });
+
+            return p;
         },
         look: function look() {
             return io.emit('command', {

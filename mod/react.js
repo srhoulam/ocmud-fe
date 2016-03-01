@@ -524,7 +524,7 @@ var OptionForm = _react2.default.createClass({
                 currRow.push(_react2.default.createElement(OptionElement, { key: index,
                     labelText: currOption.name,
                     labelClass: perRow === 6 ? classes.sixthRow : classes.quarterRow,
-                    name: this.state.name,
+                    name: this.state.name || "choice",
                     value: currOption.value }));
             }
 
@@ -658,7 +658,7 @@ var OneLineForm = _react2.default.createClass({
                 { className: 'row' },
                 _react2.default.createElement('input', { className: classes.olfInputBox,
                     type: 'text',
-                    name: this.state.name,
+                    name: this.state.name || "line",
                     placeholder: this.state.placeholder }),
                 _react2.default.createElement(
                     'button',
@@ -717,7 +717,7 @@ var Location = _react2.default.createClass({
     },
     render: function render() {
         var exits = this.renderExits();
-        var surfaceExists = this.state.writings && this.state.writings.length > 0;
+        var surfaceExists = this.state.surface !== null;
 
         return _react2.default.createElement(
             'div',
@@ -762,7 +762,7 @@ var Location = _react2.default.createClass({
                 ),
                 surfaceExists && _react2.default.createElement(Surface, {
                     name: this.state.surface,
-                    writings: this.state.writings,
+                    writings: this.state.writings || [],
                     className: classes.surface })
             )
         );
