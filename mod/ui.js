@@ -1,58 +1,74 @@
 'use strict';
 
-var ui = (function() {
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require('./react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _api = require('./api');
+
+var _api2 = _interopRequireDefault(_api);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Api = undefined;
+
+var ui = function () {
     var elements = {
-        olf : document.getElementById("line-form"),
-        optionForm : document.getElementById("option-form")
+        olf: document.getElementById("line-form"),
+        optionForm: document.getElementById("option-form")
     };
 
     function genericSubmitterFactory(helper) {
-        return function(e) {
+        return function (e) {
             e.preventDefault();
             helper(e);
             return e.target.reset();
         };
     }
     function olfHelperFactory(executor) {
-        return function(e) {
-            reactViews.form.hide();
+        return function (e) {
+            _react2.default.form.hide();
             executor(e);
-            reactViews.form.setState(reactViews.form.getInitialState());
+            _react2.default.form.setState(_react2.default.form.getInitialState());
             return ui.methods.listenMain();
         };
     }
     var formStates = {
-        say : {
-            title : "Say what?",
-            name : "message",
-            description : "Enter what you want to say below.",
-            placeholder : "I couldn't think of anything to say.",
-            buttonTitle : "Say",
-            submitHandler : genericSubmitterFactory(olfHelperFactory(function(e) {
-                api.say(e.target.message.value);
+        say: {
+            title: "Say what?",
+            name: "message",
+            description: "Enter what you want to say below.",
+            placeholder: "I couldn't think of anything to say.",
+            buttonTitle: "Say",
+            submitHandler: genericSubmitterFactory(olfHelperFactory(function (e) {
+                Api.say(e.target.message.value);
             }))
         },
-        write : {
-            title : "Write what?",
-            name : "text",
-            description : "Enter what you want to write below.",
-            placeholder : `Somebody was here.`,
-            buttonTitle : "Write",
-            submitHandler : genericSubmitterFactory(olfHelperFactory(function(e) {
-                api.write(e.target.text.value);
+        write: {
+            title: "Write what?",
+            name: "text",
+            description: "Enter what you want to write below.",
+            placeholder: 'Somebody was here.',
+            buttonTitle: "Write",
+            submitHandler: genericSubmitterFactory(olfHelperFactory(function (e) {
+                Api.write(e.target.text.value);
             }))
         },
-        jump : {
+        jump: {
             /* TODO */
         }
     };
 
     function processKey(code) {
-        var result;
+        var result = undefined;
 
-        if(Number.isFinite(code)) {
+        if (Number.isFinite(code)) {
             // Chrome
-            switch(code) {
+            switch (code) {
                 case 27:
                     result = "escape";
                     break;
@@ -80,59 +96,59 @@ var ui = (function() {
         return result.toLowerCase();
     }
 
-    return {
-        methods : {
-            addToChatLog : function addToChat(message) {
-                return reactViews.chatLog.add(message);
+    var ui = {
+        methods: {
+            addToChatLog: function addToChat(message) {
+                return _react2.default.chatLog.add(message);
             },
-            addToInfoLog : function addToLog(type, info) {
-                return reactViews.infoLog.add({
-                    'type' : type,
-                    message : info
+            addToInfoLog: function addToLog(type, info) {
+                return _react2.default.infoLog.add({
+                    'type': type,
+                    message: info
                 });
             },
-            ageMessages : function ageMessages() {
-                reactViews.chatLog.tick();
-                return reactViews.infoLog.tick();
+            ageMessages: function ageMessages() {
+                _react2.default.chatLog.tick();
+                return _react2.default.infoLog.tick();
             },
-            displaySight : function displaySight(sight) {
-                return reactViews.location.setState(sight);
+            displaySight: function displaySight(sight) {
+                return _react2.default.location.setState(sight);
             },
-            handleTravel : function handleTravel(info) {
-                if(info === true) {
+            handleTravel: function handleTravel(info) {
+                if (info === true) {
                     ui.methods.ageMessages();
-                } else if(info !== false) {
+                } else if (info !== false) {
                     //  not a boolean
                     ui.methods.addToInfoLog('travel', info);
                 }
             },
-            init : function uiInit() {
-                return reactViews.authForm.show();
+            init: function uiInit() {
+                return _react2.default.authForm.show();
             },
-            listenMain : function() {
+            listenMain: function listenMain() {
                 return document.addEventListener('keyup', ui.handlers.keyPressMain);
             },
-            listenOLF : function() {
+            listenOLF: function listenOLF() {
                 return elements.olf.addEventListener('keyup', ui.handlers.keyPressOLF);
             },
-            listenOption : function() {
+            listenOption: function listenOption() {
                 return elements.optionForm.addEventListener('keyup', ui.handlers.keyPressOption);
             },
-            ignoreMain : function() {
+            ignoreMain: function ignoreMain() {
                 return document.removeEventListener('keyup', ui.handlers.keyPressMain);
             },
-            ignoreOLF : function() {
+            ignoreOLF: function ignoreOLF() {
                 return elements.olf.removeEventListener('keyup', ui.handlers.keyPressOLF);
             },
-            ignoreOption : function() {
+            ignoreOption: function ignoreOption() {
                 return elements.optionForm.removeEventListener('keyup', ui.handlers.keyPressOption);
             }
         },
-        handlers : {
-            keyPressMain : function mainKeyCommand(event) {
+        handlers: {
+            keyPressMain: function mainKeyCommand(event) {
                 var keyPressed = processKey(event.key || event.keyCode);
 
-                switch(keyPressed.toLowerCase()) {
+                switch (keyPressed.toLowerCase()) {
                     case 'arrowleft':
                     case 'arrowright':
                     case 'arrowup':
@@ -147,7 +163,7 @@ var ui = (function() {
                     case 'j':
                         break;
                     case 'l':
-                        api.look();
+                        Api.look();
                         break;
                     case 'm':
                         break;
@@ -162,62 +178,62 @@ var ui = (function() {
                         break;
                 }
             },
-            keyPressOLF : function olfKeyCommand(event) {
+            keyPressOLF: function olfKeyCommand(event) {
                 event.stopPropagation();
 
                 var keyPressed = processKey(event.key || event.keyCode);
 
-                switch(keyPressed.toLowerCase()) {
+                switch (keyPressed.toLowerCase()) {
                     case 'escape':
                         ui.methods.ignoreOLF();
-                        reactViews.form.hide();
-                        reactViews.form.setState(reactViews.form.getInitialState());
+                        _react2.default.form.hide();
+                        _react2.default.form.setState(_react2.default.form.getInitialState());
                         ui.methods.listenMain();
                         break;
                 }
             },
-            keyPressOption : function optionKeyCommand(event) {
+            keyPressOption: function optionKeyCommand(event) {
                 event.stopPropagation();
 
                 var keyPressed = processKey(event.key || event.keyCode);
 
-                switch(keyPressed.toLowerCase()) {
+                switch (keyPressed.toLowerCase()) {
                     case 'escape':
                         ui.methods.ignoreOption();
-                        reactViews.optionForm.hide();
-                        reactViews.optionForm.setState(reactViews.optionForm.getInitialState());
+                        _react2.default.optionForm.hide();
+                        _react2.default.optionForm.setState(_react2.default.optionForm.getInitialState());
                         ui.methods.listenMain();
                         break;
                 }
             }
         },
-        commands : {
-            connect : function connect() {},
-            create : function create() {},
-            jump : function jumo() {
+        commands: {
+            connect: function connect() {},
+            create: function create() {},
+            jump: function jumo() {
                 ui.methods.ignoreMain();
-                reactViews.optionForm.setState(formStates.jump);
-                reactViews.optionForm.show();
+                _react2.default.optionForm.setState(formStates.jump);
+                _react2.default.optionForm.show();
                 return ui.methods.listenOption();
             },
-            quit : function quit() {
+            quit: function quit() {
                 ui.methods.ignoreMain();
-                reactViews.location.reset();
-                reactViews.authForm.setDisabled(false);
-                reactViews.authForm.show();
+                _react2.default.location.reset();
+                _react2.default.authForm.setDisabled(false);
+                _react2.default.authForm.show();
 
-                return api.quit();
+                return Api.quit();
             },
-            say : function say() {
+            say: function say() {
                 ui.methods.ignoreMain();
-                reactViews.form.setState(formStates.say);
-                reactViews.form.show();
+                _react2.default.form.setState(formStates.say);
+                _react2.default.form.show();
                 return ui.methods.listenOLF();
             },
-            travel : function travel(key) {
-                var direction;
+            travel: function travel(key) {
+                var direction = undefined;
 
-                switch(key) {
+                switch (key) {
                     case 'arrowleft':
                         direction = 'w';
                         break;
@@ -232,18 +248,31 @@ var ui = (function() {
                         break;
                 }
 
-                if(!direction) {
+                if (!direction) {
                     return;
                 }
 
-                api.go(direction);
+                Api.go(direction);
             },
-            write : function write() {
+            write: function write() {
                 ui.methods.ignoreMain();
-                reactViews.form.setState(formStates.write);
-                reactViews.form.show();
+                _react2.default.form.setState(formStates.write);
+                _react2.default.form.show();
                 return ui.methods.listenOLF();
             }
         }
     };
-})();
+
+    // resolve circular dependency
+    var initApi = _api2.default.init;
+    _api2.default.init = function () {
+        initApi(ui.methods);
+        Api = _api2.default.api;
+        ui.methods.listenMain();
+    };
+
+    return ui;
+}();
+
+exports.default = ui;
+//# sourceMappingURL=ui.js.map

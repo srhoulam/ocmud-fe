@@ -1,13 +1,16 @@
-'use strict';
+import socket from './socket';
+import constants from './constants';
 
-var backendURL = "http://localhost:3000";
+function initApi(methods) {
+    try {
+        apiModule.api.quit();
+    } catch(e) {
+        //  no existing connection to terminate
+    }
 
-var api;
+    let io = socket.init(constants.backendURL);
 
-function initApi() {
-    var io = socket.init(backendURL);
-
-    window.api = {
+    let apiObject = {
         confirm : function confirm(code) {
             return io.emit('command', {
                 command : 'confirmEmail',
@@ -83,5 +86,14 @@ function initApi() {
         }
     };
 
-    ui.methods.listenMain();
+    apiModule.api = apiObject;
+
+    return socket.configure(io, methods, apiObject);
 }
+
+let apiModule = {
+    init : initApi,
+    api : null
+};
+
+export default apiModule;

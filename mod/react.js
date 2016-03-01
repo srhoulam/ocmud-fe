@@ -1,7 +1,32 @@
 'use strict';
 
-//  all class attributes to reduce duplication
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _auth = require('./auth');
+
+var _auth2 = _interopRequireDefault(_auth);
+
+var _api = require('./api');
+
+var _api2 = _interopRequireDefault(_api);
+
+var _app = require('./app');
+
+var _app2 = _interopRequireDefault(_app);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//  all class attributes to reduce duplication
 var classes = {
     entireRow: "col-xs-12 col-sm-12 col-md-12 col-lg-12",
     quarterRow: "col-xs-3 col-sm-3 col-md-3 col-lg-3",
@@ -18,198 +43,198 @@ var classes = {
 };
 
 //  Command legend
-var CommandLegend = React.createClass({
-    displayName: "CommandLegend",
+var CommandLegend = _react2.default.createClass({
+    displayName: 'CommandLegend',
 
     render: function render() {
-        return React.createElement(
-            "center",
+        return _react2.default.createElement(
+            'center',
             null,
-            React.createElement(
-                "h3",
+            _react2.default.createElement(
+                'h3',
                 null,
-                "Command Reference"
+                'Command Reference'
             ),
-            React.createElement(
-                "dl",
+            _react2.default.createElement(
+                'dl',
                 null,
-                React.createElement(
-                    "div",
-                    { className: "row" },
-                    React.createElement(
-                        "span",
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'span',
                         { className: classes.quarterRow },
-                        React.createElement(
-                            "dt",
+                        _react2.default.createElement(
+                            'dt',
                             null,
-                            "←"
+                            '←'
                         ),
-                        React.createElement(
-                            "dd",
+                        _react2.default.createElement(
+                            'dd',
                             null,
-                            "Travel west"
+                            'Travel west'
                         )
                     ),
-                    React.createElement(
-                        "span",
+                    _react2.default.createElement(
+                        'span',
                         { className: classes.quarterRow },
-                        React.createElement(
-                            "dt",
+                        _react2.default.createElement(
+                            'dt',
                             null,
-                            "↑"
+                            '↑'
                         ),
-                        React.createElement(
-                            "dd",
+                        _react2.default.createElement(
+                            'dd',
                             null,
-                            "Travel north"
+                            'Travel north'
                         )
                     ),
-                    React.createElement(
-                        "span",
+                    _react2.default.createElement(
+                        'span',
                         { className: classes.quarterRow },
-                        React.createElement(
-                            "dt",
+                        _react2.default.createElement(
+                            'dt',
                             null,
-                            "→"
+                            '→'
                         ),
-                        React.createElement(
-                            "dd",
+                        _react2.default.createElement(
+                            'dd',
                             null,
-                            "Travel east"
+                            'Travel east'
                         )
                     ),
-                    React.createElement(
-                        "span",
+                    _react2.default.createElement(
+                        'span',
                         { className: classes.quarterRow },
-                        React.createElement(
-                            "dt",
+                        _react2.default.createElement(
+                            'dt',
                             null,
-                            "↓"
+                            '↓'
                         ),
-                        React.createElement(
-                            "dd",
+                        _react2.default.createElement(
+                            'dd',
                             null,
-                            "Travel south"
+                            'Travel south'
                         )
                     )
                 ),
-                React.createElement(
-                    "div",
-                    { className: "row" },
-                    React.createElement(
-                        "span",
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'span',
                         { className: classes.quarterRow },
-                        React.createElement(
-                            "dt",
+                        _react2.default.createElement(
+                            'dt',
                             null,
-                            "W"
+                            'W'
                         ),
-                        React.createElement(
-                            "dd",
+                        _react2.default.createElement(
+                            'dd',
                             null,
-                            "Write"
+                            'Write'
                         )
                     ),
-                    React.createElement(
-                        "span",
+                    _react2.default.createElement(
+                        'span',
                         { className: classes.quarterRow },
-                        React.createElement(
-                            "dt",
+                        _react2.default.createElement(
+                            'dt',
                             null,
-                            "S"
+                            'S'
                         ),
-                        React.createElement(
-                            "dd",
+                        _react2.default.createElement(
+                            'dd',
                             null,
-                            "Speak"
+                            'Speak'
                         )
                     ),
-                    React.createElement(
-                        "span",
+                    _react2.default.createElement(
+                        'span',
                         { className: classes.quarterRow },
-                        React.createElement(
-                            "dt",
+                        _react2.default.createElement(
+                            'dt',
                             null,
-                            "J"
+                            'J'
                         ),
-                        React.createElement(
-                            "dd",
+                        _react2.default.createElement(
+                            'dd',
                             null,
-                            "Jump"
+                            'Jump'
                         )
                     ),
-                    React.createElement(
-                        "span",
+                    _react2.default.createElement(
+                        'span',
                         { className: classes.quarterRow },
-                        React.createElement(
-                            "dt",
+                        _react2.default.createElement(
+                            'dt',
                             null,
-                            "L"
+                            'L'
                         ),
-                        React.createElement(
-                            "dd",
+                        _react2.default.createElement(
+                            'dd',
                             null,
-                            "Look around (refresh)"
+                            'Look around (refresh)'
                         )
                     )
                 ),
-                React.createElement(
-                    "div",
-                    { className: "row" },
-                    React.createElement(
-                        "span",
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'span',
                         { className: classes.quarterRow },
-                        React.createElement(
-                            "dt",
+                        _react2.default.createElement(
+                            'dt',
                             null,
-                            "Esc"
+                            'Esc'
                         ),
-                        React.createElement(
-                            "dd",
+                        _react2.default.createElement(
+                            'dd',
                             null,
-                            "Special command menu"
+                            'Special command menu'
                         )
                     ),
-                    React.createElement(
-                        "span",
+                    _react2.default.createElement(
+                        'span',
                         { className: classes.quarterRow },
-                        React.createElement(
-                            "dt",
+                        _react2.default.createElement(
+                            'dt',
                             null,
-                            "M"
+                            'M'
                         ),
-                        React.createElement(
-                            "dd",
+                        _react2.default.createElement(
+                            'dd',
                             null,
-                            "Make new location"
+                            'Make new location'
                         )
                     ),
-                    React.createElement(
-                        "span",
+                    _react2.default.createElement(
+                        'span',
                         { className: classes.quarterRow },
-                        React.createElement(
-                            "dt",
+                        _react2.default.createElement(
+                            'dt',
                             null,
-                            "C"
+                            'C'
                         ),
-                        React.createElement(
-                            "dd",
+                        _react2.default.createElement(
+                            'dd',
                             null,
-                            "Connect location"
+                            'Connect location'
                         )
                     ),
-                    React.createElement(
-                        "span",
+                    _react2.default.createElement(
+                        'span',
                         { className: classes.quarterRow },
-                        React.createElement(
-                            "dt",
+                        _react2.default.createElement(
+                            'dt',
                             null,
-                            "Q"
+                            'Q'
                         ),
-                        React.createElement(
-                            "dd",
+                        _react2.default.createElement(
+                            'dd',
                             null,
-                            "Quit"
+                            'Quit'
                         )
                     )
                 )
@@ -219,8 +244,8 @@ var CommandLegend = React.createClass({
 });
 
 //  Authentication form
-var AuthForm = React.createClass({
-    displayName: "AuthForm",
+var AuthForm = _react2.default.createClass({
+    displayName: 'AuthForm',
 
     statics: {
         containingElement: document.getElementById('auth')
@@ -251,7 +276,7 @@ var AuthForm = React.createClass({
         console.log("Explore mode. Launching socket.");
         this.setDisabled(true);
         this.hide();
-        return initApi();
+        return _api2.default.init();
     },
     submit: function authHandler(e) {
         e.preventDefault();
@@ -260,7 +285,7 @@ var AuthForm = React.createClass({
 
         var username = e.target.username.value;
 
-        auth.enticate({
+        _auth2.default.enticate({
             'username': username,
             password: e.target.password.value,
             email: e.target.email.value,
@@ -274,8 +299,8 @@ var AuthForm = React.createClass({
         return function () {
             console.log("Auth successful. Launching socket.");
             self.hide();
-            app.loggedInAs = username;
-            return initApi();
+            _app2.default.loggedInAs = username;
+            return _api2.default.init();
         };
     },
     authFailure: function authFailure() {
@@ -295,149 +320,149 @@ var AuthForm = React.createClass({
         });
     },
     render: function render() {
-        return React.createElement(
-            "form",
+        return _react2.default.createElement(
+            'form',
             { onSubmit: this.submit },
-            React.createElement(
-                "center",
-                { className: "row" },
-                React.createElement(
-                    "h1",
+            _react2.default.createElement(
+                'center',
+                { className: 'row' },
+                _react2.default.createElement(
+                    'h1',
                     { className: classes.entireRow },
-                    "Register or Log In"
+                    'Register or Log In'
                 )
             ),
-            React.createElement(
-                "div",
-                { className: "row directions" },
-                React.createElement(
-                    "div",
+            _react2.default.createElement(
+                'div',
+                { className: 'row directions' },
+                _react2.default.createElement(
+                    'div',
                     { className: classes.entireRow },
-                    React.createElement(
-                        "h3",
+                    _react2.default.createElement(
+                        'h3',
                         null,
-                        "To ",
-                        React.createElement(
-                            "strong",
+                        'To ',
+                        _react2.default.createElement(
+                            'strong',
                             null,
-                            "log in"
+                            'log in'
                         ),
-                        ", supply your username and password and click the \"log in\" button."
+                        ', supply your username and password and click the "log in" button.'
                     ),
-                    React.createElement(
-                        "h3",
+                    _react2.default.createElement(
+                        'h3',
                         null,
-                        "To ",
-                        React.createElement(
-                            "strong",
+                        'To ',
+                        _react2.default.createElement(
+                            'strong',
                             null,
-                            "register an account"
+                            'register an account'
                         ),
-                        ", simply provide an email with your desired username and password."
+                        ', simply provide an email with your desired username and password.'
                     ),
-                    React.createElement(
-                        "h3",
+                    _react2.default.createElement(
+                        'h3',
                         null,
-                        "If the username does not exist, and account by that name will be created for you. If the username is already claimed, you will be asked to choose another one."
+                        'If the username does not exist, and account by that name will be created for you. If the username is already claimed, you will be asked to choose another one.'
                     ),
-                    React.createElement(
-                        "h3",
+                    _react2.default.createElement(
+                        'h3',
                         null,
-                        "You also have the option to ",
-                        React.createElement(
-                            "strong",
+                        'You also have the option to ',
+                        _react2.default.createElement(
+                            'strong',
                             null,
-                            "explore ocmud"
+                            'explore ocmud'
                         ),
-                        ". Explorers aren't allowed to do all the things that creators (registered users) are, but are able to travel and see the world others have made."
+                        '. Explorers aren\'t allowed to do all the things that creators (registered users) are, but are able to travel and see the world others have made.'
                     )
                 )
             ),
-            this.state.error && React.createElement(
-                "center",
+            this.state.error && _react2.default.createElement(
+                'center',
                 { className: this.state.error.type },
-                React.createElement(
-                    "h2",
+                _react2.default.createElement(
+                    'h2',
                     null,
                     this.state.error.title
                 ),
-                React.createElement(
-                    "p",
+                _react2.default.createElement(
+                    'p',
                     null,
                     this.state.error.message
                 )
             ),
-            React.createElement(FormElement, { labelClass: classes.authLabel,
-                labelText: "Username",
+            _react2.default.createElement(FormElement, { labelClass: classes.authLabel,
+                labelText: 'Username',
                 inputClass: classes.authInput,
-                type: "text",
-                name: "username",
-                placeholder: "Username",
+                type: 'text',
+                name: 'username',
+                placeholder: 'Username',
                 disabled: this.state.disabled,
                 required: true }),
-            React.createElement(FormElement, { labelClass: classes.authLabel,
-                labelText: "Password",
+            _react2.default.createElement(FormElement, { labelClass: classes.authLabel,
+                labelText: 'Password',
                 inputClass: classes.authInput,
-                type: "password",
-                name: "password",
-                placeholder: "Password123!",
+                type: 'password',
+                name: 'password',
+                placeholder: 'Password123!',
                 disabled: this.state.disabled,
                 required: true }),
-            React.createElement(FormElement, { labelClass: classes.authLabel,
-                labelText: "Email*",
+            _react2.default.createElement(FormElement, { labelClass: classes.authLabel,
+                labelText: 'Email*',
                 inputClass: classes.authInput,
-                type: "email",
-                name: "email",
-                placeholder: "your@email.address",
+                type: 'email',
+                name: 'email',
+                placeholder: 'your@email.address',
                 disabled: this.state.disabled }),
-            React.createElement(
-                "center",
-                { className: "row" },
-                React.createElement(
-                    "button",
+            _react2.default.createElement(
+                'center',
+                { className: 'row' },
+                _react2.default.createElement(
+                    'button',
                     { className: classes.authBtn1,
                         disabled: this.state.disabled,
-                        type: "submit" },
-                    "Log in / Register"
+                        type: 'submit' },
+                    'Log in / Register'
                 ),
-                React.createElement(
-                    "button",
+                _react2.default.createElement(
+                    'button',
                     { className: classes.authBtn2,
                         disabled: this.state.disabled,
-                        type: "button",
+                        type: 'button',
                         onClick: this.explore },
-                    "Explore as a guest"
+                    'Explore as a guest'
                 )
             ),
-            React.createElement(
-                "center",
-                { className: "row" },
-                React.createElement(
-                    "span",
+            _react2.default.createElement(
+                'center',
+                { className: 'row' },
+                _react2.default.createElement(
+                    'span',
                     { className: classes.entireRow },
-                    "* Required for registration, not required when logging in."
+                    '* Required for registration, not required when logging in.'
                 )
             )
         );
     }
 });
 //'
-var FormElement = React.createClass({
-    displayName: "FormElement",
+var FormElement = _react2.default.createClass({
+    displayName: 'FormElement',
 
     render: function render() {
-        return React.createElement(
-            "center",
-            { className: "row" },
-            React.createElement(
-                "label",
+        return _react2.default.createElement(
+            'center',
+            { className: 'row' },
+            _react2.default.createElement(
+                'label',
                 null,
-                React.createElement(
-                    "span",
+                _react2.default.createElement(
+                    'span',
                     { className: this.props.labelClass },
                     this.props.labelText
                 ),
-                React.createElement("input", { className: this.props.inputClass,
+                _react2.default.createElement('input', { className: this.props.inputClass,
                     disabled: this.props.disabled,
                     type: this.props.type, name: this.props.name,
                     placeholder: this.props.placeholder,
@@ -448,8 +473,8 @@ var FormElement = React.createClass({
 });
 
 //  Option form
-var OptionForm = React.createClass({
-    displayName: "OptionForm",
+var OptionForm = _react2.default.createClass({
+    displayName: 'OptionForm',
 
     statics: {
         containingElement: document.getElementById('option-form')
@@ -496,57 +521,57 @@ var OptionForm = React.createClass({
                 var index = row * perRow + option;
                 var currOption = this.state.options[index];
 
-                currRow.push(React.createElement(OptionElement, { key: index,
+                currRow.push(_react2.default.createElement(OptionElement, { key: index,
                     labelText: currOption.name,
                     labelClass: perRow === 6 ? classes.sixthRow : classes.quarterRow,
                     name: this.state.name,
                     value: currOption.value }));
             }
 
-            rows.push(React.createElement(
-                "center",
-                { key: row, className: "row" },
+            rows.push(_react2.default.createElement(
+                'center',
+                { key: row, className: 'row' },
                 currRow
             ));
         }
 
-        return React.createElement(
-            "form",
+        return _react2.default.createElement(
+            'form',
             { onSubmit: this.state.submitHandler },
-            React.createElement(
-                "center",
-                { className: "row" },
-                React.createElement(
-                    "h1",
+            _react2.default.createElement(
+                'center',
+                { className: 'row' },
+                _react2.default.createElement(
+                    'h1',
                     { className: classes.entireRow },
                     this.state.title
                 )
             ),
-            React.createElement(
-                "center",
-                { className: "row" },
-                React.createElement(
-                    "h3",
+            _react2.default.createElement(
+                'center',
+                { className: 'row' },
+                _react2.default.createElement(
+                    'h3',
                     { className: classes.entireRow },
                     this.state.description
                 )
             ),
             rows,
-            React.createElement(
-                "center",
-                { className: "row" },
-                React.createElement(
-                    "button",
+            _react2.default.createElement(
+                'center',
+                { className: 'row' },
+                _react2.default.createElement(
+                    'button',
                     { className: classes.optButton,
-                        type: "submit" },
+                        type: 'submit' },
                     this.state.buttonTitle
                 )
             )
         );
     }
 });
-var OptionElement = React.createClass({
-    displayName: "OptionElement",
+var OptionElement = _react2.default.createClass({
+    displayName: 'OptionElement',
 
     statics: {
         changeHandler: function changeHandler(e) {
@@ -557,17 +582,17 @@ var OptionElement = React.createClass({
         }
     },
     render: function render() {
-        return React.createElement(
-            "label",
-            { className: this.props.labelClass + " option" },
-            React.createElement(
-                "span",
+        return _react2.default.createElement(
+            'label',
+            { className: this.props.labelClass + ' option' },
+            _react2.default.createElement(
+                'span',
                 null,
                 this.props.labelText
             ),
-            React.createElement("input", { className: "hidden",
-                type: "radio", name: this.props.name,
-                required: "true",
+            _react2.default.createElement('input', { className: 'hidden',
+                type: 'radio', name: this.props.name,
+                required: 'true',
                 onChange: OptionElement.changeHandler,
                 value: this.props.value })
         );
@@ -575,8 +600,8 @@ var OptionElement = React.createClass({
 });
 
 //  Generic form with one text box input
-var OneLineForm = React.createClass({
-    displayName: "OneLineForm",
+var OneLineForm = _react2.default.createClass({
+    displayName: 'OneLineForm',
 
     statics: {
         containingElement: document.getElementById('line-form')
@@ -607,38 +632,38 @@ var OneLineForm = React.createClass({
         return OneLineForm.containingElement.querySelector('form').reset();
     },
     render: function render() {
-        return React.createElement(
-            "form",
+        return _react2.default.createElement(
+            'form',
             { onSubmit: this.state.submitHandler },
-            React.createElement(
-                "center",
-                { className: "row" },
-                React.createElement(
-                    "h1",
+            _react2.default.createElement(
+                'center',
+                { className: 'row' },
+                _react2.default.createElement(
+                    'h1',
                     { className: classes.entireRow },
                     this.state.title
                 )
             ),
-            React.createElement(
-                "center",
-                { className: "row" },
-                React.createElement(
-                    "h3",
+            _react2.default.createElement(
+                'center',
+                { className: 'row' },
+                _react2.default.createElement(
+                    'h3',
                     { className: classes.entireRow },
                     this.state.description
                 )
             ),
-            React.createElement(
-                "div",
-                { className: "row" },
-                React.createElement("input", { className: classes.olfInputBox,
-                    type: "text",
+            _react2.default.createElement(
+                'div',
+                { className: 'row' },
+                _react2.default.createElement('input', { className: classes.olfInputBox,
+                    type: 'text',
                     name: this.state.name,
                     placeholder: this.state.placeholder }),
-                React.createElement(
-                    "button",
+                _react2.default.createElement(
+                    'button',
                     { className: classes.olfButton,
-                        type: "submit" },
+                        type: 'submit' },
                     this.state.buttonTitle
                 )
             )
@@ -653,8 +678,8 @@ var directionNames = {
     'w': 'west',
     's': 'south'
 };
-var Location = React.createClass({
-    displayName: "Location",
+var Location = _react2.default.createClass({
+    displayName: 'Location',
 
     getInitialState: function getInitialState() {
         return {
@@ -682,7 +707,7 @@ var Location = React.createClass({
         } else if (exits.length === 2) {
             result = exits.join(' and ');
         } else {
-            result = exits.slice(0, exits.length - 1).join(', ') + ", and " + exits[exits.length - 1];
+            result = exits.slice(0, exits.length - 1).join(', ') + ', and ' + exits[exits.length - 1];
         }
 
         return {
@@ -694,48 +719,48 @@ var Location = React.createClass({
         var exits = this.renderExits();
         var surfaceExists = this.state.writings && this.state.writings.length > 0;
 
-        return React.createElement(
-            "div",
+        return _react2.default.createElement(
+            'div',
             null,
-            React.createElement(
-                "div",
-                { className: "row" },
-                React.createElement(
-                    "center",
+            _react2.default.createElement(
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                    'center',
                     { className: classes[surfaceExists ? 'location' : 'locOnly'] },
-                    React.createElement(
-                        "h1",
+                    _react2.default.createElement(
+                        'h1',
                         null,
                         this.state.name
                     ),
-                    React.createElement(
-                        "h3",
+                    _react2.default.createElement(
+                        'h3',
                         null,
                         this.state.description
                     ),
-                    React.createElement(
-                        "h3",
+                    _react2.default.createElement(
+                        'h3',
                         null,
-                        "There are ",
+                        'There are ',
                         exits.num > 0 ? '' : 'no ',
-                        "exits",
+                        'exits',
                         exits.num > 0 ? ' to the ' : '',
-                        React.createElement(
-                            "strong",
+                        _react2.default.createElement(
+                            'strong',
                             null,
                             exits.directions
                         ),
-                        " here."
+                        ' here.'
                     ),
-                    this.state.surface && React.createElement(
-                        "h4",
+                    this.state.surface && _react2.default.createElement(
+                        'h4',
                         null,
-                        "There is a ",
+                        'There is a ',
                         this.state.surface,
-                        " here."
+                        ' here.'
                     )
                 ),
-                surfaceExists && React.createElement(Surface, {
+                surfaceExists && _react2.default.createElement(Surface, {
                     name: this.state.surface,
                     writings: this.state.writings,
                     className: classes.surface })
@@ -745,91 +770,91 @@ var Location = React.createClass({
 });
 
 //  Surface view
-var Surface = React.createClass({
-    displayName: "Surface",
+var Surface = _react2.default.createClass({
+    displayName: 'Surface',
 
     render: function render() {
-        return React.createElement(
-            "center",
-            { className: "surface " + this.props.className, id: "surfaceView" },
-            React.createElement(
-                "h2",
+        return _react2.default.createElement(
+            'center',
+            { className: 'surface ' + this.props.className, id: 'surfaceView' },
+            _react2.default.createElement(
+                'h2',
                 null,
-                this.props.name ? "A " + this.props.name : 'Nothing'
+                this.props.name ? 'A ' + this.props.name : 'Nothing'
             ),
-            React.createElement(WritingList, { writings: this.props.writings })
+            _react2.default.createElement(WritingList, { writings: this.props.writings })
         );
     }
 });
-var WritingList = React.createClass({
-    displayName: "WritingList",
+var WritingList = _react2.default.createClass({
+    displayName: 'WritingList',
 
     render: function render() {
         var writings = this.props.writings.map(function (writing, index) {
-            return React.createElement(Writing, { key: index, author: writing.author, text: writing.message });
+            return _react2.default.createElement(Writing, { key: index, author: writing.author, text: writing.message });
         });
-        return React.createElement(
-            "ul",
-            { className: "writingList" },
+        return _react2.default.createElement(
+            'ul',
+            { className: 'writingList' },
             writings
         );
     }
 });
 
 //  convert this into a generic form that is customizable by setting its state
-var WriteForm = React.createClass({
-    displayName: "WriteForm",
+var WriteForm = _react2.default.createClass({
+    displayName: 'WriteForm',
 
     render: function render() {
-        return React.createElement(
-            "form",
-            { className: "writeForm", onSubmit: this.props.onSubmit },
-            React.createElement(
-                "label",
+        return _react2.default.createElement(
+            'form',
+            { className: 'writeForm', onSubmit: this.props.onSubmit },
+            _react2.default.createElement(
+                'label',
                 null,
-                "Message: ",
-                React.createElement("input", { name: "message", placeholder: "A message for passerby." })
+                'Message: ',
+                _react2.default.createElement('input', { name: 'message', placeholder: 'A message for passerby.' })
             ),
-            React.createElement("input", { type: "submit", value: "Write" })
+            _react2.default.createElement('input', { type: 'submit', value: 'Write' })
         );
     }
 });
-var Writing = React.createClass({
-    displayName: "Writing",
+var Writing = _react2.default.createClass({
+    displayName: 'Writing',
 
     render: function render() {
-        return React.createElement(
-            "li",
-            { className: "writing" },
-            "\"",
-            React.createElement(
-                "em",
+        return _react2.default.createElement(
+            'li',
+            { className: 'writing' },
+            '"',
+            _react2.default.createElement(
+                'em',
                 null,
                 this.props.text
             ),
-            "\", written by ",
-            React.createElement(
-                "strong",
+            '", written by ',
+            _react2.default.createElement(
+                'strong',
                 null,
                 this.props.author
             ),
-            "."
+            '.'
         );
     }
 });
 
 //  Info & chat view
-var Log = React.createClass({
-    displayName: "Log",
+var Log = _react2.default.createClass({
+    displayName: 'Log',
 
     componentWillUpdate: function componentWillUpdate() {
-        var domNode = ReactDOM.findDOMNode(this);
+        var domNode = _reactDom2.default.findDOMNode(this);
         this.shouldScroll = Array.prototype.map.call(domNode.children, function (n, i) {
             return Math.abs(n.scrollTop + n.offsetHeight - n.scrollHeight) <= 1;
         });
     },
     componentDidUpdate: function componentDidUpdate() {
-        var domNode = ReactDOM.findDOMNode(this);
+        var domNode = _reactDom2.default.findDOMNode(this);
         this.shouldScroll.forEach(function (shouldUpdate, index) {
             if (shouldUpdate) {
                 var currNode = domNode.children[index];
@@ -846,46 +871,46 @@ var Log = React.createClass({
             return self.props.formatMessage('fresh', m, i);
         });
 
-        return React.createElement(
-            "center",
+        return _react2.default.createElement(
+            'center',
             { className: this.props.type.toLowerCase() + 'Box' },
-            React.createElement(
-                "h3",
+            _react2.default.createElement(
+                'h3',
                 null,
                 this.props.type
             ),
-            React.createElement(
-                "div",
-                { className: "staleMessages" },
-                React.createElement(
-                    "h4",
+            _react2.default.createElement(
+                'div',
+                { className: 'staleMessages' },
+                _react2.default.createElement(
+                    'h4',
                     null,
-                    "Older messages"
+                    'Older messages'
                 ),
                 staleMessages
             ),
-            React.createElement(
-                "div",
-                { className: "freshMessages" },
-                React.createElement(
-                    "h4",
+            _react2.default.createElement(
+                'div',
+                { className: 'freshMessages' },
+                _react2.default.createElement(
+                    'h4',
                     null,
-                    "New messages"
+                    'New messages'
                 ),
                 freshMessages
             )
         );
     }
 });
-var InfoLog = React.createClass({
-    displayName: "InfoLog",
+var InfoLog = _react2.default.createClass({
+    displayName: 'InfoLog',
 
     statics: {
         formatMessage: function formatMessage(type, msg, index) {
-            return React.createElement(
-                "div",
+            return _react2.default.createElement(
+                'div',
                 { key: index, className: type + 'Message' },
-                "[" + msg.type + "] " + msg.message
+                '[' + msg.type + '] ' + msg.message
             );
         }
     },
@@ -917,18 +942,18 @@ var InfoLog = React.createClass({
         this.forceUpdate();
     },
     render: function render() {
-        return React.createElement(Log, { type: "Info", messages: this.state.messages, formatMessage: InfoLog.formatMessage });
+        return _react2.default.createElement(Log, { type: 'Info', messages: this.state.messages, formatMessage: InfoLog.formatMessage });
     }
 });
-var ChatLog = React.createClass({
-    displayName: "ChatLog",
+var ChatLog = _react2.default.createClass({
+    displayName: 'ChatLog',
 
     statics: {
         formatMessage: function formatMessage(type, msg, index) {
-            return React.createElement(
-                "div",
+            return _react2.default.createElement(
+                'div',
                 { key: index, className: type + 'Message' },
-                "<" + msg.from + "> " + msg.message
+                '<' + msg.from + '> ' + msg.message
             );
         }
     },
@@ -960,17 +985,17 @@ var ChatLog = React.createClass({
         this.forceUpdate();
     },
     render: function render() {
-        return React.createElement(Log, { type: "Chat", messages: this.state.messages, formatMessage: ChatLog.formatMessage });
+        return _react2.default.createElement(Log, { type: 'Chat', messages: this.state.messages, formatMessage: ChatLog.formatMessage });
     }
 });
 
-window.reactViews = {
-    form: ReactDOM.render(React.createElement(OneLineForm, null), OneLineForm.containingElement),
-    authForm: ReactDOM.render(React.createElement(AuthForm, null), AuthForm.containingElement),
-    optionForm: ReactDOM.render(React.createElement(OptionForm, null), OptionForm.containingElement),
-    location: ReactDOM.render(React.createElement(Location, null), document.getElementById('location')),
-    infoLog: ReactDOM.render(React.createElement(InfoLog, null), document.getElementById('infoLog')),
-    chatLog: ReactDOM.render(React.createElement(ChatLog, null), document.getElementById('chatLog')),
-    commandLegend: ReactDOM.render(React.createElement(CommandLegend, null), document.getElementById('commands'))
+exports.default = {
+    form: _reactDom2.default.render(_react2.default.createElement(OneLineForm, null), OneLineForm.containingElement),
+    authForm: _reactDom2.default.render(_react2.default.createElement(AuthForm, null), AuthForm.containingElement),
+    optionForm: _reactDom2.default.render(_react2.default.createElement(OptionForm, null), OptionForm.containingElement),
+    location: _reactDom2.default.render(_react2.default.createElement(Location, null), document.getElementById('location')),
+    infoLog: _reactDom2.default.render(_react2.default.createElement(InfoLog, null), document.getElementById('infoLog')),
+    chatLog: _reactDom2.default.render(_react2.default.createElement(ChatLog, null), document.getElementById('chatLog')),
+    commandLegend: _reactDom2.default.render(_react2.default.createElement(CommandLegend, null), document.getElementById('commands'))
 };
 //# sourceMappingURL=react.js.map

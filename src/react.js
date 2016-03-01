@@ -1,4 +1,8 @@
-'use strict';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import auth from './auth';
+import api from './api';
+import app from './app';
 
 //  all class attributes to reduce duplication
 let classes = {
@@ -114,7 +118,7 @@ let AuthForm = React.createClass({
         console.log("Explore mode. Launching socket.");
         this.setDisabled(true);
         this.hide();
-        return initApi();
+        return api.init();
     },
     submit : function authHandler(e) {
         e.preventDefault();
@@ -138,7 +142,7 @@ let AuthForm = React.createClass({
             console.log("Auth successful. Launching socket.");
             self.hide();
             app.loggedInAs = username;
-            return initApi();
+            return api.init();
         };
     },
     authFailure : function() {
@@ -658,7 +662,7 @@ let ChatLog = React.createClass({
     }
 });
 
-window.reactViews = {
+export default {
     form : ReactDOM.render(
         <OneLineForm />,
         OneLineForm.containingElement

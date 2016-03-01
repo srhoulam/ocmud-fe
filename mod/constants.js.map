@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/constants.js"],"names":[],"mappings":";;;;;kBAAe;AACX,gBAAa,uBAAb","file":"constants.js","sourcesContent":["export default {\n    backendURL : \"http://localhost:3000\"\n};\n"]}

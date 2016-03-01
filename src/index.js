@@ -1,8 +1,4 @@
-'use strict';
-
-var app = {
-    loggedInAs : false
-};
+import ui from './ui';
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOMContentLoaded");

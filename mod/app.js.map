@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/app.js"],"names":[],"mappings":";;;;;kBAAe;AACX,gBAAa,KAAb","file":"app.js","sourcesContent":["export default {\n    loggedInAs : false\n};\n"]}

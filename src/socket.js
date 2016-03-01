@@ -1,17 +1,12 @@
-'use strict';
+import app from './app';
 
-var socket = {
+export default {
     init : function initSocket(url) {
-        try {
-            api.quit();
-        } catch(error) {
-            //  no existing connection to terminate
-        }
-
-        var socket = io(url, {
+        return io(url, {
             forceNew : true
         });
-
+    },
+    configure : function(socket, methods, api) {
         //  yes, this is actually necessary
         function detectDowngrade() {
             console.log("detectDowngrade");
@@ -45,26 +40,24 @@ var socket = {
         });
 
         socket.on("info", function(info) {
-            ui.methods.addToInfoLog('info', info);
+            methods.addToInfoLog('info', info);
         });
 
         socket.on("numClients", num => console.log("numClients:", num.clients));
 
-        socket.on("travel", ui.methods.handleTravel);
+        socket.on("travel", methods.handleTravel);
         socket.on("action", function(info) {
             if(info === true) {
                 api.look();
             } else {
-                ui.methods.addToInfoLog('action', info);
+                methods.addToInfoLog('action', info);
             }
         });
         socket.on("locations", function(locs) {
-            ui.methods.addToInfoLog('locations', locs);
+            methods.addToInfoLog('locations', locs);
         });
 
-        socket.on("sight", ui.methods.displaySight);
-        socket.on("speech", ui.methods.addToChatLog);
-
-        return socket;
+        socket.on("sight", methods.displaySight);
+        socket.on("speech", methods.addToChatLog);
     }
 };
