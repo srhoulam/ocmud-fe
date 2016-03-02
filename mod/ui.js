@@ -25,6 +25,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Api = undefined;
 
 var ui = function () {
+    var elements = {
+        optionForm: document.getElementById("option-form")
+    };
+
     function genericSubmitterFactory(helper) {
         return function (e) {
             e.preventDefault();
@@ -236,7 +240,7 @@ var ui = function () {
                         Api.look();
                         break;
                     case 'm':
-                        ui.commands.create();
+                        ifLoggedIn(ui.commands.create);
                         break;
                     case 'q':
                         ui.commands.quit();
@@ -262,9 +266,32 @@ var ui = function () {
                 }
             },
             keyPressOption: function optionKeyCommand(event) {
-                var keyPressed = processKey(event.key || event.keyCode);
+                var keyPressed = processKey(event.key || event.keyCode).toLowerCase();
 
-                switch (keyPressed.toLowerCase()) {
+                switch (keyPressed) {
+                    case 'arrowleft':
+                    case 'arrowright':
+                    case 'arrowup':
+                    case 'arrowdown':
+                        var choice = elements.optionForm.querySelector('input[value=' + _constants2.default.directionArrows[keyPressed] + ']');
+                        if (choice) {
+                            choice.click();
+                        } else if (keyPressed === 'arrowleft' || keyPressed === 'arrowright') {
+                            var offset = keyPressed === 'arrowleft' ? -1 : 1;
+                            var inputs = elements.optionForm.querySelectorAll('input');
+                            for (var index = 0; index < inputs.length; index++) {
+                                if (inputs[index].checked) {
+                                    inputs[index + offset % inputs.length].click();
+                                    break;
+                                }
+                                if (index === inputs.length - 1) {
+                                    inputs[0].click();
+                                }
+                            }
+                        }
+
+                        elements.optionForm.querySelector("button[type=submit]").focus();
+                        break;
                     case 'escape':
                         ui.methods.ignoreOption();
                         _react2.default.optionForm.hide();
@@ -314,22 +341,7 @@ var ui = function () {
                 return ui.methods.listenOLF();
             },
             travel: function travel(key) {
-                var direction = undefined;
-
-                switch (key) {
-                    case 'arrowleft':
-                        direction = 'w';
-                        break;
-                    case 'arrowright':
-                        direction = 'e';
-                        break;
-                    case 'arrowup':
-                        direction = 'n';
-                        break;
-                    case 'arrowdown':
-                        direction = 's';
-                        break;
-                }
+                var direction = _constants2.default.directionArrows[key];
 
                 if (!direction) {
                     return;

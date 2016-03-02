@@ -5,6 +5,10 @@ import app from './app';
 let Api;
 
 var ui = (function() {
+    let elements = {
+        optionForm : document.getElementById("option-form")
+    };
+
     function genericSubmitterFactory(helper) {
         return function(e) {
             e.preventDefault();
@@ -220,7 +224,7 @@ var ui = (function() {
                         Api.look();
                         break;
                     case 'm':
-                        ui.commands.create();
+                        ifLoggedIn(ui.commands.create);
                         break;
                     case 'q':
                         ui.commands.quit();
@@ -246,9 +250,36 @@ var ui = (function() {
                 }
             },
             keyPressOption : function optionKeyCommand(event) {
-                let keyPressed = processKey(event.key || event.keyCode);
+                let keyPressed = processKey(event.key || event.keyCode).toLowerCase();
 
-                switch(keyPressed.toLowerCase()) {
+                switch(keyPressed) {
+                    case 'arrowleft':
+                    case 'arrowright':
+                    case 'arrowup':
+                    case 'arrowdown':
+                        let choice = elements.optionForm.
+                            querySelector(`input[value=${constants.directionArrows[keyPressed]}]`);
+                        if(choice) {
+                            choice.click();
+                        } else if(keyPressed === 'arrowleft' || keyPressed === 'arrowright') {
+                            let offset = keyPressed === 'arrowleft' ? -1 : 1;
+                            let inputs = elements.optionForm.
+                                querySelectorAll('input');
+                            for(let index = 0; index < inputs.length; index++) {
+                                if(inputs[index].checked) {
+                                    inputs[index + offset % inputs.length].click();
+                                    break;
+                                }
+                                if(index === inputs.length - 1) {
+                                    inputs[0].click();
+                                }
+                            }
+                        }
+
+                        elements.optionForm.
+                            querySelector("button[type=submit]").
+                            focus();
+                        break;
                     case 'escape':
                         ui.methods.ignoreOption();
                         react.optionForm.hide();
@@ -302,22 +333,7 @@ var ui = (function() {
                 return ui.methods.listenOLF();
             },
             travel : function travel(key) {
-                let direction;
-
-                switch(key) {
-                    case 'arrowleft':
-                        direction = 'w';
-                        break;
-                    case 'arrowright':
-                        direction = 'e';
-                        break;
-                    case 'arrowup':
-                        direction = 'n';
-                        break;
-                    case 'arrowdown':
-                        direction = 's';
-                        break;
-                }
+                let direction = constants.directionArrows[key];
 
                 if(!direction) {
                     return;
