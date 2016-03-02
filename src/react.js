@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import auth from './auth';
 import api from './api';
 import app from './app';
+import constants from './constants';
 
 //  all class attributes to reduce duplication
 let classes = {
@@ -308,7 +309,7 @@ let OptionForm = React.createClass({
                         labelText={currOption.name}
                         labelClass={perRow === 6 ? classes.sixthRow : classes.quarterRow}
                         name={this.state.name || "choice"}
-                        value={index} />
+                        value={currOption.value || index} />
                 );
             }
 
@@ -417,12 +418,6 @@ let OneLineForm = React.createClass({
 });
 
 //  Location view
-const directionNames = {
-    'n' : 'north',
-    'e' : 'east',
-    'w' : 'west',
-    's' : 'south'
-};
 let Location = React.createClass({
     getInitialState : function() {
         return {
@@ -439,7 +434,7 @@ let Location = React.createClass({
     },
     renderExits : function() {
         let exits = this.state.exits.map(function(d) {
-            return directionNames[d];
+            return constants.directionNames[d];
         });
         let result;
 

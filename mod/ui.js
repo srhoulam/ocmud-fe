@@ -8,6 +8,10 @@ var _react = require('./react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _constants = require('./constants');
+
+var _constants2 = _interopRequireDefault(_constants);
+
 var _api = require('./api');
 
 var _api2 = _interopRequireDefault(_api);
@@ -71,7 +75,24 @@ var ui = function () {
     var optionFormSubmitters = {
         jump: genericSubmitterFactory(optionHelperFactory(function (e) {
             Api.jump(parseInt(e.target.location.value, 10));
-        }))
+        })),
+        create: genericSubmitterFactory(function (e) {
+            ui.methods.ignoreOption();
+            _react2.default.optionForm.hide();
+
+            var direction = e.target.direction.value;
+
+            _react2.default.form.setState(formStateFactories.createDesc(genericSubmitterFactory(function (e) {
+                ui.methods.ignoreOLF();
+                _react2.default.form.hide();
+                Api.create(direction, e.target.description.value);
+                _react2.default.form.setState(_react2.default.form.getInitialState());
+                ui.methods.listenMain();
+            })));
+            _react2.default.form.show();
+            ui.methods.listenOLF();
+            _react2.default.optionForm.setState(_react2.default.optionForm.getInitialState());
+        })
     };
     var formStateFactories = {
         jump: function jump(choiceArray) {
@@ -82,6 +103,26 @@ var ui = function () {
                 name: "location",
                 options: choiceArray,
                 submitHandler: optionFormSubmitters.jump
+            };
+        },
+        create: function create(exits) {
+            return {
+                title: "Create",
+                description: "Where do you wish to create the new location?",
+                buttonTitle: "Create",
+                name: "direction",
+                options: exits,
+                submitHandler: optionFormSubmitters.create
+            };
+        },
+        createDesc: function createDesc(submitHandler) {
+            return {
+                title: "Create",
+                name: "description",
+                description: "How would you describe the location you're creating?",
+                placeholder: "The official place to not be.",
+                buttonTitle: "Create",
+                submitHandler: submitHandler
             };
         }
     };
@@ -195,6 +236,7 @@ var ui = function () {
                         Api.look();
                         break;
                     case 'm':
+                        ui.commands.create();
                         break;
                     case 'q':
                         ui.commands.quit();
@@ -234,7 +276,21 @@ var ui = function () {
         },
         commands: {
             connect: function connect() {},
-            create: function create() {},
+            create: function create() {
+                ui.methods.ignoreMain();
+                _react2.default.optionForm.setState(formStateFactories.create(_constants2.default.directionList.filter(function (dir) {
+                    //  get the complement of the current location's
+                    //      available exits
+                    return _react2.default.location.state.exits.indexOf(dir) === -1;
+                }).map(function (dir) {
+                    return {
+                        name: _constants2.default.directionNames[dir],
+                        value: dir
+                    };
+                })));
+                _react2.default.optionForm.show();
+                return ui.methods.listenOption();
+            },
             jump: function jump() {
                 Api.list().then(function (locs) {
                     ui.methods.ignoreMain();

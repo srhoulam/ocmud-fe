@@ -24,6 +24,10 @@ var _app = require('./app');
 
 var _app2 = _interopRequireDefault(_app);
 
+var _constants = require('./constants');
+
+var _constants2 = _interopRequireDefault(_constants);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //  all class attributes to reduce duplication
@@ -526,7 +530,7 @@ var OptionForm = _react2.default.createClass({
                     labelText: currOption.name,
                     labelClass: perRow === 6 ? classes.sixthRow : classes.quarterRow,
                     name: this.state.name || "choice",
-                    value: index }));
+                    value: currOption.value || index }));
             }
 
             rows.push(_react2.default.createElement(
@@ -673,12 +677,6 @@ var OneLineForm = _react2.default.createClass({
 });
 
 //  Location view
-var directionNames = {
-    'n': 'north',
-    'e': 'east',
-    'w': 'west',
-    's': 'south'
-};
 var Location = _react2.default.createClass({
     displayName: 'Location',
 
@@ -697,7 +695,7 @@ var Location = _react2.default.createClass({
     },
     renderExits: function renderExits() {
         var exits = this.state.exits.map(function (d) {
-            return directionNames[d];
+            return _constants2.default.directionNames[d];
         });
         var result = undefined;
 

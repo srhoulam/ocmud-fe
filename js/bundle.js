@@ -73,6 +73,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _constants = __webpack_require__(162);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
 	var _api = __webpack_require__(163);
 	
 	var _api2 = _interopRequireDefault(_api);
@@ -136,7 +140,24 @@
 	    var optionFormSubmitters = {
 	        jump: genericSubmitterFactory(optionHelperFactory(function (e) {
 	            Api.jump(parseInt(e.target.location.value, 10));
-	        }))
+	        })),
+	        create: genericSubmitterFactory(function (e) {
+	            ui.methods.ignoreOption();
+	            _react2.default.optionForm.hide();
+	
+	            var direction = e.target.direction.value;
+	
+	            _react2.default.form.setState(formStateFactories.createDesc(genericSubmitterFactory(function (e) {
+	                ui.methods.ignoreOLF();
+	                _react2.default.form.hide();
+	                Api.create(direction, e.target.description.value);
+	                _react2.default.form.setState(_react2.default.form.getInitialState());
+	                ui.methods.listenMain();
+	            })));
+	            _react2.default.form.show();
+	            ui.methods.listenOLF();
+	            _react2.default.optionForm.setState(_react2.default.optionForm.getInitialState());
+	        })
 	    };
 	    var formStateFactories = {
 	        jump: function jump(choiceArray) {
@@ -147,6 +168,26 @@
 	                name: "location",
 	                options: choiceArray,
 	                submitHandler: optionFormSubmitters.jump
+	            };
+	        },
+	        create: function create(exits) {
+	            return {
+	                title: "Create",
+	                description: "Where do you wish to create the new location?",
+	                buttonTitle: "Create",
+	                name: "direction",
+	                options: exits,
+	                submitHandler: optionFormSubmitters.create
+	            };
+	        },
+	        createDesc: function createDesc(submitHandler) {
+	            return {
+	                title: "Create",
+	                name: "description",
+	                description: "How would you describe the location you're creating?",
+	                placeholder: "The official place to not be.",
+	                buttonTitle: "Create",
+	                submitHandler: submitHandler
 	            };
 	        }
 	    };
@@ -260,6 +301,7 @@
 	                        Api.look();
 	                        break;
 	                    case 'm':
+	                        ui.commands.create();
 	                        break;
 	                    case 'q':
 	                        ui.commands.quit();
@@ -299,7 +341,21 @@
 	        },
 	        commands: {
 	            connect: function connect() {},
-	            create: function create() {},
+	            create: function create() {
+	                ui.methods.ignoreMain();
+	                _react2.default.optionForm.setState(formStateFactories.create(_constants2.default.directionList.filter(function (dir) {
+	                    //  get the complement of the current location's
+	                    //      available exits
+	                    return _react2.default.location.state.exits.indexOf(dir) === -1;
+	                }).map(function (dir) {
+	                    return {
+	                        name: _constants2.default.directionNames[dir],
+	                        value: dir
+	                    };
+	                })));
+	                _react2.default.optionForm.show();
+	                return ui.methods.listenOption();
+	            },
 	            jump: function jump() {
 	                Api.list().then(function (locs) {
 	                    ui.methods.ignoreMain();
@@ -399,6 +455,10 @@
 	var _app = __webpack_require__(165);
 	
 	var _app2 = _interopRequireDefault(_app);
+	
+	var _constants = __webpack_require__(162);
+	
+	var _constants2 = _interopRequireDefault(_constants);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -902,7 +962,7 @@
 	                    labelText: currOption.name,
 	                    labelClass: perRow === 6 ? classes.sixthRow : classes.quarterRow,
 	                    name: this.state.name || "choice",
-	                    value: index }));
+	                    value: currOption.value || index }));
 	            }
 	
 	            rows.push(_react2.default.createElement(
@@ -1049,12 +1109,6 @@
 	});
 	
 	//  Location view
-	var directionNames = {
-	    'n': 'north',
-	    'e': 'east',
-	    'w': 'west',
-	    's': 'south'
-	};
 	var Location = _react2.default.createClass({
 	    displayName: 'Location',
 	
@@ -1073,7 +1127,7 @@
 	    },
 	    renderExits: function renderExits() {
 	        var exits = this.state.exits.map(function (d) {
-	            return directionNames[d];
+	            return _constants2.default.directionNames[d];
 	        });
 	        var result = undefined;
 	
@@ -21027,13 +21081,20 @@
 /* 162 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	exports.default = {
-	    backendURL: "http://localhost:3000"
+	    backendURL: "http://localhost:3000",
+	    directionNames: {
+	        'n': 'north',
+	        'e': 'east',
+	        'w': 'west',
+	        's': 'south'
+	    },
+	    directionList: ['n', 'e', 'w', 's']
 	};
 	//# sourceMappingURL=constants.js.map
 
