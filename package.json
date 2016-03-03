@@ -5,7 +5,7 @@
   "main": "null",
   "scripts": {
     "test": "false",
-    "build": "babel src -d js"
+    "build": "grunt"
   },
   "repository": {
     "type": "git",
