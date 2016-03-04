@@ -8,6 +8,7 @@ import constants from './constants';
 //  all class attributes to reduce duplication
 let classes = {
     entireRow : "col-xs-12 col-sm-12 col-md-12 col-lg-12",
+    thirdRow : "col-xs-4 col-sm-4 col-md-4 col-lg-4",
     quarterRow : "col-xs-3 col-sm-3 col-md-3 col-lg-3",
     sixthRow : "col-xs-2 col-sm-2 col-md-2 col-lg-2",
     authLabel : "col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xs-push-1 col-sm-push-1 col-md-push-1 col-lg-push-1",
@@ -23,7 +24,12 @@ let classes = {
 
 //  Command legend
 let CommandLegend = React.createClass({
-    render : function() {
+    getInitialState : function() {
+        return {
+            special : false
+        };
+    },
+    getMainMenu : function() {
         return (
             <center>
                 <h3>Command Reference</h3>
@@ -85,6 +91,37 @@ let CommandLegend = React.createClass({
                 </dl>
             </center>
         );
+    },
+    getSpecialMenu : function() {
+        return (
+            <center>
+                <h3>Special Menu</h3>
+                <dl>
+                    <div className="row">
+                        <span className={classes.thirdRow}>
+                            <dt>Esc</dt>
+                            <dd>Main menu</dd>
+                        </span>
+                        <span className={classes.thirdRow}>
+                            <dt>R</dt>
+                            <dd>Resend confirmation email</dd>
+                        </span>
+                        <span className={classes.thirdRow}>
+                            <dt>C</dt>
+                            <dd>Confirm email</dd>
+                        </span>
+                    </div>
+                </dl>
+            </center>
+        );
+    },
+    setSpecial : function(bool) {
+        this.setState({
+            special : bool
+        });
+    },
+    render : function() {
+        return this.state.special ? this.getSpecialMenu() : this.getMainMenu();
     }
 });
 
