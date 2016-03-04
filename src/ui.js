@@ -120,6 +120,22 @@ var ui = (function() {
             f();
         }
     }
+    function complementLocalExits() {
+        return constants.directionList.filter(function(dir) {
+            //  get the complement of the current location's
+            //      available exits
+            return react.location.state.exits.indexOf(dir) === -1;
+        });
+
+    }
+    function prepareExits(exits) {
+        return exits.map(function(dir) {
+            return {
+                name : constants.directionNames[dir],
+                value : dir
+            };
+        });
+    }
     function processKey(code) {
         let result;
 
@@ -295,16 +311,9 @@ var ui = (function() {
                 ui.methods.ignoreMain();
                 react.optionForm.setState(
                     formStateFactories.create(
-                        constants.directionList.filter(function(dir) {
-                            //  get the complement of the current location's
-                            //      available exits
-                            return react.location.state.exits.indexOf(dir) === -1;
-                        }).map(function(dir) {
-                            return {
-                                name : constants.directionNames[dir],
-                                value : dir
-                            };
-                        })
+                        prepareExits(
+                            complementLocalExits()
+                        )
                     )
                 );
                 react.optionForm.show();
