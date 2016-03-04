@@ -12,5 +12,5 @@ export default {
         'w' : 'west',
         's' : 'south'
     },
-    directionList : ['n', 'e', 'w', 's']
+    directionList : ['n', 'e', 's', 'w']
 };
