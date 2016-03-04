@@ -9,6 +9,23 @@ var ui = (function() {
         optionForm : document.getElementById("option-form")
     };
 
+    function complementExits(exits) {
+        return constants.directionList.filter(function(dir) {
+            //  get the complement of the current location's
+            //      available exits
+            return exits.indexOf(dir) === -1;
+        });
+
+    }
+    function prepareExits(exits) {
+        return exits.map(function(dir) {
+            return {
+                name : constants.directionNames[dir],
+                value : dir
+            };
+        });
+    }
+
     function genericSubmitterFactory(helper) {
         return function(e) {
             e.preventDefault();
@@ -60,6 +77,36 @@ var ui = (function() {
         jump : genericSubmitterFactory(optionHelperFactory(function(e) {
             Api.jump(parseInt(e.target.location.value, 10));
         })),
+        connectFactory : function(myLocations) {
+            return genericSubmitterFactory(function(e) {
+                let remoteLoc = parseInt(e.target.location.value, 10);
+                let availExits = complementExits(react.location.state.exits).
+                    filter(function(exit) {
+                        console.log(exit);
+                        return !myLocations[remoteLoc].exits[
+                            constants.directionList[
+                                (constants.directionList.indexOf(exit) + 2) % constants.directionList.length
+                            ]
+                        ];
+                    });
+
+                react.optionForm.setState(
+                    formStateFactories.connectDir(
+                        prepareExits(availExits),
+                        genericSubmitterFactory(function(e) {
+                            ui.methods.ignoreOption();
+                            react.optionForm.hide();
+
+                            let direction = e.target.direction.value;
+                            direction && Api.connect(direction, remoteLoc);
+
+                            react.optionForm.setState(react.form.getInitialState());
+                            ui.methods.listenMain();
+                        })
+                    )
+                );
+            });
+        },
         create : genericSubmitterFactory(function(e) {
             ui.methods.ignoreOption();
             react.optionForm.hide();
@@ -93,11 +140,31 @@ var ui = (function() {
                 submitHandler : optionFormSubmitters.jump
             };
         },
+        connect : function(locations) {
+            return {
+                title : "Connect",
+                description : "Which remote location do you wish to connect?",
+                buttonTitle : "Choose",
+                name : "location",
+                options : locations,
+                submitHandler : optionFormSubmitters.connectFactory(locations)
+            };
+        },
+        connectDir : function(directions, submitHandler) {
+            return {
+                title : "Connect",
+                description : "Which local exit will you attach it to?",
+                name : "direction",
+                options : directions,
+                buttonTitle : "Connect",
+                submitHandler
+            };
+        },
         create : function(exits) {
             return {
                 title : "Create",
                 description : "Where do you wish to create the new location?",
-                buttonTitle : "Create",
+                buttonTitle : "Choose",
                 name : "direction",
                 options : exits,
                 submitHandler : optionFormSubmitters.create
@@ -119,22 +186,6 @@ var ui = (function() {
         if(app.loggedInAs !== false) {
             f();
         }
-    }
-    function complementLocalExits() {
-        return constants.directionList.filter(function(dir) {
-            //  get the complement of the current location's
-            //      available exits
-            return react.location.state.exits.indexOf(dir) === -1;
-        });
-
-    }
-    function prepareExits(exits) {
-        return exits.map(function(dir) {
-            return {
-                name : constants.directionNames[dir],
-                value : dir
-            };
-        });
     }
     function processKey(code) {
         let result;
@@ -232,6 +283,7 @@ var ui = (function() {
                         console.log("escape");
                         break;
                     case 'c':
+                        ifLoggedIn(ui.commands.connect);
                         break;
                     case 'j':
                         ifLoggedIn(ui.commands.jump);
@@ -306,13 +358,20 @@ var ui = (function() {
             }
         },
         commands : {
-            connect : function connect() {},
+            connect : function connect() {
+                Api.list().then(function(locs) {
+                    ui.methods.ignoreMain();
+                    react.optionForm.setState(formStateFactories.connect(locs));
+                    react.optionForm.show();
+                    return ui.methods.listenOption();
+                });
+            },
             create : function create() {
                 ui.methods.ignoreMain();
                 react.optionForm.setState(
                     formStateFactories.create(
                         prepareExits(
-                            complementLocalExits()
+                            complementExits(react.location.state.exits)
                         )
                     )
                 );
