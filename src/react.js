@@ -102,11 +102,11 @@ let CommandLegend = React.createClass({
                             <dt>Esc</dt>
                             <dd>Main menu</dd>
                         </span>
-                        <span className={classes.thirdRow}>
+                        <span className={`${classes.thirdRow}${app.loggedInAs ? '' : ' unavailable'}`}>
                             <dt>R</dt>
                             <dd>Resend confirmation email</dd>
                         </span>
-                        <span className={classes.thirdRow}>
+                        <span className={`${classes.thirdRow}${app.loggedInAs ? '' : ' unavailable'}`}>
                             <dt>C</dt>
                             <dd>Confirm email</dd>
                         </span>
