@@ -53,15 +53,15 @@ let CommandLegend = React.createClass({
                         </span>
                     </div>
                     <div className="row">
-                        <span className={`${classes.quarterRow}${api.loggedInAs ? '' : ' unavailable'}`}>
+                        <span className={`${classes.quarterRow}${app.loggedInAs ? '' : ' unavailable'}`}>
                             <dt>W</dt>
                             <dd>Write</dd>
                         </span>
-                        <span className={`${classes.quarterRow}${api.loggedInAs ? '' : ' unavailable'}`}>
+                        <span className={`${classes.quarterRow}${app.loggedInAs ? '' : ' unavailable'}`}>
                             <dt>S</dt>
                             <dd>Speak</dd>
                         </span>
-                        <span className={`${classes.quarterRow}${api.loggedInAs ? '' : ' unavailable'}`}>
+                        <span className={`${classes.quarterRow}${app.loggedInAs ? '' : ' unavailable'}`}>
                             <dt>J</dt>
                             <dd>Jump</dd>
                         </span>
@@ -75,11 +75,11 @@ let CommandLegend = React.createClass({
                             <dt>Esc</dt>
                             <dd>Special command menu</dd>
                         </span>
-                        <span className={`${classes.quarterRow}${api.loggedInAs ? '' : ' unavailable'}`}>
+                        <span className={`${classes.quarterRow}${app.loggedInAs ? '' : ' unavailable'}`}>
                             <dt>M</dt>
                             <dd>Make new location</dd>
                         </span>
-                        <span className={`${classes.quarterRow}${api.loggedInAs ? '' : ' unavailable'}`}>
+                        <span className={`${classes.quarterRow}${app.loggedInAs ? '' : ' unavailable'}`}>
                             <dt>C</dt>
                             <dd>Connect location</dd>
                         </span>
@@ -180,6 +180,7 @@ let AuthForm = React.createClass({
             console.log("Auth successful. Launching socket.");
             self.hide();
             app.loggedInAs = username;
+            reactModule.commandLegend.forceUpdate();
             return api.init();
         };
     },
@@ -695,7 +696,7 @@ let ChatLog = React.createClass({
     }
 });
 
-export default {
+let reactModule = {
     form : ReactDOM.render(
         <OneLineForm />,
         OneLineForm.containingElement
@@ -725,3 +726,5 @@ export default {
         document.getElementById('commands')
     )
 };
+
+export default reactModule;
