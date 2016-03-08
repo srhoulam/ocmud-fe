@@ -53,15 +53,15 @@ let CommandLegend = React.createClass({
                         </span>
                     </div>
                     <div className="row">
-                        <span className={classes.quarterRow}>
+                        <span className={`${classes.quarterRow}${api.loggedInAs ? '' : ' unavailable'}`}>
                             <dt>W</dt>
                             <dd>Write</dd>
                         </span>
-                        <span className={classes.quarterRow}>
+                        <span className={`${classes.quarterRow}${api.loggedInAs ? '' : ' unavailable'}`}>
                             <dt>S</dt>
                             <dd>Speak</dd>
                         </span>
-                        <span className={classes.quarterRow}>
+                        <span className={`${classes.quarterRow}${api.loggedInAs ? '' : ' unavailable'}`}>
                             <dt>J</dt>
                             <dd>Jump</dd>
                         </span>
@@ -75,11 +75,11 @@ let CommandLegend = React.createClass({
                             <dt>Esc</dt>
                             <dd>Special command menu</dd>
                         </span>
-                        <span className={classes.quarterRow}>
+                        <span className={`${classes.quarterRow}${api.loggedInAs ? '' : ' unavailable'}`}>
                             <dt>M</dt>
                             <dd>Make new location</dd>
                         </span>
-                        <span className={classes.quarterRow}>
+                        <span className={`${classes.quarterRow}${api.loggedInAs ? '' : ' unavailable'}`}>
                             <dt>C</dt>
                             <dd>Connect location</dd>
                         </span>

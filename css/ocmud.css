@@ -1,6 +1,9 @@
 .hidden {
     display: none;
 }
+.unavailable {
+    opacity: .25;
+}
 .modal {
     display: block;
     padding: 5% 3%;

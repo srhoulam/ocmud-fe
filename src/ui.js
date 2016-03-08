@@ -249,23 +249,15 @@ var ui = (function() {
             init : function uiInit() {
                 return react.authForm.show();
             },
-            listenMain : function() {
-                return document.addEventListener('keyup', ui.handlers.keyPressMain);
+            showSpecialMenu : function specialMenu() {
+                react.commandLegend.setSpecial(true);
+                ui.methods.ignoreMain();
+                ui.methods.listenSpecial();
             },
-            listenOLF : function() {
-                return document.addEventListener('keyup', ui.handlers.keyPressOLF);
-            },
-            listenOption : function() {
-                return document.addEventListener('keyup', ui.handlers.keyPressOption);
-            },
-            ignoreMain : function() {
-                return document.removeEventListener('keyup', ui.handlers.keyPressMain);
-            },
-            ignoreOLF : function() {
-                return document.removeEventListener('keyup', ui.handlers.keyPressOLF);
-            },
-            ignoreOption : function() {
-                return document.removeEventListener('keyup', ui.handlers.keyPressOption);
+            showMainMenu : function mainMenu() {
+                react.commandLegend.setSpecial(false);
+                ui.methods.ignoreSpecial();
+                ui.methods.listenMain();
             }
         },
         handlers : {
@@ -280,7 +272,7 @@ var ui = (function() {
                         ui.commands.travel(keyPressed);
                         break;
                     case 'escape':
-                        console.log("escape");
+                        ui.methods.showSpecialMenu();
                         break;
                     case 'c':
                         ifLoggedIn(ui.commands.connect);
@@ -298,10 +290,10 @@ var ui = (function() {
                         ui.commands.quit();
                         break;
                     case 's':
-                        ui.commands.say();
+                        ifLoggedIn(ui.commands.say);
                         break;
                     case 'w':
-                        ui.commands.write();
+                        ifLoggedIn(ui.commands.write);
                         break;
                 }
             },
@@ -353,6 +345,15 @@ var ui = (function() {
                         react.optionForm.hide();
                         react.optionForm.setState(react.optionForm.getInitialState());
                         ui.methods.listenMain();
+                        break;
+                }
+            },
+            keyPressSpecial : function specialKeyCommand(event) {
+                let keyPressed = processKey(event.key || event.keyCode);
+
+                switch(keyPressed.toLowerCase()) {
+                    case 'escape':
+                        ui.methods.showMainMenu();
                         break;
                 }
             }
@@ -407,7 +408,7 @@ var ui = (function() {
                     return;
                 }
 
-                Api.go(direction);
+                return Api.go(direction);
             },
             write : function write() {
                 ui.methods.ignoreMain();
@@ -417,6 +418,21 @@ var ui = (function() {
             }
         }
     };
+
+    function listenMethodFactory(listener) {
+        return function() {
+            return document.addEventListener('keyup', listener);
+        };
+    }
+    function ignoreMethodFactory(listener) {
+        return function() {
+            return document.removeEventListener('keyup', listener);
+        };
+    }
+    ['Main', 'OLF', 'Option', 'Special'].forEach(function(name) {
+        ui.methods[`listen${name}`] = listenMethodFactory(ui.handlers[`keyPress${name}`]);
+        ui.methods[`ignore${name}`] = ignoreMethodFactory(ui.handlers[`keyPress${name}`]);
+    });
 
     // resolve circular dependency
     let initApi = api.init;
