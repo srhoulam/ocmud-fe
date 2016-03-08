@@ -11,7 +11,7 @@ function initApi(methods) {
     let io = socket.init(constants.backendURL);
 
     let apiObject = {
-        confirm : function confirm(code) {
+        confirmEmail : function confirm(code) {
             return io.emit('command', {
                 command : 'confirmEmail',
                 'code' : code
@@ -84,7 +84,7 @@ function initApi(methods) {
 
             return result;
         },
-        resend : function resend() {
+        resendEmail : function resend() {
             return io.emit('command', {
                 command : 'resendEmail'
             });

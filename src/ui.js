@@ -52,6 +52,16 @@ var ui = (function() {
         };
     }
     let formStates = {
+        confirmEmail : {
+            title : "Confirm Email",
+            name : "code",
+            description : "Paste the verification code you received by email below, verbatim with no leading or trailing spaces.",
+            placeholder : "Verification code.",
+            buttonTitle : "Confirm",
+            submitHandler : genericSubmitterFactory(olfHelperFactory(function(e) {
+                Api.confirmEmail(e.target.code.value);
+            }))
+        },
         say : {
             title : "Say what?",
             name : "message",
@@ -355,10 +365,22 @@ var ui = (function() {
                     case 'escape':
                         ui.methods.showMainMenu();
                         break;
+                    case 'r':
+                        ifLoggedIn(Api.resendEmail);
+                        break;
+                    case 'c':
+                        ifLoggedIn(ui.commands.confirmEmail);
+                        break;
                 }
             }
         },
         commands : {
+            confirmEmail : function confirmEmail() {
+                ui.methods.ignoreMain();
+                react.form.setState(formStates.confirmEmail);
+                react.form.show();
+                return ui.methods.listenOLF();
+            },
             connect : function connect() {
                 Api.list().then(function(locs) {
                     ui.methods.ignoreMain();
