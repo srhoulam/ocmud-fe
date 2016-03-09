@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+// import React from 'react';
+// import ReactDOM from 'react-dom';
 import auth from './auth';
 import api from './api';
 import app from './app';
@@ -165,7 +165,7 @@ let AuthForm = React.createClass({
 
         let username = e.target.username.value;
 
-        auth.enticate({
+        auth({
             'username' : username,
             password : e.target.password.value,
             email : e.target.email.value,
