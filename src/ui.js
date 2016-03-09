@@ -15,7 +15,6 @@ var ui = (function() {
             //      available exits
             return exits.indexOf(dir) === -1;
         });
-
     }
     function prepareExits(exits) {
         return exits.map(function(dir) {
