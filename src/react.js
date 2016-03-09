@@ -1,5 +1,3 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
 import auth from './auth';
 import api from './api';
 import app from './app';
