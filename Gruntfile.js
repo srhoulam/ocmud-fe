@@ -56,7 +56,7 @@ function wrapper(grunt) {
         scope : 'devDependencies'
     });
 
-    grunt.registerTask('default', ['babel', 'webpack']);
+    grunt.registerTask('default', ['babel', 'webpack', 'uglify']);
 }
 
 module.exports = wrapper;
