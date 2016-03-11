@@ -1,5 +1,5 @@
 export default {
-    backendURL : "http://localhost:3000",
+    backendURL : "",
     directionArrows : {
         'arrowleft' : 'w',
         'arrowright' : 'e',
