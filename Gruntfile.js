@@ -19,11 +19,11 @@ function wrapper(grunt) {
             }
         },
         webpack: {
-            someName: {
+            pack: {
                 // webpack options
                 entry: "./mod/index.js",
                 output: {
-                    path: "js/",
+                    path: "pack/",
                     filename: "bundle.js",
                     sourceMapFilename: "[file].map"
                 },
@@ -34,19 +34,23 @@ function wrapper(grunt) {
                     reasons: true
                 },
                 devtool: "source-map",
+                watch: false,
+                hot: false,
+                keepalive: false,
+                inline: false,
                 progress: false // Don't show progress
             }
         },
         uglify: {
-            my_target: {
+            js: {
                 options: {
                     sourceMap: true,
                     screwIE8: true,
-                    sourceMapIn: 'js/bundle.js.map',
+                    sourceMapIn: 'pack/bundle.js.map',
                     sourceMapRoot: 'src'
                 },
                 files: {
-                    'js/bundle.min.js': ['js/bundle.js']
+                    'js/bundle.min.js': ['pack/bundle.js']
                 }
             }
         }
